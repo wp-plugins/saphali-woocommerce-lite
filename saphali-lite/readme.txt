@@ -10,6 +10,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
+Saphali - set of additions to Woocommerce.
+
 Это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
 
 Плагин вносит в магазин следующие дополнения:
