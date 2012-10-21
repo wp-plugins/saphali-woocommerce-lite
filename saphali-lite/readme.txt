@@ -8,6 +8,8 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+Saphali - набор дополнений к интернет-магазину на Woocommerce, которые расширяют его возможности и адаптируют магазин к работе на российском и украинском рынках.
+
 == Description ==
 
 Saphali - set of additions to Woocommerce.
