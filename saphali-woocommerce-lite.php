@@ -1,11 +1,11 @@
 <?php 
 /*
 Plugin Name: Saphali Woocommerce LITE
-Plugin URI: http://saphali.com/
+Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce LITE - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
 Version: 1.1
 Author: Saphali
-Author URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
+Author URI: http://saphali.com/
 */
 
 
