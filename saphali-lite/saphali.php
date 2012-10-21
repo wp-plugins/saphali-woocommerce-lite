@@ -286,9 +286,10 @@ function woocommerce_lang() {
 					}
 					if(!update_option('woocommerce_saphali_filds',$filds_finish))add_option('woocommerce_saphali_filds',$filds_finish);
 					if(!update_option('woocommerce_saphali_filds_filters',$filds_finish_filter))add_option('woocommerce_saphali_filds_filters',$filds_finish_filter);
-				} else
-					delete_option('woocommerce_saphali_filds');
-					delete_option('woocommerce_saphali_filds_filters');
+				} else {
+						delete_option('woocommerce_saphali_filds');
+						delete_option('woocommerce_saphali_filds_filters'); 
+					}
 			}
 	
 		?>
