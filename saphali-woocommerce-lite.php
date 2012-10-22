@@ -129,6 +129,7 @@ function woocommerce_lang() {
 			$f = $woocommerce->checkout(); 
 			if($_POST){
 				if($_POST["reset"] != 'All') {
+					// Управление новыми полями
 					if(is_array($_POST["billing"]["new_fild"])) {
 						foreach($_POST["billing"]["new_fild"] as $k_nf => $v_nf) {
 							if($k_nf == 'name')
@@ -136,7 +137,10 @@ function woocommerce_lang() {
 							$new_fild[] = $v_nf_f;
 							 else {
 								foreach($v_nf as $k_nf_f => $v_nf_f) {
-									$addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									if($k_nf == 'class') {
+										$v_nf_f = array ( $v_nf_f );
+										$addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									} else $addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 								}
 							}
 						}
@@ -149,7 +153,10 @@ function woocommerce_lang() {
 							$new_fild[] = $v_nf_f;
 							 else {
 								foreach($v_nf as $k_nf_f => $v_nf_f) {
-									$addFild["shipping"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									if($k_nf == 'class') {
+										$v_nf_f = array ( $v_nf_f );
+										$addFild["shipping"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									} else $addFild["shipping"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 								}
 							}
 						}
@@ -162,26 +169,37 @@ function woocommerce_lang() {
 							$new_fild[] = $v_nf_f;
 							 else {
 								foreach($v_nf as $k_nf_f => $v_nf_f) {
-									$addFild["order"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									if($k_nf == 'class') {
+										$v_nf_f = array ( $v_nf_f );
+										$addFild["order"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									} else $addFild["order"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 								}
 							}
 						}
 						unset($_POST["order"]["new_fild"]);
 					}
+					//END 
 					$filds = $f->checkout_fields;
 					foreach($filds["billing"] as $key_post => $value_post) {
 						$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post] = $value_post;
-						foreach($value_post as $k_post=> $v_post){
 							if($_POST["billing"][$key_post]['public'] != 'on') {
 								$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]["public"] = false;
 								$fild_remove_filter["billing"][] = $key_post;
 							} else {$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]["public"] = true;}
-							if($k_post == 'required') {$_POST["billing"][$key_post]['required'] = ($_POST["billing"][$key_post]['required'] == 'on') ? true : false ; }
 							
+							$_POST["billing"][$key_post]['required'] = ($_POST["billing"][$key_post]['required'] == 'on') ? true : false ; 
+							
+							$_POST["billing"][$key_post]['clear'] = $bool_clear = ($_POST["billing"][$key_post]['clear'] == 'on') ? true : false ;
+							
+						foreach($value_post as $k_post=> $v_post){
 							if( $_POST["billing"][$key_post][$k_post] != $v_post && isset($_POST["billing"][$key_post][$k_post]) ) {
 								$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post][$k_post] = $_POST["billing"][$key_post][$k_post];
 							}
-							
+						}
+						if( $bool_clear ){
+								$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear'] = $bool_clear;
+						} elseif(isset($filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear'])) {
+							unset($filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear']);
 						}
 						unset($_POST["billing"][$key_post]);
 					}
@@ -193,13 +211,19 @@ function woocommerce_lang() {
 							$fild_remove_filter["shipping"][] = $key_post;
 						} else {$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]["public"] = true;}
 						
+						$_POST["shipping"][$key_post]['clear'] = $bool_clear = ($_POST["shipping"][$key_post]['clear'] == 'on') ? true : false ;
+						
+						$_POST["shipping"][$key_post]['required'] = ($_POST["shipping"][$key_post]['required'] == 'on') ? true : false ;
+						
 						foreach($value_post as $k_post=> $v_post){
-							if($k_post == 'required') {$_POST["shipping"][$key_post]['required'] = ($_POST["shipping"][$key_post]['required'] == 'on') ? true : false ; }
-							
 							if( $_POST["shipping"][$key_post][$k_post] != $v_post && isset($_POST["shipping"][$key_post][$k_post]) ) {
 								$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post][$k_post] = $_POST["shipping"][$key_post][$k_post];
 							}
-							
+						}
+						if( $bool_clear ){
+								$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear'] = $bool_clear;
+						} elseif(isset($filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear'])) {
+							unset($filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear']);
 						}
 						unset($_POST["shipping"][$key_post]);
 					}
@@ -210,17 +234,19 @@ function woocommerce_lang() {
 							$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post]["public"] = false;
 							$fild_remove_filter["order"][] = $key_post;
 						} else {$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post]["public"] = true;}
+						
+
+						$_POST["order"][$key_post]['required'] = ($_POST["order"][$key_post]['required'] == 'on') ? true : false ; 
+						
+						
 						foreach($value_post as $k_post=> $v_post){
-							if($k_post == 'required') {$_POST["order"][$key_post]['required'] = ($_POST["order"][$key_post]['required'] == 'on') ? true : false ; }
-							
 							if( $_POST["order"][$key_post][$k_post] != $v_post && isset($_POST["order"][$key_post][$k_post]) ) {
 								$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post][$k_post] = $_POST["order"][$key_post][$k_post];
 							}
-							
 						}
 						unset($_POST["order"][$key_post]);
 					}
-
+					// Управление публикацией
 					if(!empty($_POST["billing"])) {
 						foreach($_POST["billing"] as $k_post => $v_post) {
 							if($v_post["public"]  != 'on' )
@@ -239,6 +265,7 @@ function woocommerce_lang() {
 							$fild_remove_filter["order"][] = $k_post;
 						}
 					}
+					//END Управление публикацией
 					$filds_finish["billing"] = $filds_finish["shipping"] = $filds_finish["order"] = array();
 
 					for($i = 0; $i<count($filds_new["billing"]); $i++) {
@@ -254,6 +281,13 @@ function woocommerce_lang() {
 						$filds_finish["order"] = $filds_finish["order"] + $filds_new["order"][$i];
 					}
 					
+					if(is_array($_POST["billing"]))
+					$filds_finish["billing"] = $filds_finish["billing"] +  $_POST["billing"];
+					if(is_array($_POST["shipping"]))
+					$filds_finish["shipping"] = $filds_finish["shipping"] +  $_POST["shipping"];
+					if(is_array($_POST["order"]))
+					$filds_finish["order"] = $filds_finish["order"] + $_POST["order"];
+					
 					if(is_array($addFild["billing"]))
 					$filds_finish["billing"] = $filds_finish["billing"] + $addFild["billing"];
 					if(is_array($addFild["shipping"]))
@@ -261,12 +295,7 @@ function woocommerce_lang() {
 					if(is_array($addFild["order"]))
 					$filds_finish["order"] = $filds_finish["order"] + $addFild["order"] + $_POST["order"];
 					
-					if(is_array($_POST["billing"]))
-					$filds_finish["billing"] = $filds_finish["billing"] +  $_POST["billing"];
-					if(is_array($_POST["shipping"]))
-					$filds_finish["shipping"] = $filds_finish["shipping"] +  $_POST["shipping"];
-					if(is_array($_POST["order"]))
-					$filds_finish["order"] = $filds_finish["order"] + $_POST["order"];
+					
 					
 					$filds_finish_filter = $filds_finish;
 					if(is_array($fild_remove_filter["billing"])) {
@@ -304,9 +333,11 @@ function woocommerce_lang() {
 				<th width="115px">Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
-				<th>Обязательное</th>
+				<th width="40px">Clear</th>
+				<th>Класс поля</th>
+				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 			
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -316,9 +347,11 @@ function woocommerce_lang() {
 				<th>Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
-				<th>Обязательное</th>
+				<th width="40px">Clear</th>
+				<th>Класс поля</th>
+				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 				
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -335,11 +368,15 @@ function woocommerce_lang() {
 				if(empty($value['public']) && !is_array($checkout_fields["billing"])) $value['public'] = true;
 				?>
 				<tr>
-					<td><input  value='<?=$key?>' type="text" name="billing[<?=$key?>][name]" /></td>
+					<td><input disabled value='<?=$key?>' type="text" name="billing[<?=$key?>][name]" /></td>
 					<td><input value='<?=$value['label']?>' type="text" name="billing[<?=$key?>][label]" /></td>
 					<td><input value='<?=$value['placeholder']?>' type="text" name="billing[<?=$key?>][placeholder]" /></td>
+					<td><input <? if($value['clear']) echo 'checked'?>  class="<?=$value['clear']?>" type="checkbox" name="billing[<?=$key?>][clear]" /></td>
+					<td><?  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+					<input value='<?=$v_class;?>' type="text" name="billing[<?=$key?>][class][]" /> <? } } else { ?>
+					<input value='' type="text" name="billing[<?=$key?>][class][]" /> <?
+					} ?></td>
 					<td><input <? if($value['required']) echo 'checked'?> type="checkbox" name="billing[<?=$key?>][required]" /></td>
-
 					<td><input <? if($value['public']) echo 'checked';?> type="checkbox" name="billing[<?=$key?>][public]" /></td>
 					
 					<td><input rel="sort_order" id="order_count" type="hidden" name="billing[<?=$key?>][order]" value="<?=$count?>" />
@@ -349,6 +386,8 @@ function woocommerce_lang() {
 			}
 			?>
 			<tr  class="nodrop nodrag">
+					<td></td>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -368,9 +407,11 @@ function woocommerce_lang() {
 				<th width="115px">Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
-				<th>Обязательное</th>
+				<th width="40px">Clear</th>
+				<th>Класс поля</th>
+				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 			
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -380,9 +421,11 @@ function woocommerce_lang() {
 				<th>Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
-				<th>Обязательное</th>
+				<th width="40px">Clear</th>
+				<th>Класс поля</th>
+				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 				
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -391,14 +434,19 @@ function woocommerce_lang() {
 			<? $count = 0;
 			if(is_array($checkout_fields["shipping"])) $f->checkout_fields["shipping"] = $checkout_fields["shipping"];
 			foreach($f->checkout_fields["shipping"] as $key => $value) {	
-			if( empty($value['public']) && !is_array($checkout_fields["billing"]) ) $value['public'] = true;
+			if( empty($value['public']) && !is_array($checkout_fields["shipping"]) ) $value['public'] = true;
 				?>
 				<tr>
 					<td><input disabled value=<?=$key?> type="text" name="shipping[<?=$key?>][name]" /></td>
 					<td><input value='<?=$value['label']?>' type="text" name="shipping[<?=$key?>][label]" /></td>
 					<td><input value='<?=$value['placeholder']?>' type="text" name="shipping[<?=$key?>][placeholder]" /></td>
+					<td><input <? if($value['clear']) echo 'checked'?> class="<?=$value['clear']?>" type="checkbox" name="shipping[<?=$key?>][clear]" /></td>
+					<td><?  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+					
+					<input value='<?=$v_class;?>' type="text" name="shipping[<?=$key?>][class][]" /> <? } } else { ?>
+					<input value='' type="text" name="shipping[<?=$key?>][class][]" /> <?
+					} ?></td>
 					<td><input <? if($value['required']) echo 'checked'?> type="checkbox" name="shipping[<?=$key?>][required]" /></td>
-
 					<td><input <? if($value['public']) echo 'checked';?> type="checkbox" name="shipping[<?=$key?>][public]" /></td>
 					
 					<td><input rel="sort_order"  id="order_count" type="hidden" name="shipping[<?=$key?>][order]" value="<?=$count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
@@ -411,6 +459,8 @@ function woocommerce_lang() {
 					<td></td>
 					<td></td>
 	
+					<td></td>
+					<td></td>
 					<td></td>
 					<td></td>
 				
@@ -427,8 +477,9 @@ function woocommerce_lang() {
 				<th width="120px">Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
+				<th>Класс поля</th>
 				<th>Тип поля</th>
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 				
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -438,8 +489,9 @@ function woocommerce_lang() {
 				<th>Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
+				<th>Класс поля</th>
 				<th>Тип поля</th>
-				<th>Обубликовать</th>
+				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
 				
 				<th>Удалить/Добавить</th>
 			</tr>
@@ -448,12 +500,18 @@ function woocommerce_lang() {
 			<? $count = 0;
 			if(is_array($checkout_fields["order"])) $f->checkout_fields["order"] = $checkout_fields["order"];
 			foreach($f->checkout_fields["order"] as $key => $value) {	
-				if(empty($value['public']) && !is_array($checkout_fields["billing"])) $value['public'] = true;
+				if(empty($value['public']) && !is_array($checkout_fields["order"])) $value['public'] = true;
 				?>
 				<tr>
 					<td><input disabled value=<?=$key?> type="text" name="order[<?=$key?>][name]" /></td>
 					<td><input value='<?=$value['label']?>' type="text" name="order[<?=$key?>][label]" /></td>
 					<td><input value='<?=$value['placeholder']?>' type="text" name="order[<?=$key?>][placeholder]" /></td>
+					
+					<td><?  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+					
+					<input value='<?=$v_class;?>' type="text" name="order[<?=$key?>][class][]" /> <? } } else { ?>
+					<input value='' type="text" name="order[<?=$key?>][class][]" /> <?
+					} ?></td>
 					<td><input value='<?=$value['type']?>' type="text" name="order[<?=$key?>][type]" /></td>
 					<td><input <? if($value['public']) echo 'checked';?> type="checkbox" name="order[<?=$key?>][public]" /></td>
 					
@@ -468,6 +526,8 @@ function woocommerce_lang() {
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
+
 				
 				<td><input type="button" class="button" id="order" value="Добавить +"/></td>
 			</tr>
@@ -483,21 +543,21 @@ function woocommerce_lang() {
 		<script>
 		jQuery('.button#billing').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
-			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="billing" value="Добавить +"/></td></tr>');
+			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="billing" value="Добавить +"/></td></tr>');
 		});
 		jQuery('.button#shipping').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="shipping[new_fild][name][]" /></td><td><input value="" type="text" name="shipping[new_fild][label][]" /></td><td><input value="" type="text" name="shipping[new_fild][placeholder][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][required][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="shipping[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="shipping[new_fild][name][]" /></td><td><input value="" type="text" name="shipping[new_fild][label][]" /></td><td><input value="" type="text" name="shipping[new_fild][placeholder][]" /></td><td><input type="checkbox" name="shipping[new_fild][clear][]" /></td><td><input value="" type="text" name="shipping[new_fild][class][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][required][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="shipping[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
-			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="shipping" value="Добавить +"/></td></tr>');
+			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="shipping" value="Добавить +"/></td></tr>');
 		});
 		jQuery('.button#order').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="order[new_fild][name][]" /></td><td><input value="" type="text" name="order[new_fild][label][]" /></td><td><input value="" type="text" name="order[new_fild][placeholder][]" /></td><td><input checked type="text" name="order[new_fild][type][]" /></td><td><input checked type="checkbox" name="order[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="order[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="order[new_fild][name][]" /></td><td><input value="" type="text" name="order[new_fild][label][]" /></td><td><input value="" type="text" name="order[new_fild][placeholder][]" /></td><td><input value="" type="text" name="order[new_fild][class][]" /></td><td><input checked type="text" name="order[new_fild][type][]" /></td><td><input checked type="checkbox" name="order[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="order[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
-			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="order" value="Добавить +"/></td></tr>');
+			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="order" value="Добавить +"/></td></tr>');
 		});
 
 		jQuery('.button#billing_delete').live('click',function() {
