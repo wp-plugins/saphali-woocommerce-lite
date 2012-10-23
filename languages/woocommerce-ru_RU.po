@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-10-20 14:27+0200\n"
+"PO-Revision-Date: 2012-10-23 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -574,3 +574,19 @@ msgstr ""
 "<a href=\"%s\" class=\"button\">%s</a> Вы не можете добавить этот товар в "
 "таком количестве в корзину &mdash; у нас в наличии: %s, и он уже есть в "
 "вашей корзине: %s."
+
+# @ woocommerce
+#: templates/myaccount/my-orders.php:51
+msgid "Click to cancel this order"
+msgstr "Удалить этот заказ"
+
+# @ woocommerceOrder #2515 which was made 9 дней ago has the status “неудавшийся”.
+#: templates/order/tracking.php:12
+#, php-format
+msgid "Order %s which was made %s has the status &ldquo;%s&rdquo;"
+msgstr "Заказ  %s, который был совершен %s, имеет статус &ldquo;%s&rdquo;"
+
+# @ woocommerce
+#: templates/order/tracking.php:12
+msgid "ago"
+msgstr "тому назад"
