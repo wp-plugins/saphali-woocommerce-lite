@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce LITE
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce LITE - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.2.1
+Version: 1.2.2
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -109,14 +109,14 @@ function woocommerce_lang() {
 		</h2>
 		<ul class="subsubsub">
 			
-			 <li><a href="admin.php?page=woocommerce_saphali" <? if($_GET["tab"] == '') echo 'class="current"';?>><span color="red">Переход на PRO версии</span></a> | </li>
+			 <li><a href="admin.php?page=woocommerce_saphali" <? if($_GET["tab"] == '') echo 'class="current"';?>><span color="red">Дополнительная информация</span></a> | </li>
 			 <li><a href="admin.php?page=woocommerce_saphali&tab=1" <? if($_GET["tab"] == 1) echo 'class="current"';?>>Управление полями</a> | </li>
 			 <li><a href="admin.php?page=woocommerce_saphali&tab=2" <? if($_GET["tab"] == 2) echo 'class="current"';?>>Число колонок в каталоге</a></li>
 			
 		</ul>
 		<? if($_GET["tab"] == '') {?>
 		<div class="clear"></div>
-		<h2 class="woo-nav-tab-wrapper">Переход на PRO версии</h2>
+		<h2 class="woo-nav-tab-wrapper">Дополнительная информация</h2>
 		<? include_once (SAPHALI_PLUGIN_DIR_PATH . 'go_pro.php'); ?>
 
 		<?php } elseif($_GET["tab"] == 2) {?>
@@ -141,6 +141,7 @@ function woocommerce_lang() {
 										$v_nf_f = array ( $v_nf_f );
 										$addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 									} else $addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									//$addFild["billing"][$new_fild[$k_nf_f]]['add_new'] = true;
 								}
 							}
 						}
@@ -157,6 +158,7 @@ function woocommerce_lang() {
 										$v_nf_f = array ( $v_nf_f );
 										$addFild["shipping"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 									} else $addFild["shipping"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									//$addFild["shipping"][$new_fild[$k_nf_f]]['add_new'] = true;
 								}
 							}
 						}
@@ -173,6 +175,7 @@ function woocommerce_lang() {
 										$v_nf_f = array ( $v_nf_f );
 										$addFild["order"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
 									} else $addFild["order"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+									//$addFild["order"][$new_fild[$k_nf_f]]['add_new'] = true;
 								}
 							}
 						}
@@ -330,16 +333,16 @@ function woocommerce_lang() {
 		<table class="wp-list-table widefat fixed posts" cellspacing="0">
 		<thead>
 			<tr>
-				<th width="115px">Название</th>
-				<th>Заголовок</th>
-				<th>Текст в поле</th>
-				<th width="56px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
-				<th>Класс поля</th>
-				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
+				<th width="130px">Название<img class="help_tip" data-tip="Название поля должно быть уни&shy;ка&shy;ль&shy;ным (не должно повторяться)." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
+				<th width="130px">Заголовок</th>
+				<th width="130px">Текст в поле</th>
+				<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
+				<th width="130px">Класс поля<img class="help_tip" data-tip="<h3 style='margin:0;padding:0'>Задает стиль текущего поля</h3><ul style='text-align: left;'><li><span style='color: #000'>form-row-first</span>&nbsp;&ndash;&nbsp;первый в строке;</li><li><span style='color: #000'>form-row-last</span>&nbsp;&ndash;&nbsp;последний в строке.</li></ul><hr /><span style='color: #000'>ЕСЛИ ОСТАВИТЬ ПУСТЫМ</span>, то поле будет отображаться на всю ширину. Соответственно, в предыдущем поле (которое выше) нужно отметить &laquo;Clear&raquo;." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
+				<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 			
-				<th>Удалить/Добавить</th>
+				<th width="65px">Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -347,13 +350,13 @@ function woocommerce_lang() {
 				<th>Название</th>
 				<th>Заголовок</th>
 				<th>Текст в поле</th>
-				<th width="56px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
+				<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
 				<th>Класс поля</th>
-				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
+				<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 				
-				<th>Удалить/Добавить</th>
+				<th>Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</tfoot>
 		<tbody id="the-list" class="myTable">
@@ -368,7 +371,7 @@ function woocommerce_lang() {
 				if(empty($value['public']) && !is_array($checkout_fields["billing"])) $value['public'] = true;
 				?>
 				<tr>
-					<td><input disabled value='<?=$key?>' type="text" name="billing[<?=$key?>][name]" /></td>
+					<td> <input  disabled value='<?=$key?>' type="text" name="billing[<?=$key?>][name]" /></td>
 					<td><input value='<?=$value['label']?>' type="text" name="billing[<?=$key?>][label]" /></td>
 					<td><input value='<?=$value['placeholder']?>' type="text" name="billing[<?=$key?>][placeholder]" /></td>
 					<td><input <? if($value['clear']) echo 'checked'?>  class="<?=$value['clear']?>" type="checkbox" name="billing[<?=$key?>][clear]" /></td>
@@ -404,16 +407,16 @@ function woocommerce_lang() {
 		<table class="wp-list-table widefat fixed posts" cellspacing="0">
 		<thead>
 			<tr>
-				<th width="115px">Название</th>
-				<th>Заголовок</th>
-				<th>Текст в поле</th>
-				<th width="56px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
-				<th>Класс поля</th>
-				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
+				<th width="130px">Название<img class="help_tip" data-tip="Название поля должно быть уни&shy;ка&shy;ль&shy;ным (не должно повторяться)." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
+				<th width="130px">Заголовок</th>
+				<th width="130px">Текст в поле</th>
+				<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
+				<th width="130px">Класс поля<img class="help_tip" data-tip="<h3 style='margin:0;padding:0'>Задает стиль текущего поля</h3><ul style='text-align: left;'><li><span style='color: #000'>form-row-first</span>&nbsp;&ndash;&nbsp;первый в строке;</li><li><span style='color: #000'>form-row-last</span>&nbsp;&ndash;&nbsp;последний в строке.</li></ul><hr /><span style='color: #000'>ЕСЛИ ОСТАВИТЬ ПУСТЫМ</span>, то поле будет отображаться на всю ширину. Соответственно, в предыдущем поле (которое выше) нужно отметить &laquo;Clear&raquo;." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
+				<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 			
-				<th>Удалить/Добавить</th>
+				<th width="65px">Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -423,11 +426,11 @@ function woocommerce_lang() {
 				<th>Текст в поле</th>
 				<th width="56px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
 				<th>Класс поля</th>
-				<th  width="65px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
+				<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 				
-				<th>Удалить/Добавить</th>
+				<th>Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</tfoot>
 		<tbody id="the-list" class="myTable">
@@ -437,7 +440,7 @@ function woocommerce_lang() {
 			if( empty($value['public']) && !is_array($checkout_fields["shipping"]) ) $value['public'] = true;
 				?>
 				<tr>
-					<td><input disabled value=<?=$key?> type="text" name="shipping[<?=$key?>][name]" /></td>
+					<td><input  disabled  value=<?=$key?> type="text" name="shipping[<?=$key?>][name]" /></td>
 					<td><input value='<?=$value['label']?>' type="text" name="shipping[<?=$key?>][label]" /></td>
 					<td><input value='<?=$value['placeholder']?>' type="text" name="shipping[<?=$key?>][placeholder]" /></td>
 					<td><input <? if($value['clear']) echo 'checked'?> class="<?=$value['clear']?>" type="checkbox" name="shipping[<?=$key?>][clear]" /></td>
@@ -474,14 +477,14 @@ function woocommerce_lang() {
 		<table class="wp-list-table widefat fixed posts" cellspacing="0">
 		<thead>
 			<tr>
-				<th width="120px">Название</th>
-				<th>Заголовок</th>
-				<th>Текст в поле</th>
-				<th>Класс поля</th>
-				<th>Тип поля</th>
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th width="130px">Название<img class="help_tip" data-tip="Название поля должно быть уни&shy;ка&shy;ль&shy;ным (не должно повторяться)." src="<? bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
+				<th width="130px">Заголовок</th>
+				<th width="130px">Текст в поле</th>
+				<th width="130px">Класс поля</th>
+				<th width="130px">Тип поля</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 				
-				<th>Удалить/Добавить</th>
+				<th width="65px">Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -491,9 +494,9 @@ function woocommerce_lang() {
 				<th>Текст в поле</th>
 				<th>Класс поля</th>
 				<th>Тип поля</th>
-				<th  width="65px">Опуб&shy;ли&shy;ко&shy;вать</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
 				
-				<th>Удалить/Добавить</th>
+				<th>Удалить/До&shy;ба&shy;вить</th>
 			</tr>
 		</tfoot>
 		<tbody id="the-list" class="myTable">
@@ -541,6 +544,10 @@ function woocommerce_lang() {
 		</form>
 		<style type="text/css">
 		#tiptip_content{font-size:11px;color:#fff;padding:4px 8px;background:#a2678c;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;box-shadow:1px 1px 3px rgba(0,0,0,0.1);-webkit-box-shadow:1px 1px 3px rgba(0,0,0,0.1);-moz-box-shadow:1px 1px 3px rgba(0,0,0,0.1);text-align:center}#tiptip_content code{background:#855c76;padding:1px}#tiptip_arrow,#tiptip_arrow_inner{position:absolute;border-color:transparent;border-style:solid;border-width:6px;height:0;width:0}#tiptip_holder.tip_top #tiptip_arrow_inner{margin-top:-7px;margin-left:-6px;border-top-color:#a2678c}#tiptip_holder.tip_bottom #tiptip_arrow_inner{margin-top:-5px;margin-left:-6px;border-bottom-color:#a2678c}#tiptip_holder.tip_right #tiptip_arrow_inner{margin-top:-6px;margin-left:-5px;border-right-color:#a2678c}#tiptip_holder.tip_left #tiptip_arrow_inner{margin-top:-6px;margin-left:-7px;border-left-color:#a2678c}img.help_tip{vertical-align:middle;margin:0 0 0 3px}#tiptip_holder{display:none;position:absolute;top:0;left:0;z-index:99999}#tiptip_holder.tip_top{padding-bottom:5px}#tiptip_holder.tip_bottom{padding-top:5px}#tiptip_holder.tip_right{padding-left:5px}#tiptip_holder.tip_left{padding-right:5px}#tiptip_content{font-size:11px;color:#fff;padding:4px 8px;background:#a2678c;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;box-shadow:1px 1px 3px rgba(0,0,0,0.1);-webkit-box-shadow:1px 1px 3px rgba(0,0,0,0.1);-moz-box-shadow:1px 1px 3px rgba(0,0,0,0.1);text-align:center}#tiptip_content code{background:#855c76;padding:1px}#tiptip_arrow,#tiptip_arrow_inner{position:absolute;border-color:transparent;border-style:solid;border-width:6px;height:0;width:0}#tiptip_holder.tip_top #tiptip_arrow_inner{margin-top:-7px;margin-left:-6px;border-top-color:#a2678c}#tiptip_holder.tip_bottom #tiptip_arrow_inner{margin-top:-5px;margin-left:-6px;border-bottom-color:#a2678c}#tiptip_holder.tip_right #tiptip_arrow_inner{margin-top:-6px;margin-left:-5px;border-right-color:#a2678c}#tiptip_holder.tip_left #tiptip_arrow_inner{margin-top:-6px;margin-left:-7px;border-left-color:#a2678c}
+		input[disabled="disabled"], input[disabled=""] {
+			background:none repeat scroll 0 0 #EAEAEA !important;
+			color:#636060 !important;
+		}
 		</style>
 		<script type="text/javascript">
 		(function($){$.fn.tipTip=function(options){var defaults={activation:"hover",keepAlive:false,maxWidth:"200px",edgeOffset:3,defaultPosition:"bottom",delay:400,fadeIn:200,fadeOut:200,attribute:"title",content:false,enter:function(){},exit:function(){}};var opts=$.extend(defaults,options);if($("#tiptip_holder").length<=0){var tiptip_holder=$('<div id="tiptip_holder" style="max-width:'+opts.maxWidth+';"></div>');var tiptip_content=$('<div id="tiptip_content"></div>');var tiptip_arrow=$('<div id="tiptip_arrow"></div>');$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')))}else{var tiptip_holder=$("#tiptip_holder");var tiptip_content=$("#tiptip_content");var tiptip_arrow=$("#tiptip_arrow")}return this.each(function(){var org_elem=$(this);if(opts.content){var org_title=opts.content}else{var org_title=org_elem.attr(opts.attribute)}if(org_title!=""){if(!opts.content){org_elem.removeAttr(opts.attribute)}var timeout=false;if(opts.activation=="hover"){org_elem.hover(function(){active_tiptip()},function(){if(!opts.keepAlive){deactive_tiptip()}});if(opts.keepAlive){tiptip_holder.hover(function(){},function(){deactive_tiptip()})}}else if(opts.activation=="focus"){org_elem.focus(function(){active_tiptip()}).blur(function(){deactive_tiptip()})}else if(opts.activation=="click"){org_elem.click(function(){active_tiptip();return false}).hover(function(){},function(){if(!opts.keepAlive){deactive_tiptip()}});if(opts.keepAlive){tiptip_holder.hover(function(){},function(){deactive_tiptip()})}}function active_tiptip(){opts.enter.call(this);tiptip_content.html(org_title);tiptip_holder.hide().removeAttr("class").css("margin","0");tiptip_arrow.removeAttr("style");var top=parseInt(org_elem.offset()['top']);var left=parseInt(org_elem.offset()['left']);var org_width=parseInt(org_elem.outerWidth());var org_height=parseInt(org_elem.outerHeight());var tip_w=tiptip_holder.outerWidth();var tip_h=tiptip_holder.outerHeight();var w_compare=Math.round((org_width-tip_w)/2);var h_compare=Math.round((org_height-tip_h)/2);var marg_left=Math.round(left+w_compare);var marg_top=Math.round(top+org_height+opts.edgeOffset);var t_class="";var arrow_top="";var arrow_left=Math.round(tip_w-12)/2;if(opts.defaultPosition=="bottom"){t_class="_bottom"}else if(opts.defaultPosition=="top"){t_class="_top"}else if(opts.defaultPosition=="left"){t_class="_left"}else if(opts.defaultPosition=="right"){t_class="_right"}var right_compare=(w_compare+left)<parseInt($(window).scrollLeft());var left_compare=(tip_w+left)>parseInt($(window).width());if((right_compare&&w_compare<0)||(t_class=="_right"&&!left_compare)||(t_class=="_left"&&left<(tip_w+opts.edgeOffset+5))){t_class="_right";arrow_top=Math.round(tip_h-13)/2;arrow_left=-12;marg_left=Math.round(left+org_width+opts.edgeOffset);marg_top=Math.round(top+h_compare)}else if((left_compare&&w_compare<0)||(t_class=="_left"&&!right_compare)){t_class="_left";arrow_top=Math.round(tip_h-13)/2;arrow_left=Math.round(tip_w);marg_left=Math.round(left-(tip_w+opts.edgeOffset+5));marg_top=Math.round(top+h_compare)}var top_compare=(top+org_height+opts.edgeOffset+tip_h+8)>parseInt($(window).height()+$(window).scrollTop());var bottom_compare=((top+org_height)-(opts.edgeOffset+tip_h+8))<0;if(top_compare||(t_class=="_bottom"&&top_compare)||(t_class=="_top"&&!bottom_compare)){if(t_class=="_top"||t_class=="_bottom"){t_class="_top"}else{t_class=t_class+"_top"}arrow_top=tip_h;marg_top=Math.round(top-(tip_h+5+opts.edgeOffset))}else if(bottom_compare|(t_class=="_top"&&bottom_compare)||(t_class=="_bottom"&&!top_compare)){if(t_class=="_top"||t_class=="_bottom"){t_class="_bottom"}else{t_class=t_class+"_bottom"}arrow_top=-12;marg_top=Math.round(top+org_height+opts.edgeOffset)}if(t_class=="_right_top"||t_class=="_left_top"){marg_top=marg_top+5}else if(t_class=="_right_bottom"||t_class=="_left_bottom"){marg_top=marg_top-5}if(t_class=="_left_top"||t_class=="_left_bottom"){marg_left=marg_left+5}tiptip_arrow.css({"margin-left":arrow_left+"px","margin-top":arrow_top+"px"});tiptip_holder.css({"margin-left":marg_left+"px","margin-top":marg_top+"px"}).attr("class","tip"+t_class);if(timeout){clearTimeout(timeout)}timeout=setTimeout(function(){tiptip_holder.stop(true,true).fadeIn(opts.fadeIn)},opts.delay)}function deactive_tiptip(){opts.exit.call(this);if(timeout){clearTimeout(timeout)}tiptip_holder.fadeOut(opts.fadeOut)}}})}})(jQuery);
