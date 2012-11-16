@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce LITE
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce LITE - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.2.2
+Version: 1.2.3
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -58,12 +58,284 @@ function woocommerce_lang() {
 	add_action('admin_menu', 'woocommerce_saphali_admin_menu', 9);
 	load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 	if($_GET['page'] != 'woocommerce_saphali' && $_GET['tab'] !=1) {
 		// Hook in
 		add_filter( 'woocommerce_checkout_fields' , 'saphali_custom_override_checkout_fields' );
 		add_filter( 'woocommerce_billing_fields',  'saphali_custom_billing_fields', 10, 1 );
 		add_filter( 'woocommerce_shipping_fields',  'saphali_custom_shipping_fields', 10, 1 );
+		add_action('admin_init','woocommerce_customer_meta_fields_action', 20);
+		add_action( 'personal_options_update', 'woocommerce_save_customer_meta_fields_saphali' );
+		add_action( 'edit_user_profile_update', 'woocommerce_save_customer_meta_fields_saphali' );
+		add_action( 'woocommerce_admin_order_data_after_billing_address', 'woocommerce_admin_order_data_after_billing_address_s' );
+		add_action( 'woocommerce_admin_order_data_after_shipping_address', 'woocommerce_admin_order_data_after_shipping_address_s' );
+		add_action( 'woocommerce_admin_order_data_after_order_details', 'woocommerce_admin_order_data_after_order_details_s' );
+		
 	}
+	
+	/*Начало*/
+	function woocommerce_customer_meta_fields_action() {
+		add_action( 'show_user_profile', 'woocommerce_customer_meta_fields_s');
+		add_action( 'edit_user_profile', 'woocommerce_customer_meta_fields_s' );
+	}
+	function woocommerce_customer_meta_fields_s( $user ) {
+	if ( ! current_user_can( 'manage_woocommerce' ) )
+		return;
+
+	$show_fields = woocommerce_get_customer_meta_fields_saphali();
+	if(!empty($show_fields["billing"])) {
+		 $show_field["billing"]['title'] = __('Customer Billing Address', 'woocommerce');
+		 $show_field["billing"]['fields'] = $show_fields["billing"];
+	}
+	if(!empty($show_fields["shipping"])) {
+		 $show_field["shipping"]['title'] = __('Customer Shipping Address', 'woocommerce');
+		 $show_field["shipping"]['fields'] = $show_fields["shipping"];
+	}
+	if(is_array($show_field)) {
+	$count = 0; echo '<fieldset>';
+	foreach( $show_field as $fieldset ) :
+	if(!$count) echo '<h2>Дополнительные поля</h2>'; 
+	$count++;
+		?>
+		<h3><?php echo $fieldset['title']; ?></h3>
+		<table class="form-table">
+			<?php
+			foreach( $fieldset['fields'] as $key => $field ) :
+				?>
+				<tr>
+					<th><label for="<?php echo $key; ?>"><?php echo $field['label']; ?></label></th>
+					<td>
+						<input type="text" name="<?php echo $key; ?>" id="<?php echo $key; ?>" value="<?php echo esc_attr( get_user_meta( $user->ID, $key, true ) ); ?>" class="regular-text" /><br/>
+						<span class="description"><?php echo $field['description']; ?></span>
+					</td>
+				</tr>
+				<?php
+			endforeach;
+			?>
+		</table>
+		<?php
+	endforeach; echo '</fieldset>';
+	}
+}
+	function woocommerce_get_customer_meta_fields_saph_ed() {
+	$show_fields = apply_filters('woocommerce_customer_meta_fields', array(
+		'billing' => array(
+			'title' => __('Customer Billing Address', 'woocommerce'),
+			'fields' => array(
+				'billing_first_name' => array(
+						'label' => __('First name', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_last_name' => array(
+						'label' => __('Last name', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_company' => array(
+						'label' => __('Company', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_address_1' => array(
+						'label' => __('Address 1', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_address_2' => array(
+						'label' => __('Address 2', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_city' => array(
+						'label' => __('City', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_postcode' => array(
+						'label' => __('Postcode', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_state' => array(
+						'label' => __('State/County', 'woocommerce'),
+						'description' => __('Country or state code', 'woocommerce'),
+					),
+				'billing_country' => array(
+						'label' => __('Country', 'woocommerce'),
+						'description' => __('2 letter Country code', 'woocommerce'),
+					),
+				'billing_phone' => array(
+						'label' => __('Telephone', 'woocommerce'),
+						'description' => ''
+					),
+				'billing_email' => array(
+						'label' => __('Email', 'woocommerce'),
+						'description' => ''
+					)
+			)
+		),
+		'shipping' => array(
+			'title' => __('Customer Shipping Address', 'woocommerce'),
+			'fields' => array(
+				'shipping_first_name' => array(
+						'label' => __('First name', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_last_name' => array(
+						'label' => __('Last name', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_company' => array(
+						'label' => __('Company', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_address_1' => array(
+						'label' => __('Address 1', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_address_2' => array(
+						'label' => __('Address 2', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_city' => array(
+						'label' => __('City', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_postcode' => array(
+						'label' => __('Postcode', 'woocommerce'),
+						'description' => ''
+					),
+				'shipping_state' => array(
+						'label' => __('State/County', 'woocommerce'),
+						'description' => __('State/County or state code', 'woocommerce')
+					),
+				'shipping_country' => array(
+						'label' => __('Country', 'woocommerce'),
+						'description' => __('2 letter Country code', 'woocommerce')
+					)
+			)
+		)
+	));
+	return $show_fields;
+	}
+	function woocommerce_save_customer_meta_fields_saphali( $user_id ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) )
+			return $columns;
+
+		$show_fields = woocommerce_get_customer_meta_fields_saphali();
+		if(!empty($show_fields["billing"])) {
+			 $save_fields["billing"]['title'] = __('Customer Billing Address', 'woocommerce');
+			 $save_fields["billing"]['fields'] = $show_fields["billing"];
+		}
+		if(!empty($show_fields["shipping"])) {
+			 $save_fields["shipping"]['title'] = __('Customer Shipping Address', 'woocommerce');
+			 $save_fields["shipping"]['fields'] = $show_fields["shipping"];
+		}
+		/* if(!empty($show_fields["order"])) {
+			 $save_fields["order"]['title'] = __('Дополнительные поля', 'woocommerce');
+			 $save_fields["order"]['fields'] = $show_fields["order"];
+		} */
+		foreach( $save_fields as $fieldset )
+			foreach( $fieldset['fields'] as $key => $field )
+				if ( isset( $_POST[ $key ] ) )
+					update_user_meta( $user_id, $key, trim( esc_attr( $_POST[ $key ] ) ) );
+	}
+	function woocommerce_get_customer_meta_fields_saphali() {
+		$fieldss = get_option('woocommerce_saphali_filds_filters');
+		$show_fields = woocommerce_get_customer_meta_fields_saph_ed();
+		if(is_array($fieldss)) {
+			if(is_array($fieldss["billing"])) {
+			$billing['fields'] = array();
+			foreach($fieldss["billing"] as $key => $value) {
+				if(isset($show_fields["billing"]['fields'][$key])) continue;
+				$billing['fields'] = $billing['fields'] +
+					array( $key => array(
+						'label' => $value["label"],
+						'show' => $value["public"],
+						'description' => ''
+						)
+					);
+			}
+			}
+			if(is_array($fieldss["shipping"])) {
+			$shipping['fields'] = array();
+			foreach($fieldss["shipping"] as $key => $value) {
+			if(isset($show_fields["shipping"]['fields'][$key])) continue;
+				$shipping['fields'] = $shipping['fields'] +
+					array( $key => array(
+						'label' => $value["label"],
+						'show' => $value["public"],
+						'description' => ''
+						)
+					);
+			}
+			}
+			if(is_array($fieldss["order"])) {
+			$orders['fields'] = array();
+			foreach($fieldss["order"] as $key => $value) {
+				if(isset($show_fields["order"]['fields'][$key])) continue;
+				$orders['fields'] = $orders['fields'] +
+					array( $key => array(
+						'label' => $value["label"],
+						'show' => $value["public"],
+						'description' => ''
+						)
+					);
+			}
+			}
+		}
+		if(!is_array($show_fields['billing']['fields'])) { $show_fields['billing']['fields'] = array();  }
+			$show_fields['billing']['title'] = $show_fields['billing']['title'];
+		  $show_fields['billing'] =  /* $show_fields['billing']['fields'] + */ $billing['fields'];
+		
+		if(!is_array($show_fields['shipping']['fields'])) { $show_fields['shipping']['fields'] = array();  }
+		$show_fields['shipping']['title'] = $show_fields['shipping']['title'];
+		 $show_fields['shipping'] = /* $show_fields['shipping']['fields'] + */ $shipping['fields'];
+		
+		if(!is_array($show_fields['order']['fields'])) { $show_fields['order']['fields'] = array(); $show_fields['order']['title'] = 'Дополнительные поля'; }
+		 $show_fields['order'] =  /* $show_fields['order']['fields']  + */ $orders['fields'];
+		
+		return $show_fields;
+	}
+	function woocommerce_admin_order_data_after_billing_address_s($order) {
+	$billing_data = woocommerce_get_customer_meta_fields_saphali();
+	echo '<div class="address">';
+		if(is_array($billing_data["billing"])) {
+		foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+
+			 $field_name = '_'.$key;
+
+			if ( $order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			
+		endforeach;
+		}
+		echo '</div>';
+	}
+	function woocommerce_admin_order_data_after_shipping_address_s($order) {
+	$billing_data = woocommerce_get_customer_meta_fields_saphali();
+	echo '<div class="address">';
+		if(is_array($billing_data["shipping"])) {
+		foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+
+			 $field_name = '_'.$key;
+
+			if ( $order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			
+		endforeach;
+		}
+		echo '</div>';
+	}
+	function woocommerce_admin_order_data_after_order_details_s($order) {
+	$billing_data = woocommerce_get_customer_meta_fields_saphali();
+	echo '<div class="address">';
+		if(is_array($billing_data["order"])) {
+		foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+
+			 $field_name = '_'.$key;
+
+			if ( $order->order_custom_fields[$field_name][0] ) 
+
+			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label>' . $order->order_custom_fields[$field_name][0].'</div>';
+			
+		endforeach;
+		}
+		echo '</div>';
+	}
+	/*Конец*/
 	// Our hooked in function - $fields is passed via the filter!
 	function saphali_custom_override_checkout_fields( $fields ) {
 		
@@ -130,6 +402,7 @@ function woocommerce_lang() {
 			if($_POST){
 				if($_POST["reset"] != 'All') {
 					// Управление новыми полями
+
 					if(is_array($_POST["billing"]["new_fild"])) {
 						foreach($_POST["billing"]["new_fild"] as $k_nf => $v_nf) {
 							if($k_nf == 'name')
@@ -146,6 +419,7 @@ function woocommerce_lang() {
 							}
 						}
 						unset($_POST["billing"]["new_fild"]);
+						unset($new_fild);
 					}
 					if(is_array($_POST["shipping"]["new_fild"])) {
 						foreach($_POST["shipping"]["new_fild"] as $k_nf => $v_nf) {
@@ -163,6 +437,7 @@ function woocommerce_lang() {
 							}
 						}
 						unset($_POST["shipping"]["new_fild"]);
+						unset($new_fild);
 					}
 					if(is_array($_POST["order"]["new_fild"])) {
 						foreach($_POST["order"]["new_fild"] as $k_nf => $v_nf) {
@@ -434,7 +709,7 @@ function woocommerce_lang() {
 			</tr>
 		</tfoot>
 		<tbody id="the-list" class="myTable">
-			<? $count = 0;
+			<? $count = 0; 
 			if(is_array($checkout_fields["shipping"])) $f->checkout_fields["shipping"] = $checkout_fields["shipping"];
 			foreach($f->checkout_fields["shipping"] as $key => $value) {	
 			if( empty($value['public']) && !is_array($checkout_fields["shipping"]) ) $value['public'] = true;
@@ -559,19 +834,19 @@ function woocommerce_lang() {
 		});
 		jQuery('.button#billing').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="billing_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
 			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="billing" value="Добавить +"/></td></tr>');
 		});
 		jQuery('.button#shipping').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="shipping[new_fild][name][]" /></td><td><input value="" type="text" name="shipping[new_fild][label][]" /></td><td><input value="" type="text" name="shipping[new_fild][placeholder][]" /></td><td><input type="checkbox" name="shipping[new_fild][clear][]" /></td><td><input value="" type="text" name="shipping[new_fild][class][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][required][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="shipping[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="shipping_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="shipping[new_fild][name][]" /></td><td><input value="" type="text" name="shipping[new_fild][label][]" /></td><td><input value="" type="text" name="shipping[new_fild][placeholder][]" /></td><td><input type="checkbox" name="shipping[new_fild][clear][]" /></td><td><input value="" type="text" name="shipping[new_fild][class][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][required][]" /></td><td><input checked type="checkbox" name="shipping[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="shipping[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
 			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="shipping" value="Добавить +"/></td></tr>');
 		});
 		jQuery('.button#order').live('click',function() {
 			var obj = jQuery(this).parent().parent();
-			obj.html('<td><input value="new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="order[new_fild][name][]" /></td><td><input value="" type="text" name="order[new_fild][label][]" /></td><td><input value="" type="text" name="order[new_fild][placeholder][]" /></td><td><input value="" type="text" name="order[new_fild][class][]" /></td><td><input checked type="text" name="order[new_fild][type][]" /></td><td><input checked type="checkbox" name="order[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="order[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="order_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="order[new_fild][name][]" /></td><td><input value="" type="text" name="order[new_fild][label][]" /></td><td><input value="" type="text" name="order[new_fild][placeholder][]" /></td><td><input value="" type="text" name="order[new_fild][class][]" /></td><td><input checked type="text" name="order[new_fild][type][]" /></td><td><input checked type="checkbox" name="order[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="order[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 			obj.removeClass('nodrop nodrag');
 			obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="order" value="Добавить +"/></td></tr>');
 		});

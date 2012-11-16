@@ -6,8 +6,8 @@ Donate link: http://saphali.com/
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: 3.3 or higher
 Tested up to: 3.4.2
-Stable tag: 1.2.2
-Version: 1.2.2
+Stable tag: 1.2.3
+Version: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,10 @@ Saphali - set of additions to Woocommerce.
 3. Управление количеством колонок в каталоге товаров и рубриках.
 
 == Changelog ==
+
+= 1.2.3 =
+* На странице управления дополнительными полями и полями доставки исправлена ошибка добавления полей.
+* Добавлен вывод дополнительных полей на странице профиля пользователя, а также на странице редактирования заказа.
 
 = 1.2.2 =
 * На странице управления дополнительными полями и полями доставки в заголовке к атрибутам "Название" и "Класс поля" добавлена подсказка.
