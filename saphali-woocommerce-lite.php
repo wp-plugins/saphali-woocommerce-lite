@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce LITE
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce LITE - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.2.3
+Version: 1.2.3.1
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -31,35 +31,38 @@ Author URI: http://saphali.com/
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
-function add_inr_currency( $currencies ) {
-    $currencies['UAH'] = __( 'Ukrainian hryvnia ( grn.)', 'themewoocommerce' );
-    $currencies['RUR'] = __( 'Russian ruble ( rub.)', 'themewoocommerce' );
-    $currencies['BYR'] = __( 'Belarusian ruble ( Br.)', 'themewoocommerce' );
-    return $currencies;
-}
-
-function add_inr_currency_symbol( $symbol ) {
-	$currency = get_option( 'woocommerce_currency' );
-	switch( $currency ) {
-		case 'UAH': $symbol = 'грн.'; break;
-		case 'RUB': $symbol = 'руб.'; break;
-		case 'RUR': $symbol = 'руб.'; break;
-		case 'BYR': $symbol = 'руб.'; break;
+if ( ! function_exists( 'add_inr_currency' ) ) { 
+	function add_inr_currency( $currencies ) {
+		$currencies['UAH'] = __( 'Ukrainian hryvnia ( grn.)', 'themewoocommerce' );
+		$currencies['RUR'] = __( 'Russian ruble ( rub.)', 'themewoocommerce' );
+		$currencies['BYR'] = __( 'Belarusian ruble ( Br.)', 'themewoocommerce' );
+		return $currencies;
 	}
-	return $symbol;
 }
-
+if ( ! function_exists( 'add_inr_currency_symbol' ) ) {
+	function add_inr_currency_symbol( $symbol ) {
+		$currency = get_option( 'woocommerce_currency' );
+		switch( $currency ) {
+			case 'UAH': $symbol = 'грн.'; break;
+			case 'RUB': $symbol = 'руб.'; break;
+			case 'RUR': $symbol = 'руб.'; break;
+			case 'BYR': $symbol = 'руб.'; break;
+		}
+		return $symbol;
+	}
+}
 
 //END
 
-add_action('plugins_loaded', 'woocommerce_lang', 0);
-function woocommerce_lang() {
+add_action('plugins_loaded', 'woocommerce_lang_s_l', 0);
+if ( ! function_exists( 'woocommerce_lang_s_l' ) ) { 
+function woocommerce_lang_s_l() {
 
-	add_action('admin_menu', 'woocommerce_saphali_admin_menu', 9);
+	add_action('admin_menu', 'woocommerce_saphali_admin_menu_s_l', 9);
 	load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
-	if($_GET['page'] != 'woocommerce_saphali' && $_GET['tab'] !=1) {
+	if($_GET['page'] != 'woocommerce_saphali_s_l' && $_GET['tab'] !=1) {
 		// Hook in
 		add_filter( 'woocommerce_checkout_fields' , 'saphali_custom_override_checkout_fields' );
 		add_filter( 'woocommerce_billing_fields',  'saphali_custom_billing_fields', 10, 1 );
@@ -117,6 +120,7 @@ function woocommerce_lang() {
 	endforeach; echo '</fieldset>';
 	}
 }
+	
 	function woocommerce_get_customer_meta_fields_saph_ed() {
 	$show_fields = apply_filters('woocommerce_customer_meta_fields', array(
 		'billing' => array(
@@ -366,12 +370,12 @@ function woocommerce_lang() {
 	add_action( 'admin_enqueue_scripts', 'admin_enqueue_scripts_page_saphali' );
 	
 	function admin_enqueue_scripts_page_saphali() {
-	if($_GET['page'] == 'woocommerce_saphali' && $_GET['tab'] ==1 )
+	if($_GET['page'] == 'woocommerce_saphali_s_l' && $_GET['tab'] ==1 )
 		wp_enqueue_script( 'tablednd', plugins_url('/js/jquery.tablednd.0.5.js', __FILE__) );
 	}
 	
 	
-	function woocommerce_saphali_page () {
+	function woocommerce_saphali_page_s_l () {
 	
 	 
 	?>
@@ -381,9 +385,9 @@ function woocommerce_lang() {
 		</h2>
 		<ul class="subsubsub">
 			
-			 <li><a href="admin.php?page=woocommerce_saphali" <? if($_GET["tab"] == '') echo 'class="current"';?>><span color="red">Дополнительная информация</span></a> | </li>
-			 <li><a href="admin.php?page=woocommerce_saphali&tab=1" <? if($_GET["tab"] == 1) echo 'class="current"';?>>Управление полями</a> | </li>
-			 <li><a href="admin.php?page=woocommerce_saphali&tab=2" <? if($_GET["tab"] == 2) echo 'class="current"';?>>Число колонок в каталоге</a></li>
+			 <li><a href="admin.php?page=woocommerce_saphali_s_l" <? if($_GET["tab"] == '') echo 'class="current"';?>><span color="red">Дополнительная информация</span></a> | </li>
+			 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=1" <? if($_GET["tab"] == 1) echo 'class="current"';?>>Управление полями</a> | </li>
+			 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=2" <? if($_GET["tab"] == 2) echo 'class="current"';?>>Число колонок в каталоге</a></li>
 			
 		</ul>
 		<? if($_GET["tab"] == '') {?>
@@ -883,8 +887,11 @@ function woocommerce_lang() {
 	<?
 	}
 }
-function woocommerce_saphali_admin_menu() {
-	add_submenu_page('woocommerce',  __('Настройки Saphali WC Lite', 'woocommerce'), __('Saphali WC Lite', 'woocommerce') , 'manage_woocommerce', 'woocommerce_saphali', 'woocommerce_saphali_page');
+}
+if ( ! function_exists( 'woocommerce_saphali_admin_menu_s_l' ) ) {
+	function woocommerce_saphali_admin_menu_s_l() {
+		add_submenu_page('woocommerce',  __('Настройки Saphali WC Lite', 'woocommerce'), __('Saphali WC Lite', 'woocommerce') , 'manage_woocommerce', 'woocommerce_saphali_s_l', 'woocommerce_saphali_page_s_l');
+	}
 }
 $column_count_saphali = get_option('column_count_saphali');
 if(!empty($column_count_saphali)) {
