@@ -1,9 +1,9 @@
 <?php 
 /*
-Plugin Name: Saphali Woocommerce LITE
+Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
-Description: Saphali Woocommerce LITE - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.2.3.1
+Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
+Version: 1.2.3.2
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -31,7 +31,7 @@ Author URI: http://saphali.com/
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
-if ( ! function_exists( 'add_inr_currency' ) ) { 
+if ( ! function_exists( 'add_inr_currency' ) ) {
 	function add_inr_currency( $currencies ) {
 		$currencies['UAH'] = __( 'Ukrainian hryvnia ( grn.)', 'themewoocommerce' );
 		$currencies['RUR'] = __( 'Russian ruble ( rub.)', 'themewoocommerce' );
@@ -62,7 +62,7 @@ function woocommerce_lang_s_l() {
 	load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
-	if($_GET['page'] != 'woocommerce_saphali_s_l' && $_GET['tab'] !=1) {
+	if(@$_GET['page'] != 'woocommerce_saphali_s_l' && @$_GET['tab'] !=1) {
 		// Hook in
 		add_filter( 'woocommerce_checkout_fields' , 'saphali_custom_override_checkout_fields' );
 		add_filter( 'woocommerce_billing_fields',  'saphali_custom_billing_fields', 10, 1 );

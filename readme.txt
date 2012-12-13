@@ -1,13 +1,13 @@
 === Saphali Woocommerce LITE ===
 Contributors: Saphali
-Plugin Name: Saphali Woocommerce LITE
+Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Donate link: http://saphali.com/
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: 3.3 or higher
-Tested up to: 3.4.2
-Stable tag: 1.2.3.1
-Version: 1.2.3.1
+Tested up to: 3.5
+Stable tag: 1.2.3.2
+Version: 1.2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,9 @@ Saphali - set of additions to Woocommerce.
 3. Управление количеством колонок в каталоге товаров и рубриках.
 
 == Changelog ==
+
+= 1.2.3.2 =
+* Расширения локализации под woocommerce
 
 = 1.2.3.1 =
 * Ошибка загрузки в repository
@@ -84,6 +87,9 @@ Saphali - set of additions to Woocommerce.
 Проверить этот плагин в работе вы можете на нашем сайте http://saphali.com/ - на странице "Демо Интернет-магазин".
 
 == Upgrade Notice ==
+
+= 1.2.3.2 =
+* Расширения локализации под woocommerce
 
 = 1.2.3 =
 * На странице управления дополнительными полями и полями доставки исправлена ошибка добавления полей.

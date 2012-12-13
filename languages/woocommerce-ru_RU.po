@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-10-23 10:15+0200\n"
+"PO-Revision-Date: 2012-12-12 19:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 1 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 2 : 3 ;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_x;_n;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
@@ -41,6 +42,11 @@ msgstr "Артикул:"
 
 msgid "SKU"
 msgstr "Артикул"
+
+# @ woocommerce
+#: classes/class-wc-countries.php:45
+msgid "Belarus"
+msgstr "Беларусь"
 
 msgid "Product SKU:"
 msgstr "Артикул товара:"
@@ -562,7 +568,7 @@ msgstr ""
 # @ woocommerce
 #: templates/checkout/form-shipping.php:25
 msgid "Ship to billing address?"
-msgstr "Отправлять на платежный адрес?"
+msgstr "Отправлять на контактные данные?"
 
 # @ woocommerce
 #: classes/class-wc-cart.php:704 classes/class-wc-cart.php:712
@@ -590,3 +596,91 @@ msgstr "Заказ  %s, который был совершен %s, имеет с
 #: templates/order/tracking.php:12
 msgid "ago"
 msgstr "тому назад"
+
+msgid "Product"
+msgid_plural "Products"
+msgstr[0] "Товаров"
+msgstr[1] "Товар"
+msgstr[2] "Товара"
+msgstr[3] "Товары"
+
+msgid ""
+"Order <mark class=\"order-number\">%s</mark> made on <mark class=\"order-date"
+"\">%s</mark>"
+msgstr ""
+"Заказ <mark class=\"order-number\">%s</mark> датой на <mark class=\"order-"
+"date\">%s</mark>"
+
+msgid "Order status: <mark class=\"order-status\">%s</mark>"
+msgstr "Статус заказа: <mark class=\"order-status\">%s</mark>"
+
+# @ woocommerce
+#: admin/woocommerce-admin-users.php:102
+msgid "Customer Billing Address"
+msgstr "Контактные данные"
+
+# @ woocommerce
+#: admin/woocommerce-admin-users.php:102
+msgid "Phone"
+msgstr "Телефон"
+
+# @ woocommerce
+#: classes/class-wc-order.php:486
+#, php-format
+msgid "&nbsp;<small>%svia %s</small>"
+msgstr "&nbsp;<small>%sчерез %s</small>"
+
+# @ woocommerce
+#: admin/woocommerce-admin-users.php:18 templates/checkout/form-billing.php:14
+#: templates/myaccount/form-edit-address.php:21
+#: templates/myaccount/my-address.php:20 templates/order/order-details.php:102
+msgid "Billing Address"
+msgstr "Контактные данные"
+
+msgid "Sorry, this product cannot be purchased."
+msgstr "К сожалению, этот продукт не может быть куплен."
+
+# @ woocommerce
+#: admin/settings/settings-init.php:217
+msgid "Enable the \"Demo Store\" notice on your site"
+msgstr "Включить уведомление \"Демонстрационный магазин\" на вашем сайте"
+
+# @ woocommerce
+#: woocommerce-template.php:170
+msgid ""
+"This is a demo store for testing purposes &mdash; no orders shall be "
+"fulfilled."
+msgstr ""
+"Это демонстрационный магазин для тестирования &mdash; заказы не будут "
+"исполнены."
+
+# @ woocommerce
+#: woocommerce-template.php:170
+msgid "Store Notice Text"
+msgstr "Текст уведомления"
+
+# @ woocommerce
+#: woocommerce-template.php:170
+msgid "Sort Products"
+msgstr "Сортировать продукты"
+
+# @ woocommerce
+#: woocommerce-template.php:170
+msgid "Un-force HTTPS when leaving the checkout"
+msgstr "Не использовать HTTPS уходя со страницы заказа"
+
+# @ woocommerce
+#: admin/post-types/shop_coupon.php:22
+#: admin/post-types/writepanels/writepanel-coupon_data.php:35
+msgid "Coupon amount"
+msgstr "Значение скидки"
+
+# @ woocommerce
+#: admin/post-types/writepanels/writepanel-coupon_data.php:35
+msgid "Enter an amount e.g. 2.99"
+msgstr "Введите значение, например, 2.99"
+
+# @ woocommerce
+#: admin/settings/settings-init.php:364
+msgid "Terms page ID"
+msgstr "Страница правил и условий"
