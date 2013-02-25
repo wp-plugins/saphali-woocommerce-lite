@@ -1,4 +1,4 @@
-<? 
+<?
 if(isset($_POST['column_count_saphali'])) {
 	if(empty($_POST["clear"])) {
 			if(!empty($_POST["column_count_saphali"])) {
@@ -9,7 +9,7 @@ if(isset($_POST['column_count_saphali'])) {
 
 ?>
 <form action="" method="POST">
-Количество колонок: <input  value='<?=get_option('column_count_saphali'); ?>' type="text" name="column_count_saphali" />
+Количество колонок: <input  value='<?php echo get_option('column_count_saphali'); ?>' type="text" name="column_count_saphali" />
 <div class='clear'></div>
 <input type="submit" class="button alignleft" value="Сохранить"/>
 </form> 
