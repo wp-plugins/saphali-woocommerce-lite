@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-24 15:04+0200\n"
+"PO-Revision-Date: 2013-03-25 20:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3355,12 +3355,12 @@ msgstr "Изменить на:"
 # @ woocommerce
 #: admin/post-types/product.php:794 admin/post-types/product.php:818
 msgid "Increase by (fixed amount or %):"
-msgstr "Увеличение на (фиксированною сумму или %):"
+msgstr "Увеличение на (фиксированная сумма или %):"
 
 # @ woocommerce
 #: admin/post-types/product.php:795 admin/post-types/product.php:819
 msgid "Decrease by (fixed amount or %):"
-msgstr "Снижение на (фиксированную сумму или %)"
+msgstr "Снижение на (фиксированная сумма или %)"
 
 # @ woocommerce
 #: admin/post-types/product.php:805 admin/post-types/product.php:830
