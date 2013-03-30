@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-25 20:05+0200\n"
+"PO-Revision-Date: 2013-03-30 16:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,12 @@ msgstr "Артикул:"
 
 msgid "SKU"
 msgstr "Артикул"
+
+msgid "Download file%s"
+msgstr "Загрузить%s"
+
+msgid "Billing & Shipping"
+msgstr "Платежные данные и доставка"
 
 # @ woocommerce
 #: classes/class-wc-countries.php:45
@@ -1017,6 +1023,9 @@ msgstr "Включить уведомления о «низком наличии
 #: classes/abstracts/abstract-wc-email.php:427
 #: classes/emails/class-wc-email-customer-invoice.php:144
 msgid "Email subject"
+msgstr "Тема письма"
+
+msgid "Subject"
 msgstr "Тема письма"
 
 #
@@ -3800,7 +3809,7 @@ msgstr "Применить до налога"
 #: admin/post-types/writepanels/writepanel-coupon_data.php:57
 msgid ""
 "Check this box if the coupon should be applied before calculating cart tax."
-msgstr "Отметить если купон должен быть подсчитан в корзине до налога"
+msgstr "Отметить, если купон должен быть подсчитан в корзине до налога"
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-coupon_data.php:60
@@ -4347,8 +4356,8 @@ msgstr "Переключить на &quot;Включено&quot;"
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product-type-variable.php:78
-msgid "Переключить на &quot;Загружаемый&quot;"
-msgstr ""
+msgid "Toggle &quot;Downloadable&quot;"
+msgstr "Переключить на &quot;Загружаемый&quot;"
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product-type-variable.php:79
@@ -4404,7 +4413,7 @@ msgstr "Выбор по умолчанию:"
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product-type-variable.php:210
 msgid "No default"
-msgstr "Не по умолчанию"
+msgstr "Нет варианта по умолчанию"
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product-type-variable.php:293
@@ -5019,18 +5028,19 @@ msgstr "Аккаунт клиента"
 # @ woocommerce
 #: admin/settings/settings-init.php:176
 msgid "Prevent customers from accessing WordPress admin"
-msgstr "Предотвращение доступа клиента к управлению админ панелью WordPress"
+msgstr "Запретить клиентам доступ в панель администрирования WordPress"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:184
 msgid "Clear cart when logging out"
-msgstr "Очистить корзину при выходе"
+msgstr "Очищать корзину при выходе"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:192
 msgid "Allow customers to repurchase orders from their account page"
 msgstr ""
-"Позволить клиентам покупать обратно заказы от своей страницы учетной записи"
+"Позволить клиентам совершать повторные заказы со страницы своей учетной "
+"записи"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:201
@@ -5424,7 +5434,7 @@ msgid ""
 "methods may require this)"
 msgstr ""
 "Включить для указания поля <strong>размеров</strong> (ДлинаxШиринаxВысота) "
-"для продуктов (некоторые методы доставки может требовать этого)"
+"для продуктов (некоторые методы доставки могут требовать этого)"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:546
@@ -5977,13 +5987,13 @@ msgid ""
 "The base colour for WooCommerce email templates. Default <code>#557da1</"
 "code>."
 msgstr ""
-"Основной цвет для почтовых шаблонов WooCommerce. По умолчанию  "
-"<code>#557da1</code>."
+"Основной цвет в шаблонах писем WooCommerce. По умолчанию  <code>#557da1</"
+"code>."
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1077
 msgid "Background Colour"
-msgstr "Фоновый цвет"
+msgstr "Цвет фона"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1078
@@ -5991,28 +6001,27 @@ msgid ""
 "The background colour for WooCommerce email templates. Default "
 "<code>#f5f5f5</code>."
 msgstr ""
-"Фоновый цвет для почтовых шаблонов WooCommerce. По умолчанию   "
-"<code>#f5f5f5</code>."
+"Цвет фона в шаблонах писем WooCommerce. По умолчанию   <code>#f5f5f5</code>."
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1086
 msgid "Email Body Background Colour"
-msgstr "Почтовый фоновый цвет"
+msgstr "Цвет фона в теле письма"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1087
 msgid "The main body background colour. Default <code>#fdfdfd</code>."
-msgstr "Фоновый цвет основной части. По умолчанию <code>#fdfdfd</code>."
+msgstr "Цвет фона в теле письма. По умолчанию <code>#fdfdfd</code>."
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1095
 msgid "Email Body Text Colour"
-msgstr "Почтовый цвет основного текста"
+msgstr "Цвет текста в теле письма"
 
 # @ woocommerce
 #: admin/settings/settings-init.php:1096
 msgid "The main body text colour. Default <code>#505050</code>."
-msgstr "Текстовый цвет основной части. По умолчанию <code>#505050</code>."
+msgstr "Цвет текста в теле письма. По умолчанию <code>#505050</code>."
 
 # @ woocommerce
 # @ default
@@ -6965,7 +6974,8 @@ msgid ""
 "will use default instead."
 msgstr ""
 "Введите произвольную основу для использования. Основа <strong> должна </"
-"strong> быть установлена или будет использовать по умолчанию WordPress."
+"strong> быть установлена или будет использовать по умолчанию настройки "
+"WordPress."
 
 # @ woocommerce
 #: admin/woocommerce-admin-init.php:816
@@ -7830,8 +7840,9 @@ msgid ""
 msgstr ""
 "Управление товарными категориями вашего магазина осуществляется здесь. Для "
 "изменения порядка организации категорий в публичной части сайта их можно "
-"свободно перетаскивать. Просмотра полного списка категорий осуществляется "
-"при нажатии на ссылку вверху страницы \"screen options\""
+"свободно перетаскивать. Просмотр элементов, которые можно показать в списке "
+"категорий осуществляется при нажатии на ссылку вверху страницы \"Настройки "
+"экрана\""
 
 # @ woocommerce
 #: admin/woocommerce-admin-taxonomies.php:237
