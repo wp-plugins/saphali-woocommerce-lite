@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-30 16:54+0200\n"
+"PO-Revision-Date: 2013-03-30 17:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2059,18 +2059,19 @@ msgstr ""
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-completed-order.php:28
 msgid "Your {blogname} order from {order_date} is complete"
-msgstr "Ваш {blogname} заказ от {order_date} выполнен"
+msgstr "Ваш заказ датой на {order_date} выполнен"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-completed-order.php:38
 msgid ""
 "Your {blogname} order from {order_date} is complete - download your files"
-msgstr "Ваш {blogname} заказ от {order_date} выполнен - скачайте ваши файлы"
+msgstr ""
+"{blogname}. Ваш заказ датой на {order_date} выполнен - скачайте ваши файлы"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-invoice.php:33
 msgid "Invoice for order {order_number} from {order_date}"
-msgstr "Счет для заказа {order_number} от {order_date}"
+msgstr "Счет для заказа {order_number} датой на {order_date}"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-invoice.php:34
@@ -2080,7 +2081,7 @@ msgstr "Счет на заказ {order_number}"
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-invoice.php:36
 msgid "Your {blogname} order from {order_date}"
-msgstr "Ваш {blogname} заказ от {order_date}"
+msgstr "{blogname}. Ваш заказ датой на {order_date}"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-invoice.php:37
@@ -2115,13 +2116,13 @@ msgstr "Добро пожаловать на {blogname}"
 #: classes/emails/class-wc-email-customer-note.php:30
 msgid "Customer note emails are sent when you add a note to an order."
 msgstr ""
-"Посылать клиенту на электронную почту примечание, когда вы добавили "
-"примечание к заказу."
+"Посылать клиенту на электронную почту примечание, когда вы добавляете его к "
+"заказу."
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-note.php:35
 msgid "Note added to your {blogname} order from {order_date}"
-msgstr "Примечание добавлено к {blogname} заказа от {order_date}"
+msgstr "Примечание к заказу датой на {order_date} добавлено"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-processing-order.php:25
@@ -2129,13 +2130,13 @@ msgid ""
 "This is an order notification sent to the customer after payment containing "
 "order details."
 msgstr ""
-"Здесь в заказе уведомление отправляется клиенту после оплаты содержащие "
-"детали заказа."
+"Это уведомление отправляется клиенту после содержащия платежных данных в "
+"деталях заказа."
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-processing-order.php:28
 msgid "Your {blogname} order receipt from {order_date}"
-msgstr "Ваш {blogname} заказ получен от {order_date}"
+msgstr "{blogname}. Ваш заказ датой на {order_date} был получен"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-customer-reset-password.php:37
@@ -2143,7 +2144,7 @@ msgid ""
 "Customer reset password emails are sent when a customer resets their "
 "password."
 msgstr ""
-"Отправляются клиенту на электронную почты при сбросе пароле, когда клиент "
+"Отправляются клиенту на электронную почту при сбросе пароле, когда клиент "
 "сбрасывает свой ​​пароль."
 
 # @ woocommerce
@@ -2159,7 +2160,7 @@ msgstr "Новый заказ отправляется, когда заказ п
 # @ woocommerce
 #: classes/emails/class-wc-email-new-order.php:28
 msgid "[{blogname}] New customer order ({order_number}) - {order_date}"
-msgstr "[{blogname}] Новый заказ ({order_number}) - {order_date}"
+msgstr "[{blogname}] Новый заказ (№{order_number}) датой на {order_date}"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-new-order.php:121
@@ -2446,8 +2447,8 @@ msgid ""
 "Your order has been received and is now being processed. Your order details "
 "are shown below for your reference:"
 msgstr ""
-"Ваш заказ был получен и в настоящее время обрабатываются. Ваши контактные "
-"данные заказа приведены ниже для вашей справки:"
+"Ваш заказ был получен и в настоящее время обрабатывается. Данные заказа "
+"приведены ниже:"
 
 # @ woocommerce
 #: templates/emails/customer-reset-password.php:14
@@ -8181,3 +8182,20 @@ msgstr "Введите значение, например, 2.99"
 #: classes/class-wc-checkout.php:64
 msgid "Account username"
 msgstr "Имя пользователя (login)"
+
+# @ woocommerce
+#: classes/class-wc-emails.php:357
+msgid "Product Backorder"
+msgstr "Товары под заказ"
+
+# @ woocommerce
+#: classes/abstracts/abstract-wc-product.php:566
+#: classes/abstracts/abstract-wc-product.php:579 templates/cart/cart.php:76
+msgid "Available on backorder"
+msgstr "Доступно под заказ"
+
+# @ woocommerce
+#: classes/class-wc-emails.php:366
+#, php-format
+msgid "%s units of %s have been backordered in order #%s."
+msgstr "%s шт. из %s были совершены под заказ в заказе #%s."
