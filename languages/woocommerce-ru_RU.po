@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-30 17:59+0200\n"
+"PO-Revision-Date: 2013-03-30 18:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Артикул"
 msgid "Download file%s"
 msgstr "Загрузить%s"
 
-msgid "Billing & Shipping"
+msgid "Billing &amp; Shipping"
 msgstr "Платежные данные и доставка"
 
 # @ woocommerce
@@ -8199,3 +8199,10 @@ msgstr "Доступно под заказ"
 #, php-format
 msgid "%s units of %s have been backordered in order #%s."
 msgstr "%s шт. из %s были совершены под заказ в заказе #%s."
+
+# @ woocommerce
+#: templates/checkout/form-shipping.php:59
+#: templates/single-product/tabs/additional-information.php:14
+#: woocommerce-template.php:756
+msgid "Additional Information"
+msgstr "Дополнительная информация"
