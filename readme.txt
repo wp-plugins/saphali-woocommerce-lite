@@ -7,7 +7,7 @@ Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, 
 Requires at least: 3.3 or higher
 Tested up to: 3.5.1
 Stable tag: 1.3.2
-Version: 1.3.2
+Version: 1.3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,7 +62,10 @@ QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интерк�
 
 == Changelog ==
 
-= 1.3.1 =
+= 1.3.2.1 =
+* Мелкие исправления по локализации под WooCommerce
+
+= 1.3.2 =
 * Мелкие исправления по локализации под WooCommerce
 
 = 1.3.1 =
@@ -118,7 +121,10 @@ QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интерк�
 
 == Upgrade Notice ==
 
-= 1.3.1 =
+= 1.3.2.1 =
+* Мелкие исправления по локализации под WooCommerce
+
+= 1.3.2 =
 * Мелкие исправления по локализации под WooCommerce
 
 = 1.3.1 =

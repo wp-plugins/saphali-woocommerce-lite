@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-30 18:40+0200\n"
+"PO-Revision-Date: 2013-04-11 19:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1655,7 +1655,7 @@ msgstr ""
 # @ woocommerce
 #: templates/checkout/review-order.php:238
 msgid "I have read and accept the"
-msgstr "Я прочитал и принимаю условия"
+msgstr "Я прочитал и принимаю"
 
 # @ woocommerce
 #: templates/emails/admin-new-order.php:13
@@ -1991,7 +1991,7 @@ msgstr "Заказ &ndash; %s"
 # @ woocommerce
 #: classes/class-wc-checkout.php:276
 msgid "Backordered"
-msgstr ""
+msgstr "Повторный заказ"
 
 # @ woocommerce
 #: classes/class-wc-checkout.php:451
@@ -2160,7 +2160,7 @@ msgstr "Новый заказ отправляется, когда заказ п
 # @ woocommerce
 #: classes/emails/class-wc-email-new-order.php:28
 msgid "[{blogname}] New customer order ({order_number}) - {order_date}"
-msgstr "[{blogname}] Новый заказ (№{order_number}) датой на {order_date}"
+msgstr "[{blogname}] Новый заказ ({order_number}) датой на {order_date}"
 
 # @ woocommerce
 #: classes/emails/class-wc-email-new-order.php:121
@@ -4601,7 +4601,7 @@ msgstr ""
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product_data.php:240
 msgid "Allow Backorders?"
-msgstr "Разрешить отказы?"
+msgstr "Разрешить повторные заказы?"
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product_data.php:241
@@ -4624,9 +4624,9 @@ msgid ""
 "If managing stock, this controls whether or not backorders are allowed for "
 "this product and variations. If enabled, stock quantity can go below 0."
 msgstr ""
-"Это определяет, если есть управление складом или не разрешены отказы для "
-"этого продукта и вариаций. Если включен, количество на складе может быть "
-"ниже 0."
+"Если включено управление складом, то это контролирует, будет ли разрешены "
+"повторные заказы для этого продукта и вариаций. Если включен, количество на "
+"складе может быть ниже 0."
 
 # @ woocommerce
 #: admin/post-types/writepanels/writepanel-product_data.php:255
@@ -8186,19 +8186,19 @@ msgstr "Имя пользователя (login)"
 # @ woocommerce
 #: classes/class-wc-emails.php:357
 msgid "Product Backorder"
-msgstr "Товары под заказ"
+msgstr "Товары под заказ (повторно)"
 
 # @ woocommerce
 #: classes/abstracts/abstract-wc-product.php:566
 #: classes/abstracts/abstract-wc-product.php:579 templates/cart/cart.php:76
 msgid "Available on backorder"
-msgstr "Доступно под заказ"
+msgstr "Доступно под заказ (повторно)"
 
 # @ woocommerce
 #: classes/class-wc-emails.php:366
 #, php-format
 msgid "%s units of %s have been backordered in order #%s."
-msgstr "%s шт. из %s были совершены под заказ в заказе #%s."
+msgstr "%s шт. из %s были совершены под заказ (повторно) в заказе #%s."
 
 # @ woocommerce
 #: templates/checkout/form-shipping.php:59
