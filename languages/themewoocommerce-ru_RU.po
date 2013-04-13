@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-11-19 07:30+0200\n"
+"PO-Revision-Date: 2013-04-13 15:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Textdomain-Support: yes\n"
 "Language: ru\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: .\n"
 
 # @ woocommerce
@@ -40,6 +40,11 @@ msgstr "Русский рубль ( руб.)"
 
 # @ woocommerce
 #: functions.php:40
+msgid "Russian ruble (P)"
+msgstr "Русский рубль (P)"
+
+# @ woocommerce
+#: functions.php:40
 msgid "Belarusian ruble ( Br.)"
 msgstr "Белорусский рубль ( Br.)"
 
@@ -51,6 +56,15 @@ msgid ""
 msgstr ""
 "Журнал событий, таких как запросы/ответы на/от сервера Qiwi, внутри "
 "документа <code>woocommerce/logs/qiwi.txt</code>"
+
+# @ woocommerce
+#: functions.php:40
+msgid ""
+"Log Yandex.Money events, such as IPN requests, inside <code>woocommerce/logs/"
+"yandexmoney.txt</code>"
+msgstr ""
+"Журнал событий, таких как запросы/ответы на/от сервера Яндекс, внутри "
+"документа <code>woocommerce/logs/yandexmoney.txt</code>"
 
 # @ woocommerce
 #: functions.php:40
@@ -151,3 +165,10 @@ msgid ""
 msgstr ""
 "Спасибо за заказ, пожалуйста, нажмите на кнопку внизу, чтобы оплатить c "
 "помощью Z-Payment."
+
+msgid ""
+"Thank you for your order, please click the button below to pay with "
+"Chronopay."
+msgstr ""
+"Спасибо за заказ, пожалуйста, нажмите на кнопку внизу, чтобы оплатить при "
+"помощи Chronopay"
