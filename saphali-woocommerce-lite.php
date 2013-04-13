@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.2.1
+Version: 1.3.3
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -102,21 +102,23 @@ Author URI: http://saphali.com/
 	}
 	function add_inr_currency( $currencies ) {
 		$currencies['UAH'] = __( 'Ukrainian hryvnia ( grn.)', 'themewoocommerce' );
-		$currencies['RUR'] = __( 'Russian ruble ( rub.)', 'themewoocommerce' );
+		$currencies['RUR'] = __( 'Russian ruble ( руб.)', 'themewoocommerce' );
+		$currencies['RUB'] = __( 'Russian ruble (P)', 'themewoocommerce' );
 		$currencies['BYR'] = __( 'Belarusian ruble ( Br.)', 'themewoocommerce' );
 		$currencies['AMD'] = __( 'Armenian dram  (Դրամ)', 'themewoocommerce' );
 		return $currencies;
 	}
-	function add_inr_currency_symbol( $currency_symbol ) {
+	function add_inr_currency_symbol( $symbol ) {
+		if(!$symbol)
 		$currency = get_option( 'woocommerce_currency' );
 		switch( $currency ) {
-			case 'UAH': $currency_symbol = 'грн.'; break;
-			case 'RUB': $currency_symbol = 'руб.'; break;
-			case 'RUR': $currency_symbol = 'руб.'; break;
-			case 'BYR': $currency_symbol = 'руб.'; break;
+			case 'UAH': $symbol = 'грн.'; break;
+			case 'RUB': $symbol = '<span class="rur">p<span>уб.</span></span>'; break;
+			case 'RUR': $symbol = 'руб.'; break;
+			case 'BYR': $symbol = 'руб.'; break;
 			case 'AMD': $currency_symbol = 'Դ'; break;
 		}
-		return $currency_symbol;
+		return $symbol;
 	}
 	function admin_enqueue_scripts_page_saphali() {
 		global $woocommerce;
@@ -902,12 +904,24 @@ if(!empty($column_count_saphali)) {
 		if($woocommerce_loop['columns'] > 0) {
 		?>
 		<style type='text/css'>
-		ul.products li.product {
+		.woocommerce ul.products li.product {
 			width:<?php if($woocommerce_loop['columns'] <= 3 ) echo floor(100/$woocommerce_loop['columns'] - $woocommerce_loop['columns']); elseif($woocommerce_loop['columns'] > 3 )echo floor(100/$woocommerce_loop['columns'] - 4);?>%;
 		}
 		</style>
 		<?php
 		}
 	}
+}
+add_action("wp_head", '_print_script_columns', 10, 1);
+function _print_script_columns() {
+		if(get_woocommerce_currency() != 'RUB') return;
+		?>
+	<style type="text/css">
+		@font-face { font-family: "Rubl Sign"; src: url(http://www.artlebedev.ru/;-)/ruble.eot); }
+		span.rur { font-family: "Rubl Sign"; text-transform: uppercase; // text-transform: none;}    
+		span.rur span { position: absolute; overflow: hidden; width: .45em; height: 1em; margin: .2ex 0 0 -.55em; // display: none; }
+		span.rur span:before { content: '\2013'; }
+	</style>
+		<?php
 }
 add_action( 'admin_enqueue_scripts',  array('saphali_lite','admin_enqueue_scripts_page_saphali') );
