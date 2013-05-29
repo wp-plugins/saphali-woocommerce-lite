@@ -6,8 +6,8 @@ Donate link: http://saphali.com/
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: 3.3 or higher
 Tested up to: 3.5.1
-Stable tag: 1.3.4
-Version: 1.3.4
+Stable tag: 1.3.5
+Version: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,8 @@ QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интерк�
 3. Управление количеством колонок в каталоге товаров и рубриках.
 
 == Changelog ==
+= 1.3.5 =
+* Добавлена функция вывода дополнительных полей в письмах и при просмотре заказа покупателем.
 
 = 1.3.4 =
 * Добавлены валюты: Киргизский сом (сом) и Казахстанский тенге (тңг).

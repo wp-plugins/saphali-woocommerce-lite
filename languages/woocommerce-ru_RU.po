@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-04-14 15:45+0200\n"
+"PO-Revision-Date: 2013-05-29 10:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -8200,9 +8200,17 @@ msgstr "Доступно под заказ (повторно)"
 msgid "%s units of %s have been backordered in order #%s."
 msgstr "%s шт. из %s были совершены под заказ (повторно) в заказе #%s."
 
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
 # @ woocommerce
-#: templates/checkout/form-shipping.php:59
-#: templates/single-product/tabs/additional-information.php:14
-#: woocommerce-template.php:756
-msgid "Additional Information"
-msgstr "Характеристики"
+#: classes/class-wc-order.php:980
+msgid "Subtotal:"
+msgstr "Итого:"
+
+# @ woocommerce
+#: admin/post-types/writepanels/order-item-html.php:112
+#: templates/cart/mini-cart.php:63 templates/cart/totals.php:92
+#: templates/checkout/review-order.php:93
+msgid "Subtotal"
+msgstr "Итого"

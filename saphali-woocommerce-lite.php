@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.4
+Version: 1.3.5
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -32,11 +32,28 @@ Author URI: http://saphali.com/
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
+ var $email_order_id;
 	function __construct() {
 		add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 9);
 		load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
+		
+		add_action( 'woocommerce_thankyou',                     array( &$this, 'order_pickup_location' ), 20 );
+		add_action( 'woocommerce_view_order',                   array( &$this, 'order_pickup_location' ), 20 );
+		
+		add_action( 'woocommerce_after_template_part',          array( &$this, 'email_pickup_location' ), 10, 3 );
+					
+		add_action( 'woocommerce_order_status_pending_to_processing_notification', array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_pending_to_completed_notification',  array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_pending_to_on-hold_notification',    array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_failed_to_processing_notification',  array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_failed_to_completed_notification',   array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_completed_notification',             array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_new_customer_note_notification',                  array( &$this, 'store_order_id' ), 1 );
+		
+		add_filter( 'woocommerce_order_formatted_billing_address',  array($this,'formatted_billing_address') , 10 , 2); 
+		add_filter( 'woocommerce_order_formatted_shipping_address',  array($this,'formatted_shipping_address') , 10 , 2); 
+		
 		if(@$_GET['page'] != 'woocommerce_saphali_s_l' && @$_GET['tab'] !=1) {
 			// Hook in
 			add_filter( 'woocommerce_checkout_fields' , array($this,'saphali_custom_override_checkout_fields') );
@@ -53,6 +70,7 @@ Author URI: http://saphali.com/
 			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') ); 
 		}
 	}
+
 	function woocommerce_customer_meta_fields_action() {
 		add_action( 'show_user_profile', array($this,'woocommerce_customer_meta_fields_s') );
 		add_action( 'edit_user_profile', array($this,'woocommerce_customer_meta_fields_s') );
@@ -860,7 +878,7 @@ Author URI: http://saphali.com/
 
 			if ( $order->order_custom_fields[$field_name][0] ) 
 
-			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label>' . $order->order_custom_fields[$field_name][0].'</div>';
+			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 			
 		endforeach;
 		}
@@ -888,6 +906,111 @@ Author URI: http://saphali.com/
 		if(is_array($fieldss))
 		$fields = $fieldss["shipping"];
 		 return $fields;
+	}
+	public function store_order_id( $arg ) {
+		if ( is_int( $arg ) ) $this->email_order_id = $arg;
+		elseif ( is_array( $arg ) && array_key_exists( 'order_id', $arg ) ) $this->email_order_id = $arg['order_id'];
+	}
+	public function email_pickup_location( $template_name, $template_path, $located ) {
+		global $_shipping_data, $_billing_data;
+		if ( $template_name == 'emails/email-addresses.php' && $this->email_order_id ) {
+
+			$order = new WC_Order( $this->email_order_id );
+
+			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+			echo '<div class="address">';
+
+			if(is_array($billing_data["billing"]) && !$_billing_data) {
+				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+					$field_name = '_'.$key;
+					if ( $order->order_custom_fields[$field_name][0] ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				endforeach;
+			}
+			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
+				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+					$field_name = '_'.$key;
+					if ( $order->order_custom_fields[$field_name][0] ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				endforeach;
+			}
+			if(is_array($billing_data["order"])) {
+			foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+
+				 $field_name = '_'.$key;
+
+				if ( $order->order_custom_fields[$field_name][0] ) 
+
+				echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				
+			endforeach;
+			}
+			echo '</div>';
+		}
+	}
+	function formatted_billing_address($address, $order) {
+		global $billing_data, $_billing_data;
+		if( empty($billing_data) )
+			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+		if(is_array($billing_data["billing"])) {
+			$_billing_data = true;
+			foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+				$field_name = '_'.$key;
+				if ( $order->order_custom_fields[$field_name][0] ) 
+				echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
+			endforeach;
+		}
+		return $address;
+	}
+	function formatted_shipping_address($address, $order) {
+	global $billing_data, $_shipping_data;
+	if( empty($billing_data) )
+		$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+		if(is_array($billing_data["shipping"])) {
+			$_shipping_data = true;
+			foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+				$field_name = '_'.$key;
+				if ( $order->order_custom_fields[$field_name][0] ) {
+					echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
+					$address[$key] = $order->order_custom_fields[$field_name][0];
+				}
+			endforeach;
+		}
+		return $address;
+	}
+	function order_pickup_location($order_id) {
+		global $_billing_data, $_shipping_data;
+		$order = new WC_Order( $order_id );
+		
+		if ( is_object($order) ) {
+
+			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+
+			echo '<div class="address">';
+
+			if(is_array($billing_data["billing"]) && !$_billing_data) {
+				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+					$field_name = '_'.$key;
+					if ( $order->order_custom_fields[$field_name][0] ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				endforeach;
+			}
+			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
+				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+					$field_name = '_'.$key;
+					if ( $order->order_custom_fields[$field_name][0] ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				endforeach;
+			}
+			if(is_array($billing_data["order"]) ) {
+				foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+					$field_name = '_'.$key;
+					if ( $order->order_custom_fields[$field_name][0] ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				endforeach;
+			}
+			echo '</div>';
+		}
 	}
  }
 
