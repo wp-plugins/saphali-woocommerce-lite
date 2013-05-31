@@ -136,9 +136,9 @@ Author URI: http://saphali.com/
 			case 'RUB': $symbol = '<span class="rur">p<span>уб.</span></span>'; break;
 			case 'RUR': $symbol = 'руб.'; break;
 			case 'BYR': $symbol = 'руб.'; break;
-			case 'AMD': $currency_symbol = 'Դ'; break;
-			case 'KGS': $currency_symbol = 'сом'; break;
-			case 'KZT': $currency_symbol = 'тңг'; break;
+			case 'AMD': $symbol = 'Դ'; break;
+			case 'KGS': $symbol = 'сом'; break;
+			case 'KZT': $symbol = 'тңг'; break;
 		}
 		return $symbol;
 	}
