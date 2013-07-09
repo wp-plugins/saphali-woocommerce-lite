@@ -145,7 +145,7 @@ Author URI: http://saphali.com/
 	function admin_enqueue_scripts_page_saphali() {
 		global $woocommerce;
 		$plugin_url = plugins_url( basename( plugin_dir_path(__FILE__) ), basename( __FILE__ ) );
-		if($_GET['page'] == 'woocommerce_saphali_s_l' && $_GET['tab'] ==1 )
+		if( isset($_GET['page']) && $_GET['page'] == 'woocommerce_saphali_s_l' && $_GET['tab'] ==1 )
 		wp_enqueue_script( 'tablednd', $plugin_url. '/js/jquery.tablednd.0.5.js', array('jquery'), $woocommerce->version );
 	}
 	function woocommerce_saphali_page_s_l () {
@@ -156,12 +156,12 @@ Author URI: http://saphali.com/
 			</h2>
 			<ul class="subsubsub">
 
-				 <li><a href="admin.php?page=woocommerce_saphali_s_l" <?php if($_GET["tab"] == '') echo 'class="current"';?>><span color="red">Дополнительная информация</span></a> | </li>
-				 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=1" <?php if($_GET["tab"] == 1) echo 'class="current"';?>>Управление полями</a> | </li>
-				 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=2" <?php if($_GET["tab"] == 2) echo 'class="current"';?>>Число колонок в каталоге</a></li>
+				 <li><a href="admin.php?page=woocommerce_saphali_s_l" <?php if(empty($_GET["tab"])) echo 'class="current"';?>><span color="red">Дополнительная информация</span></a> | </li>
+				 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=1" <?php if(!empty($_GET["tab"]) && $_GET["tab"] == 1) echo 'class="current"';?>>Управление полями</a> | </li>
+				 <li><a href="admin.php?page=woocommerce_saphali_s_l&tab=2" <?php if(!empty($_GET["tab"]) && $_GET["tab"] == 2) echo 'class="current"';?>>Число колонок в каталоге</a></li>
 				
 			</ul>
-			<?php if($_GET["tab"] == '') {?>
+			<?php if( empty($_GET["tab"]) ) {?>
 			<div class="clear"></div>
 			<h2 class="woo-nav-tab-wrapper">Дополнительная информация</h2>
 			<?php include_once (SAPHALI_PLUGIN_DIR_PATH . 'go_pro.php');  } elseif($_GET["tab"] == 2) {?>
