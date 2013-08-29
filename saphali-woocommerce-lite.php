@@ -131,14 +131,16 @@ Author URI: http://saphali.com/
 	function add_inr_currency_symbol( $symbol ) {
 		if(!$symbol)
 		$currency = get_option( 'woocommerce_currency' );
-		switch( $currency ) {
-			case 'UAH': $symbol = 'грн.'; break;
-			case 'RUB': $symbol = '<span class="rur">p<span>уб.</span></span>'; break;
-			case 'RUR': $symbol = 'руб.'; break;
-			case 'BYR': $symbol = 'руб.'; break;
-			case 'AMD': $symbol = 'Դ'; break;
-			case 'KGS': $symbol = 'сом'; break;
-			case 'KZT': $symbol = 'тңг'; break;
+		if(isset($currency)) {
+			switch( $currency ) {
+				case 'UAH': $symbol = 'грн.'; break;
+				case 'RUB': $symbol = '<span class="rur">p<span>уб.</span></span>'; break;
+				case 'RUR': $symbol = 'руб.'; break;
+				case 'BYR': $symbol = 'руб.'; break;
+				case 'AMD': $symbol = 'Դ'; break;
+				case 'KGS': $symbol = 'сом'; break;
+				case 'KZT': $symbol = 'тңг'; break;
+			}
 		}
 		return $symbol;
 	}
