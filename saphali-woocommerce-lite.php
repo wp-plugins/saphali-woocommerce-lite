@@ -147,7 +147,7 @@ Author URI: http://saphali.com/
 	function admin_enqueue_scripts_page_saphali() {
 		global $woocommerce;
 		$plugin_url = plugins_url( basename( plugin_dir_path(__FILE__) ), basename( __FILE__ ) );
-		if( isset($_GET['page']) && $_GET['page'] == 'woocommerce_saphali_s_l' && $_GET['tab'] ==1 )
+		if( isset($_GET['page']) && $_GET['page'] == 'woocommerce_saphali_s_l' && (isset($_GET['tab']) && $_GET['tab'] ==1) )
 		wp_enqueue_script( 'tablednd', $plugin_url. '/js/jquery.tablednd.0.5.js', array('jquery'), $woocommerce->version );
 	}
 	function woocommerce_saphali_page_s_l () {
@@ -809,13 +809,22 @@ Author URI: http://saphali.com/
 		}
 		if(!is_array($show_fields['billing']['fields'])) { $show_fields['billing']['fields'] = array();  }
 			$show_fields['billing']['title'] = $show_fields['billing']['title'];
+		  if(isset($billing['billing']))
 		  $show_fields['billing'] =  /* $show_fields['billing']['fields'] + */ $billing['fields'];
 		
 		if(!is_array($show_fields['shipping']['fields'])) { $show_fields['shipping']['fields'] = array();  }
 		$show_fields['shipping']['title'] = $show_fields['shipping']['title'];
+		if(isset($shipping['fields']))
 		 $show_fields['shipping'] = /* $show_fields['shipping']['fields'] + */ $shipping['fields'];
+
+		if(!(@is_array($show_fields['order']['fields']))) { 
 		
-		if(!is_array($show_fields['order']['fields'])) { $show_fields['order']['fields'] = array(); $show_fields['order']['title'] = 'Дополнительные поля'; }
+		$show_fields['order']['fields'] = array(); 
+		
+		$show_fields['order']['title'] = 'Дополнительные поля'; 
+		
+		}
+		if(isset($orders['fields']))
 		 $show_fields['order'] =  /* $show_fields['order']['fields']  + */ $orders['fields'];
 		
 		return $show_fields;
@@ -850,7 +859,7 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( $order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( @$order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
 			
 		endforeach;
 		}
@@ -864,7 +873,7 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( $order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( @$order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
 			
 		endforeach;
 		}
@@ -878,7 +887,7 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( $order->order_custom_fields[$field_name][0] ) 
+			if ( @$order->order_custom_fields[$field_name][0] ) 
 
 			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 			
@@ -941,7 +950,7 @@ Author URI: http://saphali.com/
 
 				 $field_name = '_'.$key;
 
-				if ( $order->order_custom_fields[$field_name][0] ) 
+				if ( @$order->order_custom_fields[$field_name][0] ) 
 
 				echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				
@@ -958,7 +967,7 @@ Author URI: http://saphali.com/
 			$_billing_data = true;
 			foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 				$field_name = '_'.$key;
-				if ( $order->order_custom_fields[$field_name][0] ) 
+				if ( @$order->order_custom_fields[$field_name][0] ) 
 				echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
 			endforeach;
 		}
@@ -972,7 +981,7 @@ Author URI: http://saphali.com/
 			$_shipping_data = true;
 			foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 				$field_name = '_'.$key;
-				if ( $order->order_custom_fields[$field_name][0] ) {
+				if ( @$order->order_custom_fields[$field_name][0] ) {
 					echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
 					$address[$key] = $order->order_custom_fields[$field_name][0];
 				}
@@ -1007,7 +1016,7 @@ Author URI: http://saphali.com/
 			if(is_array($billing_data["order"]) ) {
 				foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] ) 
+					if ( @$order->order_custom_fields[$field_name][0] ) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
