@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.5
+Version: 1.3.6
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -242,93 +242,81 @@ Author URI: http://saphali.com/
 						}
 						//END 
 						$filds = $f->checkout_fields;
-						if(is_array($filds["billing"]))
+
+						if(is_array($filds["billing"])) {
+						if(!is_array($addFild["billing"])) $addFild["billing"] = array();
+						if(!is_array($_POST["billing"])) $_POST["billing"] = array();
+						$filds["billing"] = array_merge($filds["billing"] ,  $_POST["billing"], $addFild["billing"]);
+
 						foreach($filds["billing"] as $key_post => $value_post) {
-							$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post] = $value_post;
-								if($_POST["billing"][$key_post]['public'] != 'on') {
-									$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]["public"] = false;
+
+							if( !isset($f->checkout_fields["billing"][$key_post]['type']) ) unset($filds["billing"][$key_post]['type'],  $value_post["type"]);
+
+							
+								if($filds["billing"][$key_post]['public'] != 'on') {
+									$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post]["public"] = false;
 									$fild_remove_filter["billing"][] = $key_post;
-								} else {$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]["public"] = true;}
-								
-								$_POST["billing"][$key_post]['required'] = ($_POST["billing"][$key_post]['required'] == 'on') ? true : false ; 
-								
-								$_POST["billing"][$key_post]['clear'] = $bool_clear = ($_POST["billing"][$key_post]['clear'] == 'on') ? true : false ;
-								
+								} else {$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post]["public"] = true;}
+
+							
 							foreach($value_post as $k_post=> $v_post){
-								if( $_POST["billing"][$key_post][$k_post] != $v_post && isset($_POST["billing"][$key_post][$k_post]) ) {
-									$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post][$k_post] = $_POST["billing"][$key_post][$k_post];
-								}
+								if( 'on' == $v_post  ) {
+									$filds["billing"][$key_post][$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["billing"][$key_post][$k_post] = false; if(!$filds["billing"][$key_post][$k_post] && $k_post == 'clear') unset($filds["billing"][$key_post][$k_post]); }
 							}
-							if( $bool_clear ){
-									$filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear'] = $bool_clear;
-							} elseif(isset($filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear'])) {
-								unset($filds_new["billing"][$_POST["billing"][$key_post]["order"]][$key_post]['clear']);
-							}
+							$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post] = $value_post;
+							
 							unset($_POST["billing"][$key_post]);
 						}
-						if(is_array($filds["shipping"]))
+
+						}
+						if(is_array($filds["shipping"])) {
+						if(!is_array($addFild["shipping"])) $addFild["shipping"] = array();
+						if(!is_array($_POST["shipping"])) $_POST["shipping"] = array();
+						$filds["shipping"] = array_merge($filds["shipping"] ,  $_POST["shipping"], $addFild["shipping"]);
 						foreach($filds["shipping"] as $key_post => $value_post) {
-							$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post] = $value_post;
 							
-							if($_POST["shipping"][$key_post]['public'] != 'on') {
-								$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]["public"] = false;
+							if( !isset($f->checkout_fields["shipping"][$key_post]['type']) ) unset($filds["shipping"][$key_post]['type'],  $value_post["type"]);
+							
+							
+							if($filds["shipping"][$key_post]['public'] != 'on') {
+								$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post]["public"] = false;
 								$fild_remove_filter["shipping"][] = $key_post;
-							} else {$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]["public"] = true;}
-							
-							$_POST["shipping"][$key_post]['clear'] = $bool_clear = ($_POST["shipping"][$key_post]['clear'] == 'on') ? true : false ;
-							
-							$_POST["shipping"][$key_post]['required'] = ($_POST["shipping"][$key_post]['required'] == 'on') ? true : false ;
-							
+							} else {$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post]["public"] = true;}
+												
 							foreach($value_post as $k_post=> $v_post){
-								if( $_POST["shipping"][$key_post][$k_post] != $v_post && isset($_POST["shipping"][$key_post][$k_post]) ) {
-									$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post][$k_post] = $_POST["shipping"][$key_post][$k_post];
-								}
+								if( 'on' == $v_post  ) {
+									$filds["shipping"][$key_post][$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["shipping"][$key_post][$k_post] = false; if(!$filds["shipping"][$key_post][$k_post] && $k_post == 'clear') unset($filds["shipping"][$key_post][$k_post]); }
 							}
-							if( $bool_clear ){
-									$filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear'] = $bool_clear;
-							} elseif(isset($filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear'])) {
-								unset($filds_new["shipping"][$_POST["shipping"][$key_post]["order"]][$key_post]['clear']);
-							}
+							$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post] = $value_post;
 							unset($_POST["shipping"][$key_post]);
 						}
-						if(is_array($filds["order"]))
+						}
+						if(is_array($filds["order"])) {
+						if(!is_array($addFild["order"])) $addFild["order"] = array();
+						if(!is_array($_POST["order"])) $_POST["order"] = array();
+						$filds["order"] = array_merge($filds["order"] ,  $_POST["order"], $addFild["order"]);
+						
 						foreach($filds["order"] as $key_post => $value_post) {
-							$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post] = $value_post;
-							if($_POST["order"][$key_post]['public'] != 'on') {
-								$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post]["public"] = false;
-								$fild_remove_filter["order"][] = $key_post;
-							} else {$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post]["public"] = true;}
-							
 
-							$_POST["order"][$key_post]['required'] = ($_POST["order"][$key_post]['required'] == 'on') ? true : false ; 
-							
+							if($filds["order"][$key_post]['public'] != 'on') {
+								$filds_new["order"][$filds["order"][$key_post]["order"]][$key_post]["public"] = false;
+								$fild_remove_filter["order"][] = $key_post;
+							} else {$filds_new["order"][$filds["order"][$key_post]["order"]][$key_post]["public"] = true;}
 							
 							foreach($value_post as $k_post=> $v_post){
-								if( $_POST["order"][$key_post][$k_post] != $v_post && isset($_POST["order"][$key_post][$k_post]) ) {
-									$filds_new["order"][$_POST["order"][$key_post]["order"]][$key_post][$k_post] = $_POST["order"][$key_post][$k_post];
-								}
+								if( 'on' == $v_post  ) {
+									$filds["order"][$key_post][$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["order"][$key_post][$k_post] = false; if(!$filds["order"][$key_post][$k_post] && $k_post == 'clear') unset($filds["order"][$key_post][$k_post]); }
 							}
+						
+							$filds_new["order"][$filds["order"][$key_post]["order"]][$key_post] = $value_post;
+							
 							unset($_POST["order"][$key_post]);
 						}
-						// Управление публикацией
-						if(!empty($_POST["billing"])) {
-							foreach($_POST["billing"] as $k_post => $v_post) {
-								if($v_post["public"]  != 'on' )
-								$fild_remove_filter["billing"][] = $k_post;
-							}
 						}
-						if(!empty($_POST["shipping"])) {
-							foreach($_POST["shipping"] as $k_post => $v_post) {
-								if($v_post["public"]  != 'on' )
-								$fild_remove_filter["shipping"][] = $k_post;
-							}
-						}
-						if(!empty($_POST["order"])) {
-							foreach($_POST["order"] as $k_post => $v_post) {
-								if($v_post["public"]  != 'on' )
-								$fild_remove_filter["order"][] = $k_post;
-							}
-						}
+
 						//END Управление публикацией
 						$filds_finish["billing"] = $filds_finish["shipping"] = $filds_finish["order"] = array();
 
@@ -344,23 +332,7 @@ Author URI: http://saphali.com/
 							if(isset($filds_new["order"][$i]))
 							$filds_finish["order"] = $filds_finish["order"] + $filds_new["order"][$i];
 						}
-						
-						if(is_array($_POST["billing"]))
-						$filds_finish["billing"] = $filds_finish["billing"] +  $_POST["billing"];
-						if(is_array($_POST["shipping"]))
-						$filds_finish["shipping"] = $filds_finish["shipping"] +  $_POST["shipping"];
-						if(is_array($_POST["order"]))
-						$filds_finish["order"] = $filds_finish["order"] + $_POST["order"];
-						
-						if(is_array($addFild["billing"]))
-						$filds_finish["billing"] = $filds_finish["billing"] + $addFild["billing"];
-						if(is_array($addFild["shipping"]))
-						$filds_finish["shipping"] = $filds_finish["shipping"] + $addFild["shipping"]+ $_POST["shipping"];
-						if(is_array($addFild["order"]))
-						$filds_finish["order"] = $filds_finish["order"] + $addFild["order"] + $_POST["order"];
-						
-						
-						
+
 						$filds_finish_filter = $filds_finish;
 						if(is_array($fild_remove_filter["billing"])) {
 							foreach($fild_remove_filter["billing"] as $v_filt){
@@ -433,7 +405,7 @@ Author URI: http://saphali.com/
 					?>
 					<tr>
 						<td> <input  disabled value='<?php echo $key?>' type="text" name="billing[<?php echo $key?>][name]" /></td>
-						<td><input value='<?php echo $value['label']?>' type="text" name="billing[<?php echo $key?>][label]" /></td>
+						<td><input value='<?php echo $value['label']?>' type="text" name="billing[<?php echo $key?>][label]" /><input value='<?php echo $value['type']?>' type="hidden" name="billing[<?php echo $key?>][type]" /></td>
 						<td><input value='<?php echo $value['placeholder']?>' type="text" name="billing[<?php echo $key?>][placeholder]" /></td>
 						<td><input <?php if($value['clear']) echo 'checked'?>  class="<?php echo $value['clear']?>" type="checkbox" name="billing[<?php echo $key?>][clear]" /></td>
 						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
@@ -1052,7 +1024,7 @@ if(!empty($column_count_saphali)) {
 }
 add_action("wp_head", '_print_script_columns', 10, 1);
 function _print_script_columns() {
-		if(get_woocommerce_currency() != 'RUB') return;
+		if(apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') ) != 'RUB') return;
 		?>
 	<style type="text/css">
 		@font-face { font-family: "Rubl Sign"; src: url(http://www.artlebedev.ru/;-)/ruble.eot); }
