@@ -1052,7 +1052,7 @@ if(!empty($column_count_saphali)) {
 }
 add_action("wp_head", '_print_script_columns', 10, 1);
 function _print_script_columns() {
-		if(get_woocommerce_currency() != 'RUB') return;
+		if(apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') ) != 'RUB') return;
 		?>
 	<style type="text/css">
 		@font-face { font-family: "Rubl Sign"; src: url(http://www.artlebedev.ru/;-)/ruble.eot); }
