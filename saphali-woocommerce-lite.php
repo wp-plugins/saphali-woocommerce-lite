@@ -249,7 +249,7 @@ Author URI: http://saphali.com/
 						$filds["billing"] = array_merge($filds["billing"] ,  $_POST["billing"], $addFild["billing"]);
 
 						foreach($filds["billing"] as $key_post => $value_post) {
-
+							
 							if( !isset($f->checkout_fields["billing"][$key_post]['type']) ) unset($filds["billing"][$key_post]['type'],  $value_post["type"]);
 
 							
@@ -277,7 +277,6 @@ Author URI: http://saphali.com/
 						foreach($filds["shipping"] as $key_post => $value_post) {
 							
 							if( !isset($f->checkout_fields["shipping"][$key_post]['type']) ) unset($filds["shipping"][$key_post]['type'],  $value_post["type"]);
-							
 							
 							if($filds["shipping"][$key_post]['public'] != 'on') {
 								$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post]["public"] = false;
@@ -474,7 +473,7 @@ Author URI: http://saphali.com/
 					?>
 					<tr>
 						<td><input  disabled  value=<?php echo $key?> type="text" name="shipping[<?php echo $key?>][name]" /></td>
-						<td><input value='<?php echo $value['label']?>' type="text" name="shipping[<?php echo $key?>][label]" /></td>
+						<td><input value='<?php echo $value['label']?>' type="text" name="shipping[<?php echo $key?>][label]" /><input value='<?php echo $value['type']?>' type="hidden" name="shipping[<?php echo $key?>][type]" /></td>
 						<td><input value='<?php echo $value['placeholder']?>' type="text" name="shipping[<?php echo $key?>][placeholder]" /></td>
 						<td><input <?php if($value['clear']) echo 'checked'?> class="<?php echo $value['clear']?>" type="checkbox" name="shipping[<?php echo $key?>][clear]" /></td>
 						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
