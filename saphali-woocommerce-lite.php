@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.6
+Version: 1.3.6.1
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -262,7 +262,7 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["billing"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["billing"][$key_post][$k_post] = false; if(!$filds["billing"][$key_post][$k_post] && $k_post == 'clear') unset($filds["billing"][$key_post][$k_post]); }
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["billing"][$key_post][$k_post] = false; if(!$filds["billing"][$key_post][$k_post] && $k_post == 'public') unset($filds["billing"][$key_post][$k_post]); }
 							}
 							$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post] = $value_post;
 							
@@ -286,7 +286,7 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["shipping"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["shipping"][$key_post][$k_post] = false; if(!$filds["shipping"][$key_post][$k_post] && $k_post == 'clear') unset($filds["shipping"][$key_post][$k_post]); }
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["shipping"][$key_post][$k_post] = false; if(!$filds["shipping"][$key_post][$k_post] && $k_post == 'public') unset($filds["shipping"][$key_post][$k_post]); }
 							}
 							$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post] = $value_post;
 							unset($_POST["shipping"][$key_post]);
@@ -307,7 +307,7 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["order"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["order"][$key_post][$k_post] = false; if(!$filds["order"][$key_post][$k_post] && $k_post == 'clear') unset($filds["order"][$key_post][$k_post]); }
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["order"][$key_post][$k_post] = false; if(!$filds["order"][$key_post][$k_post] && $k_post == 'public') unset($filds["order"][$key_post][$k_post]); }
 							}
 						
 							$filds_new["order"][$filds["order"][$key_post]["order"]][$key_post] = $value_post;
@@ -736,69 +736,73 @@ Author URI: http://saphali.com/
 	}
 	function woocommerce_get_customer_meta_fields_saphali() {
 		$fieldss = get_option('woocommerce_saphali_filds_filters');
+
 		$show_fields = $this->woocommerce_get_customer_meta_fields_saph_ed();
+
+		
+
 		if(is_array($fieldss)) {
 			if(is_array($fieldss["billing"])) {
-			$billing['fields'] = array();
-			foreach($fieldss["billing"] as $key => $value) {
-				if(isset($show_fields["billing"]['fields'][$key])) continue;
-				$billing['fields'] = $billing['fields'] +
-					array( $key => array(
-						'label' => $value["label"],
-						'show' => $value["public"],
-						'description' => ''
-						)
-					);
-			}
+				$billing = array();
+				foreach($fieldss["billing"] as $key => $value) {
+					if(isset($show_fields["billing"]['fields'][$key])) continue;
+					
+					foreach($value as $k_post=> $v_post){
+									if( 'on' == $v_post  ) {
+										$value[$k_post] = true;
+									} elseif(in_array($k_post, array('public','clear','required'))) {  $value[$k_post] = false; }
+					}
+					$billing = array_merge( $billing , array ($key => $value));
+				}
 			}
 			if(is_array($fieldss["shipping"])) {
-			$shipping['fields'] = array();
-			foreach($fieldss["shipping"] as $key => $value) {
-			if(isset($show_fields["shipping"]['fields'][$key])) continue;
-				$shipping['fields'] = $shipping['fields'] +
-					array( $key => array(
-						'label' => $value["label"],
-						'show' => $value["public"],
-						'description' => ''
-						)
-					);
-			}
+				$shipping = array();
+				foreach($fieldss["shipping"] as $key => $value) {
+					if(isset($show_fields["shipping"]['fields'][$key])) continue;
+					foreach($value as $k_post=> $v_post){
+						if( 'on' == $v_post  ) {
+							$value[$k_post] = true;
+						} elseif(in_array($k_post, array('public','clear','required'))) {  $value[$k_post] = false; }
+					}
+					$shipping = array_merge( $shipping , array ($key => $value));
+				}
 			}
 			if(is_array($fieldss["order"])) {
-			$orders['fields'] = array();
-			foreach($fieldss["order"] as $key => $value) {
-				if(isset($show_fields["order"]['fields'][$key])) continue;
-				$orders['fields'] = $orders['fields'] +
-					array( $key => array(
-						'label' => $value["label"],
-						'show' => $value["public"],
-						'description' => ''
-						)
-					);
-			}
+				$orders = array();
+				foreach($fieldss["order"] as $key => $value) {
+					if(isset($show_fields["order"]['fields'][$key])) continue;
+					foreach($value as $k_post=> $v_post){
+						if( 'on' == $v_post  ) {
+							$value[$k_post] = true;
+						} elseif(in_array($k_post, array('public','clear','required'))) {  $value[$k_post] = false; }
+					}
+					$orders = array_merge( $orders , array ($key => $value));
+				}
 			}
 		}
-		if(!is_array($show_fields['billing']['fields'])) { $show_fields['billing']['fields'] = array();  }
-			$show_fields['billing']['title'] = $show_fields['billing']['title'];
-		  if(isset($billing['billing']))
-		  $show_fields['billing'] =  /* $show_fields['billing']['fields'] + */ $billing['fields'];
-		
-		if(!is_array($show_fields['shipping']['fields'])) { $show_fields['shipping']['fields'] = array();  }
-		$show_fields['shipping']['title'] = $show_fields['shipping']['title'];
-		if(isset($shipping['fields']))
-		 $show_fields['shipping'] = /* $show_fields['shipping']['fields'] + */ $shipping['fields'];
 
-		if(!(@is_array($show_fields['order']['fields']))) { 
-		
-		$show_fields['order']['fields'] = array(); 
-		
-		$show_fields['order']['title'] = 'Дополнительные поля'; 
-		
+		if(!isset($show_fields['billing']['title'])) {
+			$_show_fields['billing']['title'] = $show_fields['billing']['title'];
 		}
-		if(isset($orders['fields']))
-		 $show_fields['order'] =  /* $show_fields['order']['fields']  + */ $orders['fields'];
+			
+		  if(isset($billing))
+		  $_show_fields['billing'] =   $billing;
+		  
+		if(!isset($show_fields['shipping']['title'])) {
+			$_show_fields['shipping']['title'] = $show_fields['shipping']['title'];
+		}
+			
+		  if(isset($shipping))
+		  $_show_fields['shipping'] =   $shipping;
 		
-		return $show_fields;
+
+		if(!(@is_array($show_fields['order']['fields']))) {
+			$_show_fields['order']['title'] = 'Дополнительные поля'; 
+		}
+		if(isset($orders))
+		 $_show_fields['order'] =   $orders;
+		
+		return $_show_fields;
 	}
 	function woocommerce_save_customer_meta_fields_saphali( $user_id ) {
 		if ( ! current_user_can( 'manage_woocommerce' ) )
