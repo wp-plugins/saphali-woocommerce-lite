@@ -6,8 +6,8 @@ Donate link: http://saphali.com/
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: 3.3 or higher
 Tested up to: 3.6.1
-Stable tag: 1.3.6.1
-Version: 1.3.6.1
+Stable tag: 1.3.6
+Version: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
