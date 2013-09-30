@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.6.2
+Version: 1.3.7
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.3.6.2' );
+ define('SAPHALI_LITE_VERSION', '1.3.7' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -60,6 +60,8 @@ Author URI: http://saphali.com/
 			add_filter( 'woocommerce_checkout_fields' , array($this,'saphali_custom_override_checkout_fields') );
 			add_filter( 'woocommerce_billing_fields',  array($this,'saphali_custom_billing_fields'), 10, 1 );
 			add_filter( 'woocommerce_shipping_fields',  array($this,'saphali_custom_shipping_fields'), 10, 1 );
+			add_filter( 'woocommerce_default_address_fields',  array($this,'woocommerce_default_address_fields'), 10, 1 );
+			//add_filter( 'woocommerce_get_country_locale',  array($this,'woocommerce_get_country_locale'), 10, 1 );
 			add_action('admin_init', array($this,'woocommerce_customer_meta_fields_action'), 20);
 			add_action( 'personal_options_update', array($this,'woocommerce_save_customer_meta_fields_saphali') );
 			add_action( 'edit_user_profile_update', array($this,'woocommerce_save_customer_meta_fields_saphali') );
@@ -70,6 +72,16 @@ Author URI: http://saphali.com/
 			add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
 			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 11 ); 
 		}
+	}
+	public function woocommerce_default_address_fields($locale) {
+		$fieldss = get_option('woocommerce_saphali_filds_locate');
+		if(is_array($fieldss))
+ 		$locale = $fieldss;
+		return $locale;
+	}
+	public function woocommerce_get_country_locale($locale) {
+		
+		return $locale;	
 	}
 	public function generator() {
 		echo "\n\n" . '<!-- Saphali Lite Version -->' . "\n" . '<meta name="generator" content="Saphali Lite ' . esc_attr( SAPHALI_LITE_VERSION ) . '" />' . "\n\n";
@@ -265,7 +277,8 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["billing"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["billing"][$key_post][$k_post] = false; if(!$filds["billing"][$key_post][$k_post] && $k_post == 'public') unset($filds["billing"][$key_post][$k_post]); }
+									$value_post[$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["billing"][$key_post][$k_post] = false; $value_post[$k_post] = false; if(!$filds["billing"][$key_post][$k_post] && $k_post == 'public') unset($filds["billing"][$key_post][$k_post]); }
 							}
 							$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post] = $value_post;
 							
@@ -289,7 +302,8 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["shipping"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["shipping"][$key_post][$k_post] = false; if(!$filds["shipping"][$key_post][$k_post] && $k_post == 'public') unset($filds["shipping"][$key_post][$k_post]); }
+									$value_post[$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["shipping"][$key_post][$k_post] = false; $value_post[$k_post] = false; if(!$filds["shipping"][$key_post][$k_post] && $k_post == 'public') unset($filds["shipping"][$key_post][$k_post]); }
 							}
 							$filds_new["shipping"][$filds["shipping"][$key_post]["order"]][$key_post] = $value_post;
 							unset($_POST["shipping"][$key_post]);
@@ -310,7 +324,8 @@ Author URI: http://saphali.com/
 							foreach($value_post as $k_post=> $v_post){
 								if( 'on' == $v_post  ) {
 									$filds["order"][$key_post][$k_post] = true;
-								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["order"][$key_post][$k_post] = false; if(!$filds["order"][$key_post][$k_post] && $k_post == 'public') unset($filds["order"][$key_post][$k_post]); }
+									$value_post[$k_post] = true;
+								} elseif(in_array($k_post, array('public','clear','required'))) {  $filds["order"][$key_post][$k_post] = false; $value_post[$k_post] = false; if(!$filds["order"][$key_post][$k_post] && $k_post == 'public') unset($filds["order"][$key_post][$k_post]); }
 							}
 						
 							$filds_new["order"][$filds["order"][$key_post]["order"]][$key_post] = $value_post;
@@ -353,9 +368,19 @@ Author URI: http://saphali.com/
 						}
 						if(!update_option('woocommerce_saphali_filds',$filds_finish))add_option('woocommerce_saphali_filds',$filds_finish);
 						if(!update_option('woocommerce_saphali_filds_filters',$filds_finish_filter))add_option('woocommerce_saphali_filds_filters',$filds_finish_filter);
+						foreach($filds_finish_filter['billing'] as $k_f => $v_f) {
+							$new_key = str_replace('billing_', '' , $k_f);
+							if(in_array($new_key, array('country', 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode' ) ))
+							$locate[$new_key] = $v_f;
+							elseif(in_array(str_replace('shipping_', '' , $k_f), array('country', 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode' ) )) {
+								$locate[$new_key] = $filds_finish_filter['shipping'][$k_f];
+							}
+						}
+						if(!update_option('woocommerce_saphali_filds_locate',$locate))add_option('woocommerce_saphali_filds_locate',$locate);
 					} else {
 							delete_option('woocommerce_saphali_filds');
 							delete_option('woocommerce_saphali_filds_filters'); 
+							delete_option('woocommerce_saphali_filds_locate'); 
 						}
 				}
 		
@@ -881,13 +906,15 @@ Author URI: http://saphali.com/
 			$fields["shipping"] = $fieldss["shipping"];
 			$fields["order"] = $fieldss["order"];
 		}
+
 		 return $fields;
 	}
 	function saphali_custom_billing_fields( $fields ) {
-		
+
 		$fieldss = get_option('woocommerce_saphali_filds_filters');
 		if(is_array($fieldss))
  		$fields = $fieldss["billing"];
+
 		 return $fields;
 	}
 	function saphali_custom_shipping_fields( $fields ) {
@@ -1041,3 +1068,25 @@ function _print_script_columns() {
 		<?php
 }
 add_action( 'admin_enqueue_scripts',  array('saphali_lite','admin_enqueue_scripts_page_saphali') );
+
+register_activation_hook( __FILE__, 'saphali_woo_lite_install' );
+
+function saphali_woo_lite_install() {
+	$filds_finish_filter = get_option('woocommerce_saphali_filds_filters');
+	if($filds_finish_filter) {
+		foreach($filds_finish_filter['billing'] as $k_f => $v_f) {
+			$new_key = str_replace('billing_', '' , $k_f);
+			if(in_array($new_key, array('country', 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode' ) )) {
+				$locate[$new_key] = $v_f;
+				if( isset($locate[$new_key]['clear']) && $locate[$new_key]['clear'] == 'on') $locate[$new_key]['clear'] = true;
+				if( isset($locate[$new_key]['required']) && $locate[$new_key]['required'] == 'on') $locate[$new_key]['required'] = true;
+			} elseif(in_array(str_replace('shipping_', '' , $k_f), array('country', 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode' ) )) {
+				$locate[$new_key] = $filds_finish_filter['shipping'][$k_f];
+				if( isset($locate[$new_key]['clear']) && $locate[$new_key]['clear'] == 'on') $locate[$new_key]['clear'] = true;
+				if( isset($locate[$new_key]['required']) && $locate[$new_key]['required'] == 'on') $locate[$new_key]['required'] = true;
+			}
+			
+		}
+		if(!update_option('woocommerce_saphali_filds_locate',$locate))add_option('woocommerce_saphali_filds_locate',$locate);
+	}
+}
