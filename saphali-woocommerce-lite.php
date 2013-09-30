@@ -30,6 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
+ define('SAPHALI_LITE_VERSION', '1.3.6.2' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -50,7 +51,7 @@ Author URI: http://saphali.com/
 		add_action( 'woocommerce_order_status_failed_to_completed_notification',   array( &$this, 'store_order_id' ), 1 );
 		add_action( 'woocommerce_order_status_completed_notification',             array( &$this, 'store_order_id' ), 1 );
 		add_action( 'woocommerce_new_customer_note_notification',                  array( &$this, 'store_order_id' ), 1 );
-		
+		add_action( 'wp_head', array( $this, 'generator' ) );
 		add_filter( 'woocommerce_order_formatted_billing_address',  array($this,'formatted_billing_address') , 10 , 2); 
 		add_filter( 'woocommerce_order_formatted_shipping_address',  array($this,'formatted_shipping_address') , 10 , 2); 
 		
@@ -70,7 +71,9 @@ Author URI: http://saphali.com/
 			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 11 ); 
 		}
 	}
-
+	public function generator() {
+		echo "\n\n" . '<!-- Saphali Lite Version -->' . "\n" . '<meta name="generator" content="Saphali Lite ' . esc_attr( SAPHALI_LITE_VERSION ) . '" />' . "\n\n";
+	}
 	function woocommerce_customer_meta_fields_action() {
 		add_action( 'show_user_profile', array($this,'woocommerce_customer_meta_fields_s') );
 		add_action( 'edit_user_profile', array($this,'woocommerce_customer_meta_fields_s') );
