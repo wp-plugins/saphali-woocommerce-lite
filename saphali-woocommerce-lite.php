@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.6.1
+Version: 1.3.6.2
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -66,8 +66,8 @@ Author URI: http://saphali.com/
 			add_action( 'woocommerce_admin_order_data_after_shipping_address', array($this,'woocommerce_admin_order_data_after_shipping_address_s') );
 			add_action( 'woocommerce_admin_order_data_after_order_details', array($this,'woocommerce_admin_order_data_after_order_details_s') );
 			
-			add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') );
-			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') ); 
+			add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
+			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 11 ); 
 		}
 	}
 
@@ -129,7 +129,7 @@ Author URI: http://saphali.com/
 		return $currencies;
 	}
 	function add_inr_currency_symbol( $symbol ) {
-		if(!$symbol)
+
 		$currency = get_option( 'woocommerce_currency' );
 		if(isset($currency)) {
 			switch( $currency ) {
