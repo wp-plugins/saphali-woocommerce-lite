@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.7
+Version: 1.3.7.1
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,15 +30,14 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.3.7' );
+ define('SAPHALI_LITE_VERSION', '1.3.7.1' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
 	function __construct() {
+		add_action('before_woocommerce_init', array($this,'load_plugin_textdomain'), 9);
 		add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 9);
-		load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-		load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-		
+
 		add_action( 'woocommerce_thankyou',                     array( &$this, 'order_pickup_location' ), 20 );
 		add_action( 'woocommerce_view_order',                   array( &$this, 'order_pickup_location' ), 20 );
 		
@@ -68,10 +67,15 @@ Author URI: http://saphali.com/
 			add_action( 'woocommerce_admin_order_data_after_billing_address', array($this,'woocommerce_admin_order_data_after_billing_address_s') );
 			add_action( 'woocommerce_admin_order_data_after_shipping_address', array($this,'woocommerce_admin_order_data_after_shipping_address_s') );
 			add_action( 'woocommerce_admin_order_data_after_order_details', array($this,'woocommerce_admin_order_data_after_order_details_s') );
-			
-			add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
-			add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 11 ); 
+		
 		}
+		add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
+		add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 1 ); 
+	}
+	public function load_plugin_textdomain() {
+		
+		load_plugin_textdomain( 'woocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'themewoocommerce',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 	public function woocommerce_default_address_fields($locale) {
 		$fieldss = get_option('woocommerce_saphali_filds_locate');
