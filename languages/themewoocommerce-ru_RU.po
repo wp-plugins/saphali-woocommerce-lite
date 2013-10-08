@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-06-24 07:34+0200\n"
+"PO-Revision-Date: 2013-10-05 16:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,8 +21,8 @@ msgstr ""
 
 # @ woocommerce
 #: functions.php:40
-msgid "Ukrainian hryvnia ( grn.)"
-msgstr "Украинская гривна ( грн.)"
+msgid "Ukrainian hryvnia"
+msgstr "Украинская гривна"
 
 msgid "Product Custom Fild"
 msgstr "Произвольное поле товарной записи"
@@ -35,8 +35,8 @@ msgstr "Произвольное поле"
 
 # @ woocommerce
 #: functions.php:40
-msgid "Russian ruble ( rub.)"
-msgstr "Русский рубль ( руб.)"
+msgid "Russian ruble"
+msgstr "Русский рубль"
 
 # @ woocommerce
 #: functions.php:40
@@ -45,8 +45,8 @@ msgstr "Русский рубль (P)"
 
 # @ woocommerce
 #: functions.php:40
-msgid "Belarusian ruble ( Br.)"
-msgstr "Белорусский рубль ( Br.)"
+msgid "Belarusian ruble"
+msgstr "Белорусский рубль"
 
 # @ woocommerce
 #: functions.php:40

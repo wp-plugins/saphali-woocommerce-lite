@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.7.1
+Version: 1.3.7.2
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.3.7.1' );
+ define('SAPHALI_LITE_VERSION', '1.3.7.2' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -43,6 +43,7 @@ Author URI: http://saphali.com/
 		
 		add_action( 'woocommerce_after_template_part',          array( &$this, 'email_pickup_location' ), 10, 3 );
 					
+		add_action( 'woocommerce_admin_order_totals_after_shipping', array( &$this, 'woocommerce_admin_order_totals_after_shipping' ), 1 );
 		add_action( 'woocommerce_order_status_pending_to_processing_notification', array( &$this, 'store_order_id' ), 1 );
 		add_action( 'woocommerce_order_status_pending_to_completed_notification',  array( &$this, 'store_order_id' ), 1 );
 		add_action( 'woocommerce_order_status_pending_to_on-hold_notification',    array( &$this, 'store_order_id' ), 1 );
@@ -70,7 +71,39 @@ Author URI: http://saphali.com/
 		
 		}
 		add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
-		add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 1 ); 
+		add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 1, 2 ); 
+	}
+	public function woocommerce_admin_order_totals_after_shipping($id) {
+		if( apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') ) == 'RUB' ) {
+		?>
+	<script type="text/javascript">
+	jQuery( function($){
+		$('#woocommerce-order-totals').on( 'change', '#_order_tax, #_order_shipping_tax, #_cart_discount, #_order_discount', function() {
+
+			var $this =  $(this);
+			var fields = $this.closest('.totals').find('input');
+			var total = 0;
+
+			fields.each(function(){
+				if ( $(this).val() )
+					total = total + parseFloat( $(this).val() );
+			});
+
+			var formatted_total = accounting.formatMoney( total, {
+				symbol 		: woocommerce_writepanel_params.currency_format_symbol,
+				decimal 	: woocommerce_writepanel_params.currency_format_decimal_sep,
+				thousand	: woocommerce_writepanel_params.currency_format_thousand_sep,
+				precision 	: woocommerce_writepanel_params.currency_format_num_decimals,
+				format		: woocommerce_writepanel_params.currency_format
+			} );
+			$this.closest('.totals_group').find('span.inline_total').html( formatted_total );
+			
+		} );
+		setTimeout(function() {$('span.inline_total').closest('.totals_group').find('input').change();}, 100);
+	});
+	</script>
+		<?php
+		}
 	}
 	public function load_plugin_textdomain() {
 		
@@ -138,22 +171,22 @@ Author URI: http://saphali.com/
 		add_submenu_page('woocommerce',  __('Настройки Saphali WC Lite', 'woocommerce'), __('Saphali WC Lite', 'woocommerce') , 'manage_woocommerce', 'woocommerce_saphali_s_l', array($this,'woocommerce_saphali_page_s_l'));
 	}
 	function add_inr_currency( $currencies ) {
-		$currencies['UAH'] = __( 'Ukrainian hryvnia ( grn.)', 'themewoocommerce' );
-		$currencies['RUR'] = __( 'Russian ruble ( руб.)', 'themewoocommerce' );
+		$currencies['UAH'] = __( 'Ukrainian hryvnia', 'themewoocommerce' );
+		$currencies['RUR'] = __( 'Russian ruble', 'themewoocommerce' );
 		$currencies['RUB'] = __( 'Russian ruble (P)', 'themewoocommerce' );
-		$currencies['BYR'] = __( 'Belarusian ruble ( Br.)', 'themewoocommerce' );
+		$currencies['BYR'] = __( 'Belarusian ruble', 'themewoocommerce' );
 		$currencies['AMD'] = __( 'Armenian dram  (Դրամ)', 'themewoocommerce' );
-		$currencies['KGS'] = __( 'Киргизский сом (сом)', 'themewoocommerce' );
-		$currencies['KZT'] = __( 'Казахстанский тенге (тңг)', 'themewoocommerce' );
+		$currencies['KGS'] = __( 'Киргизский сом', 'themewoocommerce' );
+		$currencies['KZT'] = __( 'Казахстанский тенге ', 'themewoocommerce' );
 		return $currencies;
 	}
-	function add_inr_currency_symbol( $symbol ) {
-
+	function add_inr_currency_symbol( $symbol , $currency ) {
+		if(empty($currency))
 		$currency = get_option( 'woocommerce_currency' );
 		if(isset($currency)) {
 			switch( $currency ) {
 				case 'UAH': $symbol = 'грн.'; break;
-				case 'RUB': $symbol = '<span class="rur">p<span>уб.</span></span>'; break;
+				case 'RUB': $symbol = '<span class=rur >p<span>уб.</span></span>'; break;
 				case 'RUR': $symbol = 'руб.'; break;
 				case 'BYR': $symbol = 'руб.'; break;
 				case 'AMD': $symbol = 'Դ'; break;
