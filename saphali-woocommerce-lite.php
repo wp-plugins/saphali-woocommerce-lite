@@ -480,6 +480,12 @@ Author URI: http://saphali.com/
 						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="billing[<?php echo $key?>][public]" /></td>
 						
 						<td><input rel="sort_order" id="order_count" type="hidden" name="billing[<?php echo $key?>][order]" value="<?php echo $count?>" />
+							<?php 
+							if( isset($value['options']) && is_array($value['options']) ) {
+								foreach($value['options'] as $key_option => $val_option) {?>
+								<input id="options" type="hidden" name="billing[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" />
+							<?php }
+							} ?>
 						<input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
 					</tr>
 					<?php $count++;
@@ -549,7 +555,14 @@ Author URI: http://saphali.com/
 						<td><input <?php if($value['required']) echo 'checked'?> type="checkbox" name="shipping[<?php echo $key?>][required]" /></td>
 						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="shipping[<?php echo $key?>][public]" /></td>
 						
-						<td><input rel="sort_order"  id="order_count" type="hidden" name="shipping[<?php echo $key?>][order]" value="<?php echo $count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
+						<td><input rel="sort_order"  id="order_count" type="hidden" name="shipping[<?php echo $key?>][order]" value="<?php echo $count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/>
+							<?php 
+							if( isset($value['options']) && is_array($value['options']) ) {
+								foreach($value['options'] as  $key_option => $val_option) {?>
+								<input id="options" type="hidden" name="shipping[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" />
+							<?php }
+							} ?>
+						</td>
 					</tr>
 					<?php $count++;
 				}
@@ -615,7 +628,14 @@ Author URI: http://saphali.com/
 						<td><input value='<?php echo $value['type']?>' type="text" name="order[<?php echo $key?>][type]" /></td>
 						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="order[<?php echo $key?>][public]" /></td>
 						
-						<td><input id="order_count" rel="sort_order" type="hidden" name="order[<?php echo $key?>][order]" value="<?php echo $count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
+						<td><input id="order_count" rel="sort_order" type="hidden" name="order[<?php echo $key?>][order]" value="<?php echo $count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/>
+							<?php 
+							if( isset($value['options']) && is_array($value['options']) ) {
+								foreach($value['options'] as $key_option => $val_option) {?>
+								<input id="options" type="hidden" name="order[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" />
+							<?php }
+							} ?>
+						</td>
 					</tr>
 					<?php $count++;
 				}
