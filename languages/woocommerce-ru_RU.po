@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-05-29 10:43+0200\n"
+"PO-Revision-Date: 2013-10-23 19:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1016,7 +1016,7 @@ msgstr "Изменить мой адрес"
 #: classes/emails/class-wc-email-customer-invoice.php:140
 #: classes/emails/class-wc-email-new-order.php:117
 msgid "Enable this email notification"
-msgstr "Включить уведомления о «низком наличии»"
+msgstr "Включить уведомление по электронной почте"
 
 #
 # @ woocommerce
@@ -8214,3 +8214,18 @@ msgstr "Итого:"
 #: templates/checkout/review-order.php:93
 msgid "Subtotal"
 msgstr "Итого"
+
+# @ woocommerce
+#: woocommerce-core-functions.php:1938
+msgid "Customer"
+msgstr "Покупатель"
+
+# @ woocommerce
+#: woocommerce-core-functions.php:1938
+msgid "Shop Manager"
+msgstr "Менеджер магазина"
+
+# @ woocommerce
+#: woocommerce-core-functions.php:1938
+msgid "Read More"
+msgstr "Подробнее"
