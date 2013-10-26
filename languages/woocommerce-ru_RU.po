@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-10-23 19:26+0200\n"
+"PO-Revision-Date: 2013-10-26 21:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -676,7 +676,7 @@ msgstr "&nbsp;<small>%sчерез %s</small>"
 #: templates/myaccount/form-edit-address.php:21
 #: templates/myaccount/my-address.php:20 templates/order/order-details.php:102
 msgid "Billing Address"
-msgstr "Контактные данные"
+msgstr "Реквизиты для оплаты"
 
 msgid "Sorry, this product cannot be purchased."
 msgstr "К сожалению, этот продукт не может быть куплен."
