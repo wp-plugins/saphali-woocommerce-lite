@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.8
+Version: 1.3.8.1
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,14 +30,14 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.3.8' );
+ define('SAPHALI_LITE_VERSION', '1.3.8.1' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
 	function __construct() {
 		add_action('before_woocommerce_init', array($this,'load_plugin_textdomain'), 9);
 		add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 9);
-
+		
 		add_action( 'woocommerce_thankyou',                     array( &$this, 'order_pickup_location' ), 20 );
 		add_action( 'woocommerce_view_order',                   array( &$this, 'order_pickup_location' ), 20 );
 		
@@ -667,6 +667,7 @@ Author URI: http://saphali.com/
 				background:none repeat scroll 0 0 #EAEAEA !important;
 				color:#636060 !important;
 			}
+			
 			</style>
 			<script type="text/javascript">
 			(function($){$.fn.tipTip=function(options){var defaults={activation:"hover",keepAlive:false,maxWidth:"200px",edgeOffset:3,defaultPosition:"bottom",delay:400,fadeIn:200,fadeOut:200,attribute:"title",content:false,enter:function(){},exit:function(){}};var opts=$.extend(defaults,options);if($("#tiptip_holder").length<=0){var tiptip_holder=$('<div id="tiptip_holder" style="max-width:'+opts.maxWidth+';"></div>');var tiptip_content=$('<div id="tiptip_content"></div>');var tiptip_arrow=$('<div id="tiptip_arrow"></div>');$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')))}else{var tiptip_holder=$("#tiptip_holder");var tiptip_content=$("#tiptip_content");var tiptip_arrow=$("#tiptip_arrow")}return this.each(function(){var org_elem=$(this);if(opts.content){var org_title=opts.content}else{var org_title=org_elem.attr(opts.attribute)}if(org_title!=""){if(!opts.content){org_elem.removeAttr(opts.attribute)}var timeout=false;if(opts.activation=="hover"){org_elem.hover(function(){active_tiptip()},function(){if(!opts.keepAlive){deactive_tiptip()}});if(opts.keepAlive){tiptip_holder.hover(function(){},function(){deactive_tiptip()})}}else if(opts.activation=="focus"){org_elem.focus(function(){active_tiptip()}).blur(function(){deactive_tiptip()})}else if(opts.activation=="click"){org_elem.click(function(){active_tiptip();return false}).hover(function(){},function(){if(!opts.keepAlive){deactive_tiptip()}});if(opts.keepAlive){tiptip_holder.hover(function(){},function(){deactive_tiptip()})}}function active_tiptip(){opts.enter.call(this);tiptip_content.html(org_title);tiptip_holder.hide().removeAttr("class").css("margin","0");tiptip_arrow.removeAttr("style");var top=parseInt(org_elem.offset()['top']);var left=parseInt(org_elem.offset()['left']);var org_width=parseInt(org_elem.outerWidth());var org_height=parseInt(org_elem.outerHeight());var tip_w=tiptip_holder.outerWidth();var tip_h=tiptip_holder.outerHeight();var w_compare=Math.round((org_width-tip_w)/2);var h_compare=Math.round((org_height-tip_h)/2);var marg_left=Math.round(left+w_compare);var marg_top=Math.round(top+org_height+opts.edgeOffset);var t_class="";var arrow_top="";var arrow_left=Math.round(tip_w-12)/2;if(opts.defaultPosition=="bottom"){t_class="_bottom"}else if(opts.defaultPosition=="top"){t_class="_top"}else if(opts.defaultPosition=="left"){t_class="_left"}else if(opts.defaultPosition=="right"){t_class="_right"}var right_compare=(w_compare+left)<parseInt($(window).scrollLeft());var left_compare=(tip_w+left)>parseInt($(window).width());if((right_compare&&w_compare<0)||(t_class=="_right"&&!left_compare)||(t_class=="_left"&&left<(tip_w+opts.edgeOffset+5))){t_class="_right";arrow_top=Math.round(tip_h-13)/2;arrow_left=-12;marg_left=Math.round(left+org_width+opts.edgeOffset);marg_top=Math.round(top+h_compare)}else if((left_compare&&w_compare<0)||(t_class=="_left"&&!right_compare)){t_class="_left";arrow_top=Math.round(tip_h-13)/2;arrow_left=Math.round(tip_w);marg_left=Math.round(left-(tip_w+opts.edgeOffset+5));marg_top=Math.round(top+h_compare)}var top_compare=(top+org_height+opts.edgeOffset+tip_h+8)>parseInt($(window).height()+$(window).scrollTop());var bottom_compare=((top+org_height)-(opts.edgeOffset+tip_h+8))<0;if(top_compare||(t_class=="_bottom"&&top_compare)||(t_class=="_top"&&!bottom_compare)){if(t_class=="_top"||t_class=="_bottom"){t_class="_top"}else{t_class=t_class+"_top"}arrow_top=tip_h;marg_top=Math.round(top-(tip_h+5+opts.edgeOffset))}else if(bottom_compare|(t_class=="_top"&&bottom_compare)||(t_class=="_bottom"&&!top_compare)){if(t_class=="_top"||t_class=="_bottom"){t_class="_bottom"}else{t_class=t_class+"_bottom"}arrow_top=-12;marg_top=Math.round(top+org_height+opts.edgeOffset)}if(t_class=="_right_top"||t_class=="_left_top"){marg_top=marg_top+5}else if(t_class=="_right_bottom"||t_class=="_left_bottom"){marg_top=marg_top-5}if(t_class=="_left_top"||t_class=="_left_bottom"){marg_left=marg_left+5}tiptip_arrow.css({"margin-left":arrow_left+"px","margin-top":arrow_top+"px"});tiptip_holder.css({"margin-left":marg_left+"px","margin-top":marg_top+"px"}).attr("class","tip"+t_class);if(timeout){clearTimeout(timeout)}timeout=setTimeout(function(){tiptip_holder.stop(true,true).fadeIn(opts.fadeIn)},opts.delay)}function deactive_tiptip(){opts.exit.call(this);if(timeout){clearTimeout(timeout)}tiptip_holder.fadeOut(opts.fadeOut)}}})}})(jQuery);
@@ -676,6 +677,7 @@ Author URI: http://saphali.com/
 				'fadeOut' : 50,
 				'delay' : 200
 			});
+			jQuery('input[value="billing_booking_delivery_t"]').parent().parent().hide();
 			jQuery('.button#billing').live('click',function() {
 				var obj = jQuery(this).parent().parent();
 				obj.html('<td><input value="billing_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
@@ -915,15 +917,16 @@ Author URI: http://saphali.com/
 	}
 	function woocommerce_admin_order_data_after_billing_address_s($order) {
 		$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+		
 		echo '<div class="address">';
 		if(is_array($billing_data["billing"])) {
 		foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 
 			 $field_name = '_'.$key;
 
-			if ( @$order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
 			
-		endforeach;
+			endforeach;
 		}
 		echo '</div>';
 	}
@@ -935,9 +938,9 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( @$order->order_custom_fields[$field_name][0] ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
 			
-		endforeach;
+			endforeach;
 		}
 		echo '</div>';
 	}
@@ -949,11 +952,11 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( @$order->order_custom_fields[$field_name][0] ) 
+			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
 
 			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 			
-		endforeach;
+			endforeach;
 		}
 		echo '</div>';
 	}
@@ -998,14 +1001,14 @@ Author URI: http://saphali.com/
 			if(is_array($billing_data["billing"]) && !$_billing_data) {
 				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] ) 
+					if ( $order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
 				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] ) 
+					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
@@ -1014,7 +1017,7 @@ Author URI: http://saphali.com/
 
 				 $field_name = '_'.$key;
 
-				if ( @$order->order_custom_fields[$field_name][0] ) 
+				if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
 
 				echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				
@@ -1029,9 +1032,12 @@ Author URI: http://saphali.com/
 			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
 		if(is_array($billing_data["billing"])) {
 			$_billing_data = true;
-			foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
+			$no_fild = array ('_billing_booking_delivery_t', '_billing_booking_delivery');
+			foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show'] ) continue;
+				
 				$field_name = '_'.$key;
-				if ( @$order->order_custom_fields[$field_name][0] ) 
+				if(in_array($field_name, $no_fild)) continue;
+				if ( @$order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
 				echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
 			endforeach;
 		}
@@ -1045,7 +1051,7 @@ Author URI: http://saphali.com/
 			$_shipping_data = true;
 			foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 				$field_name = '_'.$key;
-				if ( @$order->order_custom_fields[$field_name][0] ) {
+				if ( @$order->order_custom_fields[$field_name][0]  && !empty($field['label'])) {
 					echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
 					$address[$key] = $order->order_custom_fields[$field_name][0];
 				}
@@ -1066,21 +1072,21 @@ Author URI: http://saphali.com/
 			if(is_array($billing_data["billing"]) && !$_billing_data) {
 				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] ) 
+					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
 				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] ) 
+					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label']) ) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["order"]) ) {
 				foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( @$order->order_custom_fields[$field_name][0] ) 
+					if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
 					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
 				endforeach;
 			}
@@ -1148,4 +1154,8 @@ function saphali_woo_lite_install() {
 		}
 		if(!update_option('woocommerce_saphali_filds_locate',$locate))add_option('woocommerce_saphali_filds_locate',$locate);
 	}
+	//if(!update_option('woocommerce_informal_localisation_type' , 'yes'))add_option('woocommerce_informal_localisation_type' , 'yes');
+	//global $woocommerce;
+	//copy( SAPHALI_PLUGIN_DIR_PATH . '/languages/woocommerce-ru_RU.mo', $woocommerce->plugin_path() .'/i18n/languages/informal/woocommerce-ru_RU.mo');
+	//copy( SAPHALI_PLUGIN_DIR_PATH . '/languages/woocommerce-ru_RU.po', $woocommerce->plugin_path() .'/i18n/languages/informal/woocommerce-ru_RU.po');
 }
