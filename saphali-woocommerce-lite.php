@@ -193,7 +193,7 @@ Author URI: http://saphali.com/
 				case 'AMD': $symbol = 'Դ'; break;
 				case 'KGS': $symbol = 'сом'; break;
 				case 'KZT': $symbol = 'тңг'; break;
-				case 'UZS': $symbol = 'сум'; break;
+				case 'UZS': $symbol = 'sóm'; break;
 			}
 		}
 		return $symbol;
