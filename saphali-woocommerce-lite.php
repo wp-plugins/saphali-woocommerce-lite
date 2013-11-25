@@ -1099,6 +1099,8 @@ add_action('plugins_loaded', 'woocommerce_lang_s_l', 0);
 if ( ! function_exists( 'woocommerce_lang_s_l' ) ) {
 	function woocommerce_lang_s_l() {
 		new saphali_lite();
+		if( is_admin() )
+		add_action( 'admin_enqueue_scripts',  array('saphali_lite','admin_enqueue_scripts_page_saphali') );
 	}
 }
 //END
@@ -1132,7 +1134,7 @@ function _print_script_columns() {
 	</style>
 		<?php
 }
-add_action( 'admin_enqueue_scripts',  array('saphali_lite','admin_enqueue_scripts_page_saphali') );
+
 
 register_activation_hook( __FILE__, 'saphali_woo_lite_install' );
 
