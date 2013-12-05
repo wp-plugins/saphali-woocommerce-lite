@@ -237,11 +237,11 @@ Author URI: http://saphali.com/
 					}
 				}
 				 else	$f = $woocommerce->checkout; 
-				if($_POST){
-					if($_POST["reset"] != 'All') {
+				if( isset($_POST) ){
+					if(@$_POST["reset"] != 'All') {
 						// Управление новыми полями
 
-						if(is_array($_POST["billing"]["new_fild"])) {
+						if(@is_array($_POST["billing"]["new_fild"])) {
 							foreach($_POST["billing"]["new_fild"] as $k_nf => $v_nf) {
 								if($k_nf == 'name')
 								foreach($v_nf as $v_nf_f)
@@ -259,7 +259,7 @@ Author URI: http://saphali.com/
 							unset($_POST["billing"]["new_fild"]);
 							unset($new_fild);
 						}
-						if(is_array($_POST["shipping"]["new_fild"])) {
+						if(@is_array($_POST["shipping"]["new_fild"])) {
 							foreach($_POST["shipping"]["new_fild"] as $k_nf => $v_nf) {
 								if($k_nf == 'name')
 								foreach($v_nf as $v_nf_f)
@@ -277,7 +277,7 @@ Author URI: http://saphali.com/
 							unset($_POST["shipping"]["new_fild"]);
 							unset($new_fild);
 						}
-						if(is_array($_POST["order"]["new_fild"])) {
+						if(@is_array($_POST["order"]["new_fild"])) {
 							foreach($_POST["order"]["new_fild"] as $k_nf => $v_nf) {
 								if($k_nf == 'name')
 								foreach($v_nf as $v_nf_f)
@@ -307,7 +307,7 @@ Author URI: http://saphali.com/
 							if( !isset($f->checkout_fields["billing"][$key_post]['type']) ) unset($filds["billing"][$key_post]['type'],  $value_post["type"]);
 
 							
-								if($filds["billing"][$key_post]['public'] != 'on') {
+								if(@$filds["billing"][$key_post]['public'] != 'on') {
 									$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post]["public"] = false;
 									$fild_remove_filter["billing"][] = $key_post;
 								} else {$filds_new["billing"][$filds["billing"][$key_post]["order"]][$key_post]["public"] = true;}
