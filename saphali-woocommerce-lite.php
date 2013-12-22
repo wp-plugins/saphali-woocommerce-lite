@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.3.8.1
+Version: 1.4
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.3.8.1' );
+ define('SAPHALI_LITE_VERSION', '1.4' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -237,23 +237,28 @@ Author URI: http://saphali.com/
 					}
 				}
 				 else	$f = $woocommerce->checkout; 
-				if( isset($_POST) ){
+				if($_POST){
 					if(@$_POST["reset"] != 'All') {
 						// Управление новыми полями
 
 						if(@is_array($_POST["billing"]["new_fild"])) {
 							foreach($_POST["billing"]["new_fild"] as $k_nf => $v_nf) {
-								if($k_nf == 'name')
-								foreach($v_nf as $v_nf_f)
-								$new_fild[] = $v_nf_f;
-								 else {
-									foreach($v_nf as $k_nf_f => $v_nf_f) {
-										if($k_nf == 'class') {
-											$v_nf_f = array ( $v_nf_f );
-											$addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
-										} else $addFild["billing"][$new_fild[$k_nf_f]][$k_nf] = $v_nf_f;
+							if($k_nf == 'name') {
+								foreach($v_nf as $v_nf_f) {
+								$new_fild = $v_nf_f;
+								}
+							}
+							 else {
+								foreach($v_nf as $k_nf_f => $v_nf_f) {
+									if($k_nf == 'class' ) {
+										$v_nf_f = array ( $v_nf_f );
+										$addFild["billing"][$new_fild][$k_nf] = $v_nf_f;
+									} else $addFild["billing"][$new_fild][$k_nf] = $v_nf_f;
 										//$addFild["billing"][$new_fild[$k_nf_f]]['add_new'] = true;
 									}
+								if($k_nf == 'type' && !is_array($v_nf) || $k_nf == 'options') {
+									$addFild["billing"][$new_fild][$k_nf] = $v_nf;
+								}
 								}
 							}
 							unset($_POST["billing"]["new_fild"]);
@@ -304,7 +309,7 @@ Author URI: http://saphali.com/
 
 						foreach($filds["billing"] as $key_post => $value_post) {
 							
-							if( !isset($f->checkout_fields["billing"][$key_post]['type']) ) unset($filds["billing"][$key_post]['type'],  $value_post["type"]);
+							if( !isset($f->checkout_fields["billing"][$key_post]['type']) && $filds["billing"][$key_post]['type'] != 'select' && $filds["billing"][$key_post]['type'] != 'checkbox' && $filds["billing"][$key_post]['type'] != 'textarea' ) unset($filds["billing"][$key_post]['type'],  $value_post["type"]);
 
 							
 								if(@$filds["billing"][$key_post]['public'] != 'on') {
@@ -426,7 +431,7 @@ Author URI: http://saphali.com/
 			?>
 			<div class="clear"></div>
 			<h3 class="nav-tab-wrapper woo-nav-tab-wrapper" style="text-align: center;">Управление полями на странице заказа и на странице профиля</h3>
-			
+		 <?php if($_POST && @$_POST["reset"] != 'All') { ?><div class="updated" id="message"><p>Настройки сохранены</p></div><?php } ?>
 			<h2 align="center">Реквизиты оплаты</h2>
 			<form action="" method="post">
 			<table class="wp-list-table widefat fixed posts" cellspacing="0">
@@ -437,20 +442,22 @@ Author URI: http://saphali.com/
 					<th width="130px">Текст в поле</th>
 					<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<?php bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
 					<th width="130px">Класс поля<img class="help_tip" data-tip="<h3 style='margin:0;padding:0'>Задает стиль текущего поля</h3><ul style='text-align: left;'><li><span style='color: #000'>form-row-first</span>&nbsp;&ndash;&nbsp;первый в строке;</li><li><span style='color: #000'>form-row-last</span>&nbsp;&ndash;&nbsp;последний в строке.</li></ul><hr /><span style='color: #000'>ЕСЛИ ОСТАВИТЬ ПУСТЫМ</span>, то поле будет отображаться на всю ширину. Соответственно, в предыдущем поле (которое выше) нужно отметить &laquo;Clear&raquo;." src="<?php bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /></th>
-					<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
+				<th  width="40px">Тип поля</th>
+				<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
-					<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
-				
-					<th width="65px">Удалить/До&shy;ба&shy;вить</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Название</th>
-					<th>Заголовок</th>
-					<th>Текст в поле</th>
-					<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<?php bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
-					<th>Класс поля</th>
+				<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
+			
+				<th width="65px">Удалить/До&shy;ба&shy;вить</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Название</th>
+				<th>Заголовок</th>
+				<th>Текст в поле</th>
+				<th width="35px">Clear<img class="help_tip" data-tip="Указывает на то, что следующее поле за текущим, будет начинаться с новой строки." src="<?php  bloginfo('wpurl');?>/wp-content/plugins/woocommerce/assets/images/help.png" /> </th>
+				<th>Класс поля</th>
+				<th  width="40px">Тип поля</th>
 					<th  width="40px">Обя&shy;за&shy;те&shy;ль&shy;ное</th>
 
 					<th  width="40px">Опу&shy;бли&shy;ко&shy;вать</th>
@@ -471,23 +478,33 @@ Author URI: http://saphali.com/
 					?>
 					<tr>
 						<td> <input  disabled value='<?php echo $key?>' type="text" name="billing[<?php echo $key?>][name]" /></td>
-						<td><input value='<?php echo $value['label']?>' type="text" name="billing[<?php echo $key?>][label]" /><input value='<?php echo $value['type']?>' type="hidden" name="billing[<?php echo $key?>][type]" /></td>
-						<td><input value='<?php echo $value['placeholder']?>' type="text" name="billing[<?php echo $key?>][placeholder]" /></td>
+						<td><input value='<?php echo $value['label']?>' type="text" name="billing[<?php echo $key?>][label]" /></td>
+					<td<?php if($value['type'] == 'select') {echo ' class="option-area"';}  ?>><?php if($value['type'] != 'select') { ?><input value='<?php  echo $value['placeholder']?>' type="text" name="billing[<?php  echo $key?>][placeholder]" /><?php } else { 
+							if( isset($value['options']) && is_array($value['options']) ) {
+								foreach($value['options'] as $key_option => $val_option) {?>
+								<span><input id="options" type="text" name="billing[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" /> <span class="delete-option" style="cursor:pointer;border:1px solid">Удалить</span></span><br />
+								
+							<?php } ?>
+							<div class="button add_option" rel="<?php echo $key; ?>">Добавить еще</div>
+							<?php
+							}
+					
+					} ?></td>
 						<td><input <?php if($value['clear']) echo 'checked'?>  class="<?php echo $value['clear']?>" type="checkbox" name="billing[<?php echo $key?>][clear]" /></td>
 						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
 						<input value='<?php echo $v_class;?>' type="text" name="billing[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="billing[<?php echo $key?>][class][]" /> <?php
 						} ?></td>
+					<td>
+					Select <input <?php  if($value['type'] == 'select') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="select" /><br />
+					Checkbox <input <?php  if($value['type'] == 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="checkbox"  /><br />
+					Textarea <input <?php  if($value['type'] == 'textarea') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="textarea"  /><br />
+					<?php echo (!$value['type'] || $value['type'] == 'select'|| $value['type'] == 'checkbox'|| $value['type'] == 'textarea') ? 'Text' : $value['type']; ?> <input <?php  if($value['type'] == $value['type'] && $value['type'] != 'select'&& $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="<?php if($value['type'] != 'select' && $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo $value['type']; ?>"  />
+					</td>
 						<td><input <?php if($value['required']) echo 'checked'?> type="checkbox" name="billing[<?php echo $key?>][required]" /></td>
 						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="billing[<?php echo $key?>][public]" /></td>
 						
 						<td><input rel="sort_order" id="order_count" type="hidden" name="billing[<?php echo $key?>][order]" value="<?php echo $count?>" />
-							<?php 
-							if( isset($value['options']) && is_array($value['options']) ) {
-								foreach($value['options'] as $key_option => $val_option) {?>
-								<input id="options" type="hidden" name="billing[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" />
-							<?php }
-							} ?>
 						<input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
 					</tr>
 					<?php $count++;
@@ -678,9 +695,38 @@ Author URI: http://saphali.com/
 				'delay' : 200
 			});
 			jQuery('input[value="billing_booking_delivery_t"]').parent().parent().hide();
+		jQuery('.delete-option').live('click',function() {
+			jQuery(this).parent().remove();
+		});
+		jQuery('.button.add_option').live('click',function() {
+			jQuery(this).before(' <span><br /><input type="text" id="options" value="" name="billing['+jQuery(this).attr('rel')+'][options][option-'+ (jQuery(this).parent().find('input').length + 1) +']"/><span class="delete-option" style="cursor:pointer;border:1px solid">Удалить</span></span>');
+		});
+		jQuery('input[type="radio"]').live('click',function() {
+			if( jQuery(this).val() == 'select' || jQuery(this).val() == 'radio') {
+				jQuery(this).parent().parent().find('td').css('border-bottom', 'none');
+				jQuery(this).parent().parent().addClass('parrent_td_option'+jQuery('.button.add_option').length);
+				if('billing[new_fild][name][]' != jQuery(this).parent().parent().find('td:first input').attr('name') )
+				jQuery(this).parent().parent().after('<tr style="border-top:0" class="tr_td_option'+jQuery('.button.add_option').length +'" ><td  style="border-top:0;padding-left: 72%;" colspan="9"> <span><input id="options" type="text" value="" name="billing['+jQuery(this).parent().parent().find('td:first input').val()+'][options][option-1]"/><span class="delete-option" style="cursor:pointer;border:1px solid">Удалить</span></span> <div class="button add_option" rel="'+jQuery(this).parent().parent().find('td:first input').val()+'">Добавить еще</div></td></tr>');
+				else jQuery(this).parent().parent().after('<tr style="border-top:0" class="tr_td_option'+jQuery('.button.add_option').length +'" ><td  style="border-top:0;padding-left: 72%;" colspan="9"> <span><input id="options" type="text" value="" name="billing[new_fild][options][option-1]"/><span class="delete-option" style="cursor:pointer;border:1px solid">Удалить</span></span> <div class="button add_option" rel="new_fild">Добавить еще</div></td></tr>');
+			} else {
+				if(jQuery(this).parent().parent().find('td').attr('style') != '') {
+					jQuery(this).parent().parent().find('td').attr('style', '');
+					var text = jQuery(this).parent().parent().attr('class');//parrent_td_option
+					text = text.replace(/parrent_td_option/g,'');
+					jQuery('tr.tr_td_option'+text).remove();
+					jQuery(this).parent().parent().attr('class', '');
+				}
+			}
+		});
+		
+		jQuery('input#options').live('blur', function() {
+			var text = jQuery(this).attr('name');
+			text = text.replace(/\[options\]\[(.*)\]/g,'[options]['+ jQuery(this).val() +']');
+			jQuery(this).attr('name', text);
+		});
 			jQuery('.button#billing').live('click',function() {
 				var obj = jQuery(this).parent().parent();
-				obj.html('<td><input value="billing_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
+			obj.html('<td><input value="billing_new_fild'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" type="text" name="billing[new_fild][name][]" /></td><td><input value="" type="text" name="billing[new_fild][label][]" /></td><td><input value="" type="text" name="billing[new_fild][placeholder][]" /></td><td><input type="checkbox" name="billing[new_fild][clear][]" /></td><td><input value="" type="text" name="billing[new_fild][class][]" /></td><td>	Select <input type="radio" value="select" name="billing[new_fild][type]"><br>Radio <input type="radio" value="radio" name="billing[new_fild][type]"><br>Checkbox <input type="radio" value="checkbox" name="billing[new_fild][type]"><br>	Textarea <input type="radio" value="textarea" name="billing[new_fild][type]"><br>	Text <input type="radio" value="" name="billing[new_fild][type]" checked="checked"></td><td><input checked type="checkbox" name="billing[new_fild][required][]" /></td><td><input checked type="checkbox" name="billing[new_fild][public][]" /></td><td><input id="order_count" rel="sort_order" type="hidden" name="billing[new_fild][order][]" value="'+(parseInt(obj.parent().find('tr td input#order_count:last').val(),10)+1)+'" /><input type="button" class="button" id="billing_delete" value="Удалить -"/></td>');
 				obj.removeClass('nodrop nodrag');
 				obj.after('<tr  class="nodrop nodrag"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="button" class="button" id="billing" value="Добавить +"/></td></tr>');
 			});
