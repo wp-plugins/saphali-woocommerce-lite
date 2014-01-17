@@ -8,6 +8,7 @@ Requires at least: 3.3 or higher
 Tested up to: 3.8
 Stable tag: 1.4
 Version: 1.4
+Donate link: http://saphali.com/vznos
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
