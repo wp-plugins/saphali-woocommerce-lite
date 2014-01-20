@@ -1144,9 +1144,9 @@ Author URI: http://saphali.com/
 add_action('plugins_loaded', 'woocommerce_lang_s_l', 0);
 if ( ! function_exists( 'woocommerce_lang_s_l' ) ) {
 	function woocommerce_lang_s_l() {
-		new saphali_lite();
+		$lite = new saphali_lite();
 		if( is_admin() )
-		add_action( 'admin_enqueue_scripts',  array('saphali_lite','admin_enqueue_scripts_page_saphali') );
+		add_action( 'admin_enqueue_scripts',  array( $lite, 'admin_enqueue_scripts_page_saphali' ) );
 	}
 }
 //END
