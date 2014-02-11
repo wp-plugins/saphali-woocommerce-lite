@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-12-14 08:54+0200\n"
+"PO-Revision-Date: 2014-02-11 11:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -850,6 +850,63 @@ msgstr ""
 #: admin/woocommerce-admin-functions.php:300
 msgid "Mark processing"
 msgstr "Изменить статус на обработка"
+
+msgid "Mark on-hold"
+msgstr "Изменить статус на зарезервирован"
+
+msgid "Last Month"
+msgstr "Предыдущий месяц"
+
+msgid "This Month"
+msgstr "Этот месяц"
+
+msgid "Last 7 Days"
+msgstr "Последние 7 дней"
+
+msgid "Custom:"
+msgstr "Выборочно:"
+
+msgid "Sales by date"
+msgstr "Продажа по дате"
+
+msgid "Sales by product"
+msgstr "Продажа товаров"
+
+msgid "%s sales in this period"
+msgstr "%s распродано за этот период"
+
+msgid "%s average daily sales"
+msgstr "среднесуточная реализация: %s"
+
+msgid "%s average monthly sales"
+msgstr "среднемесячные продажи: %s"
+
+msgid "%s orders placed"
+msgstr "размещенных заказов: %s"
+
+msgid "%s items purchased"
+msgstr "размещенных позиций: %s"
+
+msgid "%s charged for shipping"
+msgstr "за доставку: %s"
+
+msgid "%s worth of coupons used"
+msgstr "стоимость используемых купонов: %s"
+
+msgid "Coupons by date"
+msgstr "Применение купонов по дате"
+
+msgid "Selling Location(s)"
+msgstr "Допустимые страны"
+
+msgid "Sell to all countries"
+msgstr "Все страны"
+
+msgid "Sell to specific countries only"
+msgstr "Определенные страны"
+
+msgid "Product Archive / Shop Page"
+msgstr "Архив товаров / Страница магазина"
 
 # @ woocommerce
 #: admin/woocommerce-admin-functions.php:302

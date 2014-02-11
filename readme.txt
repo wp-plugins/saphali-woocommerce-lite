@@ -5,9 +5,9 @@ Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Donate link: http://saphali.com/vznos
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: 3.3 or higher
-Tested up to: 3.8
-Stable tag: 1.4
-Version: 1.4
+Tested up to: 3.8.1
+Stable tag: 1.5
+Version: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интерк�
 5. Управление количеством колонок в каталоге товаров и рубриках.
 
 == Changelog ==
+
+= 1.4 =
+* Изменения в связи с выходом Woocommerce 2.1.0.
 
 = 1.4 =
 * В управлении полями реализована возможность использовать различные типы полей (select, checkbox, textarea).

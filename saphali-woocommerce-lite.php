@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.4
+Version: 1.5
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,27 +30,28 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.4' );
+ define('SAPHALI_LITE_VERSION', '1.5' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
 	function __construct() {
 		add_action('before_woocommerce_init', array($this,'load_plugin_textdomain'), 9);
-		add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 9);
+		if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) )  add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 9);
+		else add_action('admin_menu', array($this,'woocommerce_saphali_admin_menu_s_l'), 10);
 		
-		add_action( 'woocommerce_thankyou',                     array( &$this, 'order_pickup_location' ), 20 );
-		add_action( 'woocommerce_view_order',                   array( &$this, 'order_pickup_location' ), 20 );
+		add_action( 'woocommerce_thankyou',                     array( $this, 'order_pickup_location' ), 20 );
+		add_action( 'woocommerce_view_order',                   array( $this, 'order_pickup_location' ), 20 );
 		
-		add_action( 'woocommerce_after_template_part',          array( &$this, 'email_pickup_location' ), 10, 3 );
+		add_action( 'woocommerce_after_template_part',          array( $this, 'email_pickup_location' ), 10, 3 );
 					
-		add_action( 'woocommerce_admin_order_totals_after_shipping', array( &$this, 'woocommerce_admin_order_totals_after_shipping' ), 1 );
-		add_action( 'woocommerce_order_status_pending_to_processing_notification', array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_order_status_pending_to_completed_notification',  array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_order_status_pending_to_on-hold_notification',    array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_order_status_failed_to_processing_notification',  array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_order_status_failed_to_completed_notification',   array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_order_status_completed_notification',             array( &$this, 'store_order_id' ), 1 );
-		add_action( 'woocommerce_new_customer_note_notification',                  array( &$this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_admin_order_totals_after_shipping', array( $this, 'woocommerce_admin_order_totals_after_shipping' ), 1 );
+		add_action( 'woocommerce_order_status_pending_to_processing_notification', array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_pending_to_completed_notification',  array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_pending_to_on-hold_notification',    array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_failed_to_processing_notification',  array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_failed_to_completed_notification',   array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_order_status_completed_notification',             array( $this, 'store_order_id' ), 1 );
+		add_action( 'woocommerce_new_customer_note_notification',                  array( $this, 'store_order_id' ), 1 );
 		add_action( 'wp_head', array( $this, 'generator' ) );
 		add_filter( 'woocommerce_order_formatted_billing_address',  array($this,'formatted_billing_address') , 10 , 2); 
 		add_filter( 'woocommerce_order_formatted_shipping_address',  array($this,'formatted_shipping_address') , 10 , 2); 
@@ -72,6 +73,19 @@ Author URI: http://saphali.com/
 		}
 		add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
 		add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 1, 2 ); 
+		add_action( 'woocommerce_checkout_update_order_meta',   array( $this, 'checkout_update_order_meta' ), 10, 2 );
+	}
+	public function checkout_update_order_meta( $order_id, $posted ) {
+		if ( !version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) {
+			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+			if(is_array($billing_data["order"])) {
+				foreach ( $billing_data["order"] as $key => $field ) {
+					if (isset($field['show']) && !$field['show'] || $key == 'order_comments') continue;
+					if(!empty($posted[$key]))
+						if(!update_post_meta( $order_id, '_' . $key, $posted[$key] )) add_post_meta( $order_id, '_' . $key, $posted[$key] );
+				}
+			}
+		}
 	}
 	public function woocommerce_admin_order_totals_after_shipping($id) {
 		if( apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') ) == 'RUB' ) {
@@ -249,6 +263,7 @@ Author URI: http://saphali.com/
 								}
 							}
 							 else {
+								if(is_array($v_nf) )
 								foreach($v_nf as $k_nf_f => $v_nf_f) {
 									if($k_nf == 'class' ) {
 										$v_nf_f = array ( $v_nf_f );
@@ -969,8 +984,11 @@ Author URI: http://saphali.com/
 		foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 
 			 $field_name = '_'.$key;
-
-			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+			$value_fild = @$order->order_custom_fields[$field_name][0];
+			else
+			$value_fild = $order->__get( $key );
+			if ( $value_fild && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$value_fild.'</p>';
 			
 			endforeach;
 		}
@@ -984,7 +1002,11 @@ Author URI: http://saphali.com/
 
 			 $field_name = '_'.$key;
 
-			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$order->order_custom_fields[$field_name][0].'</p>';
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+			$value_fild = @$order->order_custom_fields[$field_name][0];
+			else
+			$value_fild = $order->__get( $key );
+			if ( $value_fild && !empty($field['label']) ) echo '<p><strong>'.$field['label'].':</strong> '.$value_fild.'</p>';
 			
 			endforeach;
 		}
@@ -997,14 +1019,18 @@ Author URI: http://saphali.com/
 		foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 
 			 $field_name = '_'.$key;
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+			$value_fild = @$order->order_custom_fields[$field_name][0];
+			else
+			$value_fild = $order->__get( $key );
+			if ( $value_fild && !empty($field['label']) ) 
 
-			if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
-
-			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+			echo '<div class="form-field form-field-wide"><label>'. $field['label']. ':</label> ' . $value_fild.'</div>';
 			
 			endforeach;
 		}
 		echo '</div>';
+		
 	}
 	function saphali_custom_override_checkout_fields( $fields ) {
 		
@@ -1047,25 +1073,36 @@ Author URI: http://saphali.com/
 			if(is_array($billing_data["billing"]) && !$_billing_data) {
 				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
-					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+					else
+					$value_fild = $order->__get( $key );
+					if ( $value_fild && !empty($field['label']) ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
 				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
-					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+					else
+					$value_fild = $order->__get( $key );
+					if ( $value_fild  && !empty($field['label'])) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["order"])) {
 			foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 
 				 $field_name = '_'.$key;
+				if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+				else
+					$value_fild = $order->__get( $key );
+				if ( $value_fild && !empty($field['label']) ) 
 
-				if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
-
-				echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+				echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				
 			endforeach;
 			}
@@ -1082,9 +1119,14 @@ Author URI: http://saphali.com/
 			foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show'] ) continue;
 				
 				$field_name = '_'.$key;
+				
 				if(in_array($field_name, $no_fild)) continue;
-				if ( @$order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
-				echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
+				if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+				else
+					$value_fild = $order->__get( $key );
+				if ( $value_fild  && !empty($field['label'])) 
+				echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'<br />';
 			endforeach;
 		}
 		return $address;
@@ -1097,9 +1139,13 @@ Author URI: http://saphali.com/
 			$_shipping_data = true;
 			foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 				$field_name = '_'.$key;
-				if ( @$order->order_custom_fields[$field_name][0]  && !empty($field['label'])) {
-					echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'<br />';
-					$address[$key] = $order->order_custom_fields[$field_name][0];
+				if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+				else
+					$value_fild = $order->__get( $key );
+				if ( $value_fild  && !empty($field['label'])) {
+					echo  '<label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'<br />';
+					$address[$key] = $value_fild;
 				}
 			endforeach;
 		}
@@ -1118,22 +1164,34 @@ Author URI: http://saphali.com/
 			if(is_array($billing_data["billing"]) && !$_billing_data) {
 				foreach ( $billing_data["billing"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label'])) 
-					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+					else
+					$value_fild = $order->__get( $key );
+					if ( $value_fild  && !empty($field['label'])) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["shipping"]) && !$_shipping_data) {
 				foreach ( $billing_data["shipping"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( $order->order_custom_fields[$field_name][0]  && !empty($field['label']) ) 
-					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+					else
+					$value_fild = $order->__get( $key );
+					if ( $value_fild  && !empty($field['label']) ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				endforeach;
 			}
 			if(is_array($billing_data["order"]) ) {
 				foreach ( $billing_data["order"] as $key => $field ) : if (isset($field['show']) && !$field['show']) continue;
 					$field_name = '_'.$key;
-					if ( @$order->order_custom_fields[$field_name][0] && !empty($field['label']) ) 
-					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $order->order_custom_fields[$field_name][0].'</div>';
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) 
+					$value_fild = @$order->order_custom_fields[$field_name][0];
+					else
+					$value_fild = $order->__get( $key );
+					if ( $value_fild && !empty($field['label']) ) 
+					echo '<div class="form-field form-field-wide"><label><strong>'. $field['label']. ':</strong></label> ' . $value_fild.'</div>';
 				endforeach;
 			}
 			echo '</div>';
