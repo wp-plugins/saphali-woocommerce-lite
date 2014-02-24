@@ -971,6 +971,7 @@ Author URI: http://saphali.com/
 			 $save_fields["order"]['title'] = __('Дополнительные поля', 'woocommerce');
 			 $save_fields["order"]['fields'] = $show_fields["order"];
 		} */
+		if(isset($save_fields) && is_array($save_fields))
 		foreach( $save_fields as $fieldset )
 			foreach( $fieldset['fields'] as $key => $field )
 				if ( isset( $_POST[ $key ] ) )
