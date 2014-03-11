@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-02-11 11:27+0200\n"
+"PO-Revision-Date: 2014-03-11 09:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Textdomain-Support: yes\n"
 "Language: ru\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
 # @ woocommerce
@@ -8287,3 +8287,11 @@ msgstr "Менеджер магазина"
 #: woocommerce-core-functions.php:1938
 msgid "Read More"
 msgstr "Подробнее"
+
+#: includes/admin/post-types/class-wc-admin-cpt-shop_order.php:127
+msgid "Y/m/d g:i:s A"
+msgstr "Y/m/d g:i:s A"
+
+#: includes/admin/post-types/class-wc-admin-cpt-shop_order.php:130
+msgid "Y/m/d"
+msgstr "Y/m/d"
