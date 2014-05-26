@@ -3,7 +3,7 @@
 <ol>
 <li>Улучшенная русская локализация Woocommerce.</li>
 <li>В общий список валют добавлены — Украинская гривна (грн.), Российский рубль (руб.), Белорусский рубль (руб.) и Armenian dram (Դրամ)</li>
-<li>Управление полями на странице оформления заказа и на странице профиля. Функция позволяет настроить заказную форму регистрации, чтобы настроить магазин на упрощенение оформления заказа. Вы можете сделать некоторые поля необязательными при регистрации/оформленнии заказа либо удалить их полностью.</li>
+<li>Управление полями на странице оформления заказа и на странице профиля. Функция позволяет настроить заказную форму регистрации, чтобы настроить магазин на упрощение оформления заказа. Вы можете сделать некоторые поля необязательными при регистрации/оформлении заказа либо удалить их полностью.</li>
 <li>Управление количеством колонок в каталоге товаров на странице "Магазин" и в категориях.</li>
 </ol>
 <p>Подробнее на сайте <strong><a href="http://saphali.com/" target="_blank">www.saphali.com</a></strong></p>
@@ -224,6 +224,16 @@
 			<td style="width:153px;height:19px;">
 				<p>
 					<strong><a href="http://saphali.com/woocommerce-plugins/woocommerce-webpay">Подробнее</a></strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:470px;height:19px;">
+				<p>
+					<strong>Woocommerce epay-ArCa плагин (Армения)</strong></p>
+			</td>
+			<td style="width:153px;height:19px;">
+				<p>
+					<strong><a href="http://saphali.com/woocommerce-plugins/woocommerce-epay-arca-plugin-armeniya">Подробнее</a></strong></p>
 			</td>
 		</tr>
 	</tbody>
@@ -616,6 +626,26 @@
 	<strong>Плагины расширенных функций </strong><strong>WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
+		<tr>
+			<td style="width:470px;">
+				<p>
+					<strong>WooCommerce Расширенные товары (УНИВЕРСАЛЬНЫЙ товар-конструктор)</strong></p>
+			</td>
+			<td style="width:168px;">
+				<p>
+					<strong><a href="http://saphali.com/woocommerce-plugins/woocommerce-universalnyj-produkt-konstruktor">Подробнее</a></strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:470px;">
+				<p>
+					<strong>WooCommerce Продажа услуг</strong></p>
+			</td>
+			<td style="width:168px;">
+				<p>
+					<strong><a href="http://saphali.com/woocommerce-plugins/woocommerce-prodazha-uslug">Подробнее</a></strong></p>
+			</td>
+		</tr>
 		<tr>
 			<td style="width:470px;">
 				<p>
