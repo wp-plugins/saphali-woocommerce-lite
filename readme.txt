@@ -4,8 +4,8 @@ Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Donate link: http://saphali.com/vznos
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
-Requires at least: 3.3 or higher
-Tested up to: 3.8.1
+Requires at least: 3.3 or higher & WooCommerce 1.6.6 or higher
+Tested up to: 3.9.1
 Stable tag: 1.5
 Version: 1.5
 License: GPLv2 or later
