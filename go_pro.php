@@ -12,7 +12,7 @@
 	<strong>ВНИМАНИЕ!</strong></p>
 <p>
 	Для простоты и удобства использования <strong>магазина </strong><strong>Woocomerce</strong>,&nbsp; мы <strong>разработали</strong> <strong>дополнительные плагины</strong> <strong>для </strong><strong>Woocomerce</strong><strong>, которые заметно сэкономят ваше время и значительно повысят функциональные возможности вашего магазина.</strong></p>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагины платежных шлюзов для WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0" style="width:624px;" width="624">
 	<tbody>
@@ -228,7 +228,7 @@
 		</tr>
 	</tbody>
 </table>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагины оформления доставки для Woocommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
@@ -354,7 +354,7 @@
 		</tr>
 	</tbody>
 </table>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагины обработки цены</strong> <strong>для WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
@@ -480,7 +480,7 @@
 		</tr>
 	</tbody>
 </table>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагины для маркетинга в магазине</strong> <strong>WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
@@ -596,7 +596,7 @@
 		</tr>
 	</tbody>
 </table>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагин для </strong><strong>SEO</strong><strong>оптимизации магазина </strong><strong>WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
@@ -612,7 +612,7 @@
 		</tr>
 	</tbody>
 </table>
-<p align="center">
+<p style="padding-left: 30px">
 	<strong>Плагины расширенных функций </strong><strong>WooCommerce</strong></p>
 <table border="1" cellpadding="0" cellspacing="0">
 	<tbody>
