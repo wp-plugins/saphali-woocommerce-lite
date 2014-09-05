@@ -207,7 +207,7 @@ Author URI: http://saphali.com/
 				case 'BYR': $symbol = 'руб.'; break;
 				case 'AMD': $symbol = 'Դ'; break;
 				case 'KGS': $symbol = 'сом'; break;
-				case 'KZT': $symbol = 'тңг'; break;
+				case 'KZT': $symbol = '₸'; break;
 				case 'UZS': $symbol = 'sóm'; break;
 				case 'LTL': $symbol = 'lt.'; break;
 			}
