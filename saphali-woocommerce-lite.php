@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.5.1
+Version: 1.5.2
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.5.1' );
+ define('SAPHALI_LITE_VERSION', '1.5.2' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -246,7 +246,7 @@ Author URI: http://saphali.com/
 					if ( version_compare( WOOCOMMERCE_VERSION, '2.0', '<' ) ) { 
 						include_once( WP_PLUGIN_DIR . '/' . $woocommerce->template_url. 'classes/class-wc-checkout.php' ); 
 					}
-					else { if(!class_exists('WC_Customer')) $woocommerce->autoload( 'WC_Customer' );  $woocommerce->autoload( 'WC_Checkout' );  }
+					else { if(!class_exists('WC_Customer')) $woocommerce->autoload( 'WC_Customer' );  $woocommerce->autoload( 'WC_Checkout' ); if ( !version_compare( WOOCOMMERCE_VERSION, '2.2', '<' ) ) { include_once( WP_PLUGIN_DIR . '/' . WC()->template_path() . 'includes/abstracts/abstract-wc-session.php' ); include_once( WP_PLUGIN_DIR . '/' . WC()->template_path() . 'includes/class-wc-session-handler.php' );  $woocommerce->session =  new WC_Session_Handler();}  }
 					if(class_exists('WC_Checkout')) {
 						if(class_exists('WC_Customer')) $woocommerce->customer =  new WC_Customer();
 						$f = new WC_Checkout();
