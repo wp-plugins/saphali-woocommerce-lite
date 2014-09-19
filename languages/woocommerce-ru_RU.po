@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce theme v1.0.0\n"
+"Project-Id-Version: WooCommerce Lite|Standard v2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-09-19 10:40+0200\n"
+"PO-Revision-Date: 2014-09-19 16:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -204,6 +204,11 @@ msgstr "Показан один результат"
 #, php-format
 msgid "Showing all %d results"
 msgstr "Показаны все товары. Всего товаров: %d"
+
+#: templates/loop/result-count.php:32
+msgctxt "%1$d = first, %2$d = last, %3$d = total"
+msgid "Showing %1$d&ndash;%2$d of %3$d results"
+msgstr "Показаны товары с %1$d по %2$d из %3$d"
 
 #: templates/loop/result-count.php:32
 #, php-format
