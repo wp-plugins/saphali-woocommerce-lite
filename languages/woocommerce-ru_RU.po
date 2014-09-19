@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-04-03 06:01+0200\n"
+"PO-Revision-Date: 2014-09-19 10:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Textdomain-Support: yes\n"
 "Language: ru\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.9\n"
 "X-Poedit-SearchPath-0: .\n"
 
 # @ woocommerce
@@ -8295,3 +8295,33 @@ msgstr "Y/m/d g:i:s A"
 #: includes/admin/post-types/class-wc-admin-cpt-shop_order.php:130
 msgid "Y/m/d"
 msgstr "Y/m/d"
+
+#: includes/class-wc-post-types.php:391 includes/wc-order-functions.php:23
+msgctxt "Order status"
+msgid "Pending payment"
+msgstr "В ожидании оплаты"
+
+#: includes/class-wc-post-types.php:439 includes/wc-order-functions.php:29
+msgctxt "Order status"
+msgid "Failed"
+msgstr "Неудавшийся"
+
+#: includes/class-wc-post-types.php:407 includes/wc-order-functions.php:25
+msgctxt "Order status"
+msgid "On hold"
+msgstr "Зарезервирован"
+
+#: includes/class-wc-post-types.php:415 includes/wc-order-functions.php:26
+msgctxt "Order status"
+msgid "Completed"
+msgstr "Выполнен"
+
+#: includes/class-wc-post-types.php:431 includes/wc-order-functions.php:28
+msgctxt "Order status"
+msgid "Refunded"
+msgstr "Возмещен"
+
+#: includes/class-wc-post-types.php:423 includes/wc-order-functions.php:27
+msgctxt "Order status"
+msgid "Cancelled"
+msgstr "Отменен"
