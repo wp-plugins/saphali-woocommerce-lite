@@ -201,14 +201,14 @@ Author URI: http://saphali.com/
 		$currency = get_option( 'woocommerce_currency' );
 		if(isset($currency)) {
 			switch( $currency ) {
-				case 'UAH': $symbol = 'грн.'; break;
-				case 'RUB': $symbol = '<span class=rur >p<span>уб.</span></span>'; break;
-				case 'RUR': $symbol = 'руб.'; break;
-				case 'BYR': $symbol = 'руб.'; break;
-				case 'AMD': $symbol = 'Դ'; break;
+				case 'UAH': $symbol = '&#x433;&#x440;&#x43D;.'; break;
+				case 'RUB': $symbol = '<span class=rur >&#x440;<span>&#x443;&#x431;.</span></span>'; break;
+				case 'RUR': $symbol = '&#x440;&#x443;&#x431;.'; break;
+				case 'BYR': $symbol = '&#x440;&#x443;&#x431;.'; break;
+				case 'AMD': $symbol = '&#x534;'; break;
 				case 'KGS': $symbol = 'сом'; break;
-				case 'KZT': $symbol = '₸'; break;
-				case 'UZS': $symbol = 'sóm'; break;
+				case 'KZT': $symbol = '&#x20B8;'; break;
+				case 'UZS': $symbol = '&#x441;&#x45E;&#x43C;'; break;
 				case 'LTL': $symbol = 'lt.'; break;
 			}
 		}
