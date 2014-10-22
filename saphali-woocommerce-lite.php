@@ -497,7 +497,8 @@ Author URI: http://saphali.com/
 
 				$checkout_fields = get_option('woocommerce_saphali_filds');
 				
-				if(is_array($checkout_fields["billing"])) $f->checkout_fields["billing"] = $checkout_fields["billing"];
+				if( isset($checkout_fields["billing"]) && is_array($checkout_fields["billing"])) $f->checkout_fields["billing"] = $checkout_fields["billing"];
+				if( isset($f) )
 				foreach($f->checkout_fields["billing"] as $key => $value) {
 					if(empty($value['public']) && !is_array($checkout_fields["billing"])) $value['public'] = true;
 					?>
@@ -516,7 +517,7 @@ Author URI: http://saphali.com/
 					
 					} ?></td>
 						<td><input <?php if($value['clear']) echo 'checked'?>  class="<?php echo $value['clear']?>" type="checkbox" name="billing[<?php echo $key?>][clear]" /></td>
-						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+						<td><?php  if(isset($value['class']) && is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
 						<input value='<?php echo $v_class;?>' type="text" name="billing[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="billing[<?php echo $key?>][class][]" /> <?php
 						} ?></td>
@@ -582,7 +583,8 @@ Author URI: http://saphali.com/
 			</tfoot>
 			<tbody id="the-list" class="myTable">
 				<?php $count = 0; 
-				if(is_array($checkout_fields["shipping"])) $f->checkout_fields["shipping"] = $checkout_fields["shipping"];
+				if(isset($checkout_fields["shipping"]) && is_array($checkout_fields["shipping"])) $f->checkout_fields["shipping"] = $checkout_fields["shipping"];
+				if( isset( $f->checkout_fields["shipping"] ) )
 				foreach($f->checkout_fields["shipping"] as $key => $value) {	
 				if( empty($value['public']) && !is_array($checkout_fields["shipping"]) ) $value['public'] = true;
 					?>
@@ -591,7 +593,7 @@ Author URI: http://saphali.com/
 						<td><input value='<?php echo $value['label']?>' type="text" name="shipping[<?php echo $key?>][label]" /><input value='<?php echo $value['type']?>' type="hidden" name="shipping[<?php echo $key?>][type]" /></td>
 						<td><input value='<?php echo $value['placeholder']?>' type="text" name="shipping[<?php echo $key?>][placeholder]" /></td>
 						<td><input <?php if($value['clear']) echo 'checked'?> class="<?php echo $value['clear']?>" type="checkbox" name="shipping[<?php echo $key?>][clear]" /></td>
-						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+						<td><?php  if( isset($value['class']) && is_array($value['class']) ) { foreach($value['class'] as $v_class) { ?>
 						
 						<input value='<?php echo $v_class;?>' type="text" name="shipping[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="shipping[<?php echo $key?>][class][]" /> <?php
@@ -655,7 +657,8 @@ Author URI: http://saphali.com/
 			</tfoot>
 			<tbody id="the-list" class="myTable">
 				<?php $count = 0;
-				if(is_array($checkout_fields["order"])) $f->checkout_fields["order"] = $checkout_fields["order"];
+				if(isset($checkout_fields["order"]) && is_array($checkout_fields["order"])) $f->checkout_fields["order"] = $checkout_fields["order"];
+				if(isset($f->checkout_fields["order"]) )
 				foreach($f->checkout_fields["order"] as $key => $value) {	
 					if(empty($value['public']) && !is_array($checkout_fields["order"])) $value['public'] = true;
 					?>
@@ -664,7 +667,7 @@ Author URI: http://saphali.com/
 						<td><input value='<?php echo $value['label']?>' type="text" name="order[<?php echo $key?>][label]" /></td>
 						<td><input value='<?php echo $value['placeholder']?>' type="text" name="order[<?php echo $key?>][placeholder]" /></td>
 						
-						<td><?php  if(is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
+						<td><?php  if(isset($value['class']) && is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
 						
 						<input value='<?php echo $v_class;?>' type="text" name="order[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="order[<?php echo $key?>][class][]" /> <?php
@@ -1059,7 +1062,7 @@ Author URI: http://saphali.com/
 		$fieldss = get_option('woocommerce_saphali_filds_filters');
 		if(is_array($fieldss))
  		$_fields = $fieldss["billing"];
-		
+		if( isset($_fields) && is_array($_fields) )
 		foreach($_fields as $key => $value) {
 			if(str_replace( 'billing_','', $key ) != 'email')
 			$__fields[wc_edit_address_i18n( sanitize_key( $wp->query_vars['edit-address'] ), true ) . str_replace( 'billing','', $key ) ] = $value;
