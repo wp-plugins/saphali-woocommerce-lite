@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.5.2
+Version: 1.5.3
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.5.2' );
+ define('SAPHALI_LITE_VERSION', '1.5.3' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -56,9 +56,11 @@ Author URI: http://saphali.com/
 		add_filter( 'woocommerce_order_formatted_billing_address',  array($this,'formatted_billing_address') , 10 , 2); 
 		add_filter( 'woocommerce_order_formatted_shipping_address',  array($this,'formatted_shipping_address') , 10 , 2); 
 		
-		if(@$_GET['page'] != 'woocommerce_saphali_s_l' && @$_GET['tab'] !=1) {
+		if(@$_GET['page'] != 'woocommerce_saphali_s_l' && @$_GET['tab'] !=1 ) {
 			// Hook in
 			add_filter( 'woocommerce_checkout_fields' , array($this,'saphali_custom_override_checkout_fields') );
+			add_filter( 'wp' , array($this,'wp') );
+
 			add_filter( 'woocommerce_billing_fields',  array($this,'saphali_custom_billing_fields'), 10, 1 );
 			add_filter( 'woocommerce_shipping_fields',  array($this,'saphali_custom_shipping_fields'), 10, 1 );
 			add_filter( 'woocommerce_default_address_fields',  array($this,'woocommerce_default_address_fields'), 10, 1 );
@@ -74,6 +76,12 @@ Author URI: http://saphali.com/
 		add_filter( 'woocommerce_currencies',  array($this,'add_inr_currency') , 11);
 		add_filter( 'woocommerce_currency_symbol',  array($this,'add_inr_currency_symbol') , 1, 2 ); 
 		add_action( 'woocommerce_checkout_update_order_meta',   array( $this, 'checkout_update_order_meta' ), 10, 2 );
+	}
+	public function wp( ) {
+		if(function_exists('wc_edit_address_i18n')){
+			global $wp;
+			add_filter( 'woocommerce_'.wc_edit_address_i18n( sanitize_key( $wp->query_vars['edit-address'] ), true ) .'_fields',  array($this,'saphali_custom_edit_address_fields'), 10, 1 );
+		}
 	}
 	public function checkout_update_order_meta( $order_id, $posted ) {
 		if ( !version_compare( WOOCOMMERCE_VERSION, '2.1.0', '<' ) ) {
@@ -1045,6 +1053,21 @@ Author URI: http://saphali.com/
 		}
 
 		 return $fields;
+	}
+	function saphali_custom_edit_address_fields( $fields ) {
+		global $wp;
+		$fieldss = get_option('woocommerce_saphali_filds_filters');
+		if(is_array($fieldss))
+ 		$_fields = $fieldss["billing"];
+		
+		foreach($_fields as $key => $value) {
+			if(str_replace( 'billing_','', $key ) != 'email')
+			$__fields[wc_edit_address_i18n( sanitize_key( $wp->query_vars['edit-address'] ), true ) . str_replace( 'billing','', $key ) ] = $value;
+			$_a_ = array_diff_assoc ($__fields, $fields);
+			if(is_array($_a_) && is_array($fields) ) $fields = (array)$fields + (array)$_a_;
+		}
+	
+		return $fields;
 	}
 	function saphali_custom_billing_fields( $fields ) {
 
