@@ -69,16 +69,6 @@
 		<tr>
 			<td style="width:470px;height:19px;">
 				<p>
-					<strong>Woocommerce ROBOKASSA</strong></p>
-			</td>
-			<td style="width:153px;height:19px;">
-				<p>
-					<strong><a href="http://wordpress.org/plugins/robokassa-for-woocommerce/">Подробнее</a></strong></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:470px;height:19px;">
-				<p>
 					<strong>Woocommerce Z-payment</strong></p>
 			</td>
 			<td style="width:153px;height:19px;">

@@ -3,7 +3,7 @@
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Description: Saphali Woocommerce Russian - это бесплатный вордпресс плагин, который добавляет набор дополнений к интернет-магазину на Woocommerce.
-Version: 1.5.3
+Version: 1.5.4
 Author: Saphali
 Author URI: http://saphali.com/
 */
@@ -30,7 +30,7 @@ Author URI: http://saphali.com/
   ------------------------------------------------------------ */
   // Подключение валюты и локализации
  define('SAPHALI_PLUGIN_DIR_URL',plugin_dir_url(__FILE__));
- define('SAPHALI_LITE_VERSION', '1.5.3' );
+ define('SAPHALI_LITE_VERSION', '1.5.4' );
  define('SAPHALI_PLUGIN_DIR_PATH',plugin_dir_path(__FILE__));
  class saphali_lite {
  var $email_order_id;
@@ -91,6 +91,21 @@ Author URI: http://saphali.com/
 					if (isset($field['show']) && !$field['show'] || $key == 'order_comments') continue;
 					if(!empty($posted[$key]))
 						if(!update_post_meta( $order_id, '_' . $key, $posted[$key] )) add_post_meta( $order_id, '_' . $key, $posted[$key] );
+				}
+			}
+		}
+		if ( version_compare( WOOCOMMERCE_VERSION, '2.2.0', '>=' ) && version_compare( WOOCOMMERCE_VERSION, '2.2.2', '<=' ) )
+		{
+			$billing_data = $this->woocommerce_get_customer_meta_fields_saphali();
+			foreach ( array("billing", "shipping") as $type )
+			{
+				if (isset($billing_data[$type]) && is_array($billing_data[$type]))
+				{
+					foreach ( $billing_data[$type] as $key => $field ) {
+						if (isset($field['public']) && $field['public'] && !empty($posted[$key])) {
+							if(!update_post_meta( $order_id, '_' . $key, $posted[$key] )) add_post_meta( $order_id, '_' . $key, $posted[$key] );
+						}
+					}
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-=== Saphali Woocommerce Russian ===
+﻿=== Saphali Woocommerce Russian ===
 Contributors: Saphali
 Plugin Name: Saphali Woocommerce Russian
 Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
@@ -6,8 +6,8 @@ Donate link: http://saphali.com/vznos
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: WP 3.3 or higher & WooCommerce 1.6.6
 Tested up to: 4.0
-Stable tag: 1.5.3
-Version: 1.5.3
+Stable tag: 1.5.4
+Version: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,16 +37,10 @@ WooCommerce Russian! WooCommerce по-русски!
 <strong>ВНИМАНИЕ!</strong>
 
 Вы можете подключить к магазину все самые популярные российские и украинские платежные системы:
-QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интеркасса, PayPal для России и Украины, Z-payment, ChronoPay, ROBOKASSA!
+QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интеркасса, PayPal для России и Украины, Z-payment, ChronoPay!
 Подробнее о плагинах платежных шлюзов: http://saphali.com/wordpress/payment-gateways
 
 Другие русские плагины для интернет-магазина на Woocommerce смотрите в нашем каталоге http://saphali.com/wordpress/woocommerce-plugins
-
-<strong>Профессиональная версия - SAPHALI STANDARD</strong>
-
-Адаптирует интернет-магазин к использованию в странах СНГ, делает магазин более функциональным и удобным в использовании и администрировании, подключает все основные российские и украинские способы оплаты - <strong>QIWI, Приват24, LiqPay (прием оплаты с карт VISA и MasterCard), WebMoney, Яндекс.Деньги, PayPal для России и Украины, Z-payment, ROBOKASSA</strong>.
-Включает в себя: 8 платежных шлюзов Woocommerce и 8 новых добавленных особых функций для Woocommerce.
-Подробнее на сайте http://saphali.com/woocommerce-plugins/saphali-standard
 
 == Installation ==
 
@@ -63,6 +57,9 @@ QIWI, Приват24, LiqPay, WebMoney, Яндекс.Деньги, Интерк�
 5. Управление количеством колонок в каталоге товаров и рубриках.
 
 == Changelog ==
+
+= 1.5.4 =
+* Исправлен вывод дополнительных полей для версий WC 2.2.0 - 2.2.2.
 
 = 1.5.3 =
 * Вывод дополнительных полей в профиле/аккаунте покупателя.
