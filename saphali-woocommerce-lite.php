@@ -80,6 +80,7 @@ Author URI: http://saphali.com/
 	public function wp( ) {
 		if(function_exists('wc_edit_address_i18n')){
 			global $wp;
+			if(isset($wp->query_vars['edit-address']))
 			add_filter( 'woocommerce_'.wc_edit_address_i18n( sanitize_key( $wp->query_vars['edit-address'] ), true ) .'_fields',  array($this,'saphali_custom_edit_address_fields'), 10, 1 );
 		}
 	}
