@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce theme v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-10-05 16:55+0200\n"
+"PO-Revision-Date: 2015-03-12 21:53+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Textdomain-Support: yes\n"
 "Language: ru\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
 # @ woocommerce
@@ -36,12 +36,12 @@ msgstr "Произвольное поле"
 # @ woocommerce
 #: functions.php:40
 msgid "Russian ruble"
-msgstr "Русский рубль"
+msgstr "Российский рубль"
 
 # @ woocommerce
 #: functions.php:40
 msgid "Russian ruble (P)"
-msgstr "Русский рубль (P)"
+msgstr "Российский рубль (P)"
 
 # @ woocommerce
 #: functions.php:40
