@@ -276,10 +276,13 @@ Author URI: http://saphali.com/
 							 $woocommerce->autoload( 'WC_Session' ); 
 							 $woocommerce->autoload( 'WC_Session_Handler' ); 
 						}  
-					} else { if(!class_exists('WC_Customer')) $woocommerce->autoload( 'WC_Customer' );  $woocommerce->autoload( 'WC_Checkout' ); if ( !version_compare( WOOCOMMERCE_VERSION, '2.2', '<' ) ) { include_once( WP_PLUGIN_DIR . '/' . str_replace( array('compatability/2.2/','compatability/2.3/'), '', WC()->template_path() ) . 'includes/abstracts/abstract-wc-session.php' ); include_once( WP_PLUGIN_DIR . '/' . str_replace( array('compatability/2.2/','compatability/2.3/'), '', WC()->template_path() ) . 'includes/class-wc-session-handler.php' );  $woocommerce->session =  new WC_Session_Handler();} else {
-						 $woocommerce->autoload( 'WC_Session' ); 
-						 $woocommerce->autoload( 'WC_Session_Handler' ); 
-					}  }
+					} else { 
+						if(!class_exists('WC_Customer')) $woocommerce->autoload( 'WC_Customer' );  $woocommerce->autoload( 'WC_Checkout' ); if ( !version_compare( WOOCOMMERCE_VERSION, '2.2', '<' ) ) { include_once( WP_PLUGIN_DIR . '/' . str_replace( array('compatability/2.2/','compatability/2.3/'), '', WC()->template_path() ) . 'includes/abstracts/abstract-wc-session.php' ); include_once( WP_PLUGIN_DIR . '/' . str_replace( array('compatability/2.2/','compatability/2.3/'), '', WC()->template_path() ) . 'includes/class-wc-session-handler.php' );  $woocommerce->session =  new WC_Session_Handler();} else {
+							 $woocommerce->autoload( 'WC_Session' ); 
+							 if ( !version_compare( WOOCOMMERCE_VERSION, '2.1', '<' ))
+							 $woocommerce->autoload( 'WC_Session_Handler' ); 
+						}
+					}
 					if(class_exists('WC_Checkout')) {
 						if(class_exists('WC_Customer')) $woocommerce->customer =  new WC_Customer();
 						$f = new WC_Checkout();
