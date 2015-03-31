@@ -24,8 +24,8 @@ WooCommerce Russian! WooCommerce по-русски!
 Мы более не исправляем русский перевод в плагине - https://wordpress.org/plugins/woocommerce/, т.к. он уже корректный. Перевод нашего плагина полезен тем, кто использует Woocommerce 2.0 и ниже, т.е. старые версии плагина.
 А Вам просто нужно установить https://wordpress.org/plugins/woocommerce/ и все. Если возникают с переводом проблемы с установленной версией WC, то  нужно в самом WC произвести обновление. Можно зайти в “Woocommerce => System Status (Магазин => Состояние системы)”, перейти на вкладку “Tools” (Инструменты), и нажать на кнопку “Force Translation Upgrade”, чтобы обновить перевод.
 Теперь основные файлы локализации (помимо тех, которые в Saphali woocommerce russian) находятся здесь:
-wp-content/languages/plugins/woocommerce-admin-ru_RU.mo (админ часть), wp-content/languages/plugins/woocommerce-ru_RU.mo (пользовательская часть).\n
-Также как вариант можете скачать файлы http://saphali.com/lang.zip и распаковав скопируйте их тогда сюда wp-content/languages/plugins
+wp-content/languages/plugins/woocommerce-admin-ru_RU.mo (админ часть), wp-content/languages/plugins/woocommerce-ru_RU.mo (пользовательская часть).
+Также <em>как вариант</em> можете скачать файлы http://saphali.com/lang.zip и распаковав скопируйте их тогда сюда wp-content/languages/plugins
 
 * Валюты СНГ - Российский рубль (RUB), Украинскую гривну (UAH), Белорусский рубль (руб.), Armenian dram (Դրամ), Киргизский сом (сом) и Казахстанский тенге (тңг), Узбекский сум
 * Возможность настроить заказную форму для оформления заказа
