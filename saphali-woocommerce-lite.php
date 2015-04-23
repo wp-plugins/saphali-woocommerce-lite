@@ -539,7 +539,7 @@ Author URI: http://saphali.com/
 					<tr>
 						<td> <input  disabled value='<?php echo $key?>' type="text" name="billing[<?php echo $key?>][name]" /></td>
 						<td><input value='<?php echo $value['label']?>' type="text" name="billing[<?php echo $key?>][label]" /></td>
-					<td<?php if($value['type'] == 'select') {echo ' class="option-area"';}  ?>><?php if($value['type'] != 'select') { ?><input value='<?php  echo $value['placeholder']?>' type="text" name="billing[<?php  echo $key?>][placeholder]" /><?php } else { 
+					<td<?php if(isset($value['type']) && $value['type'] == 'select') {echo ' class="option-area"';}  ?>><?php if(!isset($value['type']) || isset($value['type']) && $value['type'] != 'select') { ?><input value='<?php  echo $value['placeholder']?>' type="text" name="billing[<?php  echo $key?>][placeholder]" /><?php } else { 
 							if( isset($value['options']) && is_array($value['options']) ) {
 								foreach($value['options'] as $key_option => $val_option) {?>
 								<span><input id="options" type="text" name="billing[<?php echo $key?>][options][<?php echo $key_option; ?>]" value="<?php echo $val_option?>" /> <span class="delete-option" style="cursor:pointer;border:1px solid">Удалить</span></span><br />
@@ -550,19 +550,19 @@ Author URI: http://saphali.com/
 							}
 					
 					} ?></td>
-						<td><input <?php if($value['clear']) echo 'checked'?>  class="<?php echo $value['clear']?>" type="checkbox" name="billing[<?php echo $key?>][clear]" /></td>
+						<td><input <?php if(isset($value['clear']) && $value['clear']) echo 'checked'?>  class="<?php echo isset($value['clear']) ? $value['clear'] : '' ;?>" type="checkbox" name="billing[<?php echo $key?>][clear]" /></td>
 						<td><?php  if(isset($value['class']) && is_array($value['class'])) { foreach($value['class'] as $v_class) { ?>
 						<input value='<?php echo $v_class;?>' type="text" name="billing[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="billing[<?php echo $key?>][class][]" /> <?php
 						} ?></td>
 					<td>
-					Select <input <?php  if($value['type'] == 'select') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="select" /><br />
-					Checkbox <input <?php  if($value['type'] == 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="checkbox"  /><br />
-					Textarea <input <?php  if($value['type'] == 'textarea') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="textarea"  /><br />
-					<?php echo (!$value['type'] || $value['type'] == 'select'|| $value['type'] == 'checkbox'|| $value['type'] == 'textarea') ? 'Text' : $value['type']; ?> <input <?php  if($value['type'] == $value['type'] && $value['type'] != 'select'&& $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="<?php if($value['type'] != 'select' && $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo $value['type']; ?>"  />
+					Select <input <?php  if(isset($value['type']) && $value['type'] == 'select') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="select" /><br />
+					Checkbox <input <?php  if(isset($value['type']) && $value['type'] == 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="checkbox"  /><br />
+					Textarea <input <?php  if(isset($value['type']) && $value['type'] == 'textarea') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="textarea"  /><br />
+					<?php echo (!isset($value['type']) || $value['type'] == 'select'|| $value['type'] == 'checkbox'|| $value['type'] == 'textarea') ? 'Text' : $value['type']; ?> <input <?php  if(isset($value['type']) && $value['type'] == $value['type'] && $value['type'] != 'select'&& $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo 'checked'?> type="radio" name="billing[<?php  echo $key?>][type]" value="<?php if( isset($value['type']) && $value['type'] != 'select' && $value['type'] != 'textarea'&& $value['type'] != 'checkbox') echo $value['type']; ?>"  />
 					</td>
-						<td><input <?php if($value['required']) echo 'checked'?> type="checkbox" name="billing[<?php echo $key?>][required]" /></td>
-						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="billing[<?php echo $key?>][public]" /></td>
+						<td><input <?php if( isset($value['required'] ) && $value['required']) echo 'checked'?> type="checkbox" name="billing[<?php echo $key?>][required]" /></td>
+						<td><input <?php if(isset($value['public']) && $value['public']) echo 'checked';?> type="checkbox" name="billing[<?php echo $key?>][public]" /></td>
 						
 						<td><input rel="sort_order" id="order_count" type="hidden" name="billing[<?php echo $key?>][order]" value="<?php echo $count?>" />
 						<input type="button" class="button" id="billing_delete" value="Удалить -"/></td>
@@ -626,14 +626,14 @@ Author URI: http://saphali.com/
 						<td><input  disabled  value=<?php echo $key?> type="text" name="shipping[<?php echo $key?>][name]" /></td>
 						<td><input value='<?php echo $value['label']?>' type="text" name="shipping[<?php echo $key?>][label]" /><input value='<?php echo $value['type']?>' type="hidden" name="shipping[<?php echo $key?>][type]" /></td>
 						<td><input value='<?php echo $value['placeholder']?>' type="text" name="shipping[<?php echo $key?>][placeholder]" /></td>
-						<td><input <?php if($value['clear']) echo 'checked'?> class="<?php echo $value['clear']?>" type="checkbox" name="shipping[<?php echo $key?>][clear]" /></td>
+						<td><input <?php if(isset($value['clear']) && $value['clear']) echo 'checked'?> class="<?php echo $value['clear']?>" type="checkbox" name="shipping[<?php echo $key?>][clear]" /></td>
 						<td><?php  if( isset($value['class']) && is_array($value['class']) ) { foreach($value['class'] as $v_class) { ?>
 						
 						<input value='<?php echo $v_class;?>' type="text" name="shipping[<?php echo $key?>][class][]" /> <?php } } else { ?>
 						<input value='' type="text" name="shipping[<?php echo $key?>][class][]" /> <?php
 						} ?></td>
-						<td><input <?php if($value['required']) echo 'checked'?> type="checkbox" name="shipping[<?php echo $key?>][required]" /></td>
-						<td><input <?php if($value['public']) echo 'checked';?> type="checkbox" name="shipping[<?php echo $key?>][public]" /></td>
+						<td><input <?php if(isset($value['required']) && $value['required']) echo 'checked'?> type="checkbox" name="shipping[<?php echo $key?>][required]" /></td>
+						<td><input <?php if(isset($value['public']) && $value['public']) echo 'checked';?> type="checkbox" name="shipping[<?php echo $key?>][public]" /></td>
 						
 						<td><input rel="sort_order"  id="order_count" type="hidden" name="shipping[<?php echo $key?>][order]" value="<?php echo $count?>" /><input type="button" class="button" id="billing_delete" value="Удалить -"/>
 							<?php 
