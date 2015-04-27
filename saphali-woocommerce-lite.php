@@ -1321,7 +1321,7 @@ function saphali_woo_lite_install() {
 			}
 			
 		}
-		if(!update_option('woocommerce_saphali_filds_locate',$locate))add_option('woocommerce_saphali_filds_locate',$locate);
+		update_option('woocommerce_saphali_filds_locate',$locate);
 	}
 	//if(!update_option('woocommerce_informal_localisation_type' , 'yes'))add_option('woocommerce_informal_localisation_type' , 'yes');
 	//global $woocommerce;
