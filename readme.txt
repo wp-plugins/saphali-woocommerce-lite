@@ -5,7 +5,7 @@ Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Donate link: http://saphali.com/vznos
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: WP 3.3 or higher & WooCommerce 1.6.6 or higher
-Tested up to: 4.2
+Tested up to: 4.2.2
 Stable tag: 1.5.6
 Version: 1.5.6
 License: GPLv2 or later
@@ -22,7 +22,7 @@ WooCommerce Russian! WooCommerce по-русски!
 = Интегрирует в магазин: =
 * Русский интерфейс. <strong>Важное замечание!</strong>
 Мы более не исправляем русский перевод в плагине - https://wordpress.org/plugins/woocommerce/, т.к. он уже корректный. Перевод нашего плагина полезен тем, кто использует Woocommerce 2.0 и ниже, т.е. старые версии плагина.
-А Вам просто нужно установить https://wordpress.org/plugins/woocommerce/ и все. Если возникают с переводом проблемы с установленной версией WC, то  нужно в самом WC произвести обновление. Можно зайти в “Woocommerce => System Status (Магазин => Состояние системы)”, перейти на вкладку “Tools” (Инструменты), и нажать на кнопку “Force Translation Upgrade”, чтобы обновить перевод.
+Остальным просто нужно установить https://wordpress.org/plugins/woocommerce/ и все. Если возникают с переводом проблемы с установленной версией WC, то  нужно в самом WC произвести обновление. Можно зайти в “Woocommerce => System Status (Магазин => Состояние системы)”, перейти на вкладку “Tools” (Инструменты), и нажать на кнопку “Force Translation Upgrade”, чтобы обновить перевод.
 Теперь основные файлы локализации (помимо тех, которые в Saphali woocommerce russian) находятся здесь:
 wp-content/languages/plugins/woocommerce-admin-ru_RU.mo (админ часть), wp-content/languages/plugins/woocommerce-ru_RU.mo (пользовательская часть).
 Также <em>как вариант</em> можете скачать файл http://saphali.com/lang.zip и распаковав скопируйте их тогда сюда wp-content/languages/plugins
