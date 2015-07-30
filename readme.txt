@@ -5,7 +5,7 @@ Plugin URI: http://saphali.com/saphali-woocommerce-plugin-wordpress
 Donate link: http://saphali.com/vznos
 Tags: woocommerce, woo commerce russian, russian ruble, ukrainian hryvnia, mod, manadger filds checkout
 Requires at least: WP 3.3 or higher & WooCommerce 1.6.6 or higher
-Tested up to: 4.2.2
+Tested up to: 4.2.3
 Stable tag: 1.5.6
 Version: 1.5.6
 License: GPLv2 or later

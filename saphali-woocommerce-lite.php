@@ -1294,7 +1294,7 @@ function _print_script_columns() {
 		if(apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') ) != 'RUB') return;
 		?>
 	<style type="text/css">
-		@font-face { font-family: "Rubl Sign"; src: url(http://www.artlebedev.ru/;-)/ruble.eot); }
+		@font-face { font-family: "Rubl Sign"; src: url(<?php echo SAPHALI_PLUGIN_DIR_URL; ?>ruble.eot); }
 		span.rur { font-family: "Rubl Sign"; text-transform: uppercase; // text-transform: none;}    
 		span.rur span { position: absolute; overflow: hidden; width: .45em; height: 1em; margin: .2ex 0 0 -.55em; // display: none; }
 		span.rur span:before { content: '\2013'; }
